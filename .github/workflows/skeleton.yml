@@ -1,0 +1,30 @@
+name: Skeleton Build Check
+
+on:
+  push:
+    branches:
+      - skeleton  # Csak a skeleton branch-re vonatkozik
+  pull_request:
+    branches:
+      - skeleton
+
+jobs:
+  build:
+    runs-on: windows-latest  # Windows környezetben futtatás
+
+    steps:
+      - name: Repository klónozása
+        uses: actions/checkout@v4
+
+      - name: Java 18 beállítása
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # OpenJDK implementáció
+          java-version: '18.0.2.1'  # A kívánt Java verzió
+
+      - name: Projekt fordítása
+        shell: cmd
+        run: |
+          javac -version
+          mkdir out
+          for /r src %f in (*.java) do javac -d out %f
