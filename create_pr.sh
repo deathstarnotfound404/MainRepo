@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # 🛠️ Repo adatok (EZEKET ÁLLÍTSD BE!)
-REPO_OWNER="myorg"   # <-- Cseréld le a GitHub usered vagy szervezeted nevére
-REPO_NAME="myproject"  # <-- Cseréld le a repo nevére
+REPO_OWNER="deathstarnotfound404"   # <-- Cseréld le a GitHub usered vagy szervezeted nevére
+REPO_NAME="MainRepo"  # <-- Cseréld le a repo nevére
 BASE_BRANCH="skeleton" # <-- A branch, amelybe merge-ölni szeretnél (pl. "skeleton")
 
 # 📌 Jelenlegi branch lekérése
