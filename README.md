@@ -9,4 +9,3 @@ Ez most csak egy teszt, megnézni működik-e az integráció.
 - Czene Zsombor
 - Kozma Szabolcs
 - Pünkösti Györk
-- GitHub Copilot

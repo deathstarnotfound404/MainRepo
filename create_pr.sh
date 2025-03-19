@@ -14,9 +14,6 @@ if [ "$CURRENT_BRANCH" == "$BASE_BRANCH" ]; then
     exit 1
 fi
 
-# 🔼 Push az új branch-re
-git push --set-upstream origin "$CURRENT_BRANCH"
-
 # 🔗 PR link generálása
 PR_URL="https://github.com/$REPO_OWNER/$REPO_NAME/compare/$BASE_BRANCH...$CURRENT_BRANCH?expand=1"
 
