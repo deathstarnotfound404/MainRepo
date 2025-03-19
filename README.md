@@ -8,6 +8,11 @@ Ez most csak egy teszt, megnézni működik-e az integráció.
 
 A program fordítása és futtatásához a skeleton mappából az alábbi parancsokat kell kiadni:
 
+```Program letöltése```
+```shell
+git clone https://github.com/deathstarnotfound404/MainRepo.git
+```
+
 ```Windows```
 ```shell
 mkdir bin
