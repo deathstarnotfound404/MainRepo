@@ -23,17 +23,17 @@ jobs:
           java-version: '18'
 
       - name: Java verzió ellenőrzés
-        shell: cmd
+        shell: pwsh
         run: javac -version && java -version
 
       - name: Projekt fordítása
-        shell: cmd
+        shell: pwsh
         run: |
           if exist bin rmdir /s /q bin
           mkdir bin
           javac -sourcepath src -d bin src/**/*.java
 
       - name: Projekt futtatása
-        shell: cmd
+        shell: pwsh
         run: |
           if exist bin/Skeleton.class (java -cp bin Skeleton) else (echo "Skeleton class not found" && exit /b 1)
