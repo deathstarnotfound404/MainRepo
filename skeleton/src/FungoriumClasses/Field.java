@@ -10,7 +10,7 @@ public class Field {
     public Field() {
         this.tektonLista = new ArrayList<>();
         this.players = new ArrayList<>();
-        System.out.println("<<<return FIeld()");
+        System.out.println("<<<return Field()");
     }
 
     List<Player> kiertekeles() {
