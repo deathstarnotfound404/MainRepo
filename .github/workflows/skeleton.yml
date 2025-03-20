@@ -30,11 +30,12 @@ jobs:
       - name: Projekt fordítása
         shell: cmd
         run: |
-          if exist out rmdir /s /q out
-          mkdir out
-          for /r src %%f in (*.java) do javac -d out %%f
+          mkdir bin
+          javac src\FungoriumClasses\*.java -d bin
+          javac -cp bin src\TestCases\*.java -d bin
+          javac -cp bin src\Skeleton.java -d bin
 
       - name: Projekt futtatása
         shell: cmd
         run: |
-          if exist out\Skeleton.class (java -cp out Skeleton) else (echo "Main class not found" && exit /b 1)
+          if exist bin\Skeleton.class (java -cp bin Skeleton) else (echo "Skeleton class not found" && exit /b 1)
