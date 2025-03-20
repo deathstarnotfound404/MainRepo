@@ -29,11 +29,13 @@ jobs:
       - name: Projekt fordítása
         shell: pwsh
         run: |
-          if exist bin rmdir /s /q bin
-          mkdir bin
-          javac -sourcepath src -d bin src/**/*.java
+          if (Test-Path bin) { Remove-Item -Recurse -Force bin }
+          New-Item -ItemType Directory -Path bin
+          javac -d bin (Get-ChildItem -Path src/FungoriumClasses -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin (Get-ChildItem -Path src/TestClasses -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin src/Skeleton.java
 
       - name: Projekt futtatása
         shell: pwsh
         run: |
-          if exist bin/Skeleton.class (java -cp bin Skeleton) else (echo "Skeleton class not found" && exit /b 1)
+          if (Test-Path bin/Skeleton.class) { java -cp bin Skeleton } else { Write-Host "Skeleton class not found"; exit 1 }
