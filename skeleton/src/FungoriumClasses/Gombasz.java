@@ -1,11 +1,13 @@
 package FungoriumClasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gombasz {
     private List<Gomba> gombaLista;
 
     public Gombasz() {
+        gombaLista = new ArrayList<Gomba>();
         System.out.println("<<<return Gombasz()");
     }
 
