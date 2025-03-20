@@ -23,17 +23,20 @@ jobs:
           java-version: '18'
 
       - name: Java verzió ellenőrzés
-        shell: cmd
+        shell: pwsh
         run: javac -version && java -version
 
       - name: Projekt fordítása
-        shell: cmd
+        shell: pwsh
         run: |
-          if exist out rmdir /s /q out
-          mkdir out
-          for /r src %%f in (*.java) do javac -d out %%f
+          if (Test-Path bin) { Remove-Item -Recurse -Force bin }
+          New-Item -ItemType Directory -Path bin
+          $SRC_PATH = "skeleton/src"
+          javac -d bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestClasses" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin "$SRC_PATH/Skeleton.java"
 
       - name: Projekt futtatása
-        shell: cmd
+        shell: pwsh
         run: |
-          if exist out\Skeleton.class (java -cp out Skeleton) else (echo "Main class not found" && exit /b 1)
+          if (Test-Path bin/Skeleton.class) { java -cp bin Skeleton } else { Write-Host "Skeleton class not found"; exit 1 }
