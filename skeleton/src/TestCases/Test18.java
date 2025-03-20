@@ -1,4 +1,7 @@
 package TestCases;
+
+import CallTracer.CallTracer;
+
 /**
  * A {@code Test18} osztály a 18. szkeleton tesztesetet implementálja.
  *
@@ -13,7 +16,7 @@ package TestCases;
  * @since 2025-03-18
  */
 
-public class Test18 implements ITestCase {
+public class Test18 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
@@ -22,8 +25,8 @@ public class Test18 implements ITestCase {
     /**
      * Létrehoz egy új {@code Test1} objektumot.
      */
-    public Test18() {
-
+    public Test18(CallTracer callTracer) {
+        super(callTracer);
     }
 
     /**

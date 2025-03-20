@@ -51,7 +51,6 @@ public class GombaTest implements IDestroyable {
     }
 
     public boolean decreaseSporaKeszlet() {
-        System.out.println("<<<return decreaseSporaKeszlet()");
         return false;
     }
 

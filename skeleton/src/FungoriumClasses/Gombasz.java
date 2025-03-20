@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +40,9 @@ public class Gombasz {
         System.out.println("<<<return szoras()");
     }
 
-    public void fonalVasarlas(Gomba g) {
-        System.out.println("<<<return fonalVasarlas()");
+    public boolean fonalVasarlas(Gomba g) {
+
+        return g.getGombaTest().decreaseSporaKeszlet();
     }
 
     public void gombatestNovesztes(Tekton t) {
@@ -47,6 +50,7 @@ public class Gombasz {
     }
 
     public void gombafonalNovesztes(Gomba g, Tekton startTekton, Tekton celTekton) {
+
         System.out.println("<<<return gombafonalNovesztes()");
     }
 }
