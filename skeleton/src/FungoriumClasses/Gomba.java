@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gomba implements IDestroyable {
+    private Tekton tekton;
     private int fonalKeszlet = 0;
     private List<List<Gombafonal>> fonalLista;
     private GombaTest GombaTest;
