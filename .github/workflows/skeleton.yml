@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '18.0.2.1'
+          java-version: '18'
 
       - name: Java verzió ellenőrzés
         shell: cmd
@@ -30,9 +30,9 @@ jobs:
         shell: cmd
         run: |
           mkdir out
-          for /r src %f in (*.java) do javac -d out %f
+          for /r src %%f in (*.java) do javac -d out %%f
 
       - name: Tesztfájl futtatása (ha van Main class)
         shell: cmd
         run: |
-          java -cp out Skeleton || exit /b 1
+          if exist out\Skeleton.class (java -cp out Skeleton) else (echo "Main class not found" && exit /b 1)
