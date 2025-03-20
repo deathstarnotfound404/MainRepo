@@ -1,6 +1,7 @@
 package FungoriumClasses;
 
 public class Rovarasz {
+    private Rovar rovaraszRovarja;
     public Rovarasz() {
         System.out.println("<<<return Rovarasz()");
     }

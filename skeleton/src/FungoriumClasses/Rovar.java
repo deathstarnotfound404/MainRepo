@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rovar {
+    private Rovarasz rovaraszRovarja;
     private int tapanyag = 0;
     private int evesHatekonysag = 1;
     private boolean maxFogyasztas;
