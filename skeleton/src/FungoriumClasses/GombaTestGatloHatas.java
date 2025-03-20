@@ -7,6 +7,6 @@ public class GombaTestGatloHatas extends TektonHatas {
 
     public String hatas() {
         System.out.println("<<<return hatas()");
-        return "GombaTestGatloHatas";
+        return null;
     }
 }

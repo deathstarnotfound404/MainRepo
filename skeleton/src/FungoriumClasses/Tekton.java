@@ -12,10 +12,15 @@ public class Tekton implements IDestroyable {
     private boolean vanGombaTestTektonon;
     private List<Tekton> szomszedosTektonok;
 
+    private TektonHatas tektonHatasa;
+    private Rovar tektononLevoRovar;
+    private Gomba tektononLevoGomba;
+
     public Tekton(TektonHatas hatas) {
         this.sporaLista = new ArrayList<>();
         this.kapcsolodoFonalak = new ArrayList<>();
         this.szomszedosTektonok = new ArrayList<>();
+        this.tektonHatasa = hatas;
         System.out.println("<<<return Tekton(hatas)");
     }
 

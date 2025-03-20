@@ -2,6 +2,8 @@ package FungoriumClasses;
 
 public class TektonHatas {
 
+    private Tekton tekton;
+
     public TektonHatas() {
         System.out.println("<<<return TektonHatas()");
     }

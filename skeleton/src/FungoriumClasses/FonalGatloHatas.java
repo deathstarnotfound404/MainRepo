@@ -7,6 +7,6 @@ public class FonalGatloHatas extends TektonHatas{
 
     public String hatas() {
         System.out.println("<<<return hatas()");
-        return "FonalGatloHatas";
+        return null;
     }
 }
