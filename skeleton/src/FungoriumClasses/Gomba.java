@@ -1,5 +1,6 @@
 package FungoriumClasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gomba implements IDestroyable {
@@ -8,6 +9,7 @@ public class Gomba implements IDestroyable {
     private GombaTest GombaTest;
 
     public Gomba(Tekton t) {
+        fonalLista = new ArrayList<List<Gombafonal>>();
         System.out.println("<<<return Gomba()");
     }
 
