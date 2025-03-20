@@ -9,9 +9,10 @@ public abstract class BaseSpora implements IDestroyable {
         System.out.println("<<<return BaseSpora()");
     }
 
-    //Absztrakt metodus, amit az alos
+    //Absztrakt metodus, amit az alosztalyok fognak implementalni a hatas miatt
     public abstract void hatas(Rovar r);
 
+    //tapanyag erteket visszaterito getter
     public int getTapanyag() {
         System.out.println("<<<return getTapanyag()");
         return tapanyag;
