@@ -31,9 +31,10 @@ jobs:
         run: |
           if (Test-Path bin) { Remove-Item -Recurse -Force bin }
           New-Item -ItemType Directory -Path bin
-          javac -d bin (Get-ChildItem -Path src/FungoriumClasses -Recurse -Filter "*.java").FullName
-          javac -cp bin -d bin (Get-ChildItem -Path src/TestClasses -Recurse -Filter "*.java").FullName
-          javac -cp bin -d bin src/Skeleton.java
+          $SRC_PATH = "skeleton/src"
+          javac -d bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestClasses" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin "$SRC_PATH/Skeleton.java"
 
       - name: Projekt futtatása
         shell: pwsh
