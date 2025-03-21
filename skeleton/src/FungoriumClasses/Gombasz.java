@@ -46,7 +46,7 @@ public class Gombasz extends Player {
         Tekton t1 = g.getTekton();
         CallTracer.exit("getTekton", "t1");
 
-        CallTracer.enter("szor", "Gomba", "t1, gt");
+        CallTracer.enter("szor", "Gomba", "celTekton, gt");
         if (g.szor(celTekton, gt)) {
             CallTracer.exit("szor", "true");
             return true;
