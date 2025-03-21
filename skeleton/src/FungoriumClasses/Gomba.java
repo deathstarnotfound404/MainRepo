@@ -108,6 +108,13 @@ public class Gomba implements IDestroyable {
         List<Tekton> szomszedLista = celTekton.getSzomszedosTektonok();
         CallTracer.exit("getSzomszedosTektonok", "szomszedLista");
 
+        //Ha nem szomszédosak a tektonok
+        boolean szomszedosak = false;
+        szomszedosak = szomszedLista.contains(gt.getAlapGomba().getTekton());
+        if(!szomszedosak) { //Test30 miatt kell
+            return false;
+        }
+
         CallTracer.enter("getSzint", "GombaTest", "");
         int szint = gt.getSzint();
         CallTracer.exit("getSzint", "szint");

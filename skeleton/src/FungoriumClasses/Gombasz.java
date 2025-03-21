@@ -47,11 +47,11 @@ public class Gombasz extends Player {
         CallTracer.exit("getTekton", "t1");
 
         CallTracer.enter("szor", "Gomba", "t1, gt");
-        if (g.szor(t1, gt)) {
+        if (g.szor(celTekton, gt)) {
             CallTracer.exit("szor", "true");
             return true;
         } else {
-            CallTracer.exit("szor", "HIBA");
+            CallTracer.exit("szor", "false");
             return false;
         }
     }

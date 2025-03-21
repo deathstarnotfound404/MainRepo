@@ -1,6 +1,7 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
 
 /**
  * A {@code Test30} osztály a 30. szkeleton tesztesetet implementálja.
@@ -19,7 +20,14 @@ import CallTracer.CallTracer;
 public class Test30 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-
+    TektonHatas th1;
+    TektonHatas th2;
+    Gombasz gsz;
+    Field f;
+    Tekton t1;
+    Tekton celTekton;
+    Gomba g;
+    GombaTest gt;
 
     //Test init
     /**
@@ -27,6 +35,23 @@ public class Test30 extends TestCase implements ITestCase {
      */
     public Test30(CallTracer callTracer) {
         super(callTracer);
+        th1 = new TektonHatas();     //1;
+        gsz = new Gombasz();        //2;
+        f = new Field();            //3;
+        t1 = new Tekton(th1);        //4;
+        f.addTekton(t1);             //5;
+        th2 = new TektonHatas();
+        celTekton = new Tekton(th2);    //6
+        th1.setTekton(t1);
+        th2.setTekton(celTekton);
+        f.addTekton(celTekton);     //7
+        g = new Gomba(t1);          //8
+        t1.setGomba(g);
+        gsz.addGomba(g);            //9
+        gt = new GombaTest(g, 5);  //10
+        gt.setAlapGomba(g);
+        g.setGombaTest(gt);
+       //Most nem állítjuk be szo,szédoknak a tektonokat
     }
 
     /**
@@ -34,6 +59,11 @@ public class Test30 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("szoras", "Gombasz", "g, t1");
+        if(!gsz.szoras(g, celTekton)) {
+            CallTracer.exit("szoras", "false");
+        } else {
+            CallTracer.exit("szoras", "HIBA");
+        }
     }
 }

@@ -26,7 +26,7 @@
 - [ ] 28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar
 - [x] ~~29: Spóra Szórás Teszt~~
   - MEGJEGYZÉS: Változás a szekvencia diagrammhoz képest
-- [ ] 30: Spóra Szórás Teszt - Nem szomszédos Tektonok
+- [x] ~~30: Spóra Szórás Teszt - Nem szomszédos Tektonok~~
 - [ ] 31: Spóra Szórás Teszt - Nincs elég spórakészlet
 - [ ] 32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest
 - [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra
