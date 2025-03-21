@@ -18,6 +18,24 @@ public class Rovar {
 
     public void vag(Gombafonal gf) {
         //TODO szekvenciák alapján
+        CallTracer.enter("getStartTekton", "Gombafonal", "");
+        Tekton start = gf.getStartTekton();
+        CallTracer.exit("getStartTekton", "");
+        CallTracer.enter("getCelTekton", "GombaFonal", "");
+        Tekton cel = gf.getCelTekton();
+        CallTracer.exit("getCelTekton", "");
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton", "gf");
+        start.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton", "gf");
+        cel.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+        CallTracer.enter("getAlapGomba", "Gombafonal", "");
+        Gomba g = gf.getAlapGomba();
+        CallTracer.exit("getAlapGomba", "Gomba");
+        CallTracer.enter("deleteFonal", "Gomba", "gf");
+        g.deleteFonal(gf);
+        CallTracer.exit("deleteFonal", "");
     }
 
     public void lep(Tekton celTekton) {

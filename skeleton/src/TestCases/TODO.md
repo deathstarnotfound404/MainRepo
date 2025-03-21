@@ -19,7 +19,7 @@
 - MEGJEGYZÉS: nem kéne minden tulajdonságát állítani a rovarnak?
 - [x] ~~22: Spóra Elfogyasztás - Spora teszt~~
 - [x] ~~23: Játék Kiértékelés Teszt~~
-- [ ] 24: Gombafonal Elvágás Teszt
+- [x] ~~24: Gombafonal Elvágás Teszt~~
 - [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
 - [ ] 26: Rovar Irány Megadás Teszt
 - [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok

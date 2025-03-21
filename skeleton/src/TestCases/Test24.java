@@ -1,6 +1,8 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
+import java.util.*;
 
 /**
  * A {@code Test24} osztály a 24. szkeleton tesztesetet implementálja.
@@ -20,6 +22,14 @@ public class Test24 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Rovarasz rsz;
+    Rovar r;
+    Gombafonal gf;
+    Tekton t1;
+    Tekton t2;
+    TektonHatas th1;
+    TektonHatas th2;
+    Gomba g;
 
     //Test init
     /**
@@ -27,6 +37,18 @@ public class Test24 extends TestCase implements ITestCase {
      */
     public Test24(CallTracer callTracer) {
         super(callTracer);
+        rsz = new Rovarasz();
+        r = new Rovar();
+        th1 = new TektonHatas();
+        th2 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t2 = new Tekton(th2);
+        gf = new Gombafonal(t1, t2);
+        g = new Gomba(t1);
+        rsz.addRovar(r, t2);
+        r.setHelyzet(t2);
+        t2.setRovar(r);
+        gf.setAlapGomba(g);
     }
 
     /**
@@ -34,6 +56,8 @@ public class Test24 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("fonalVagas", "Rovarasz", "r, gf");
+        rsz.fonalVagas(r,gf);
+        CallTracer.exit("fonalVagas", "");
     }
 }

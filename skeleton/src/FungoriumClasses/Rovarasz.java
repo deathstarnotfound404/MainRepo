@@ -1,5 +1,9 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
+import java.util.Arrays;
+
 public class Rovarasz extends Player {
     private Rovar rovaraszRovarja;
     public Rovarasz() {
@@ -23,6 +27,13 @@ public class Rovarasz extends Player {
     }
 
     public boolean fonalVagas(Rovar r, Gombafonal gf) {
-        return false;       //TODO szekvenciák alapján implementálni
+        //TODO szekvenciák alapján implementálni
+        if(!r.getTudVagni()) return false;
+        else{
+            CallTracer.enter("vag", "Rovar", "gf");
+            r.vag(gf);
+            CallTracer.exit("vag", "true");
+            return true;
+        }
     }
 }
