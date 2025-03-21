@@ -10,6 +10,7 @@ public class Gomba implements IDestroyable {
     private GombaTest GombaTest;
 
     public Gomba(Tekton t) {
+        this.tekton = t;
         fonalLista = new ArrayList<List<Gombafonal>>();
         System.out.println("<<<return Gomba()");
     }
@@ -32,12 +33,12 @@ public class Gomba implements IDestroyable {
         return fonalKeszlet;
     }
 
-    public void setGombaTest(GombaTest t) {
+    public void setGombaTest(GombaTest gt) {
+        this.GombaTest = gt;
         System.out.println("<<<return setGombaTest()");
     }
 
     public GombaTest getGombaTest() {
-        System.out.println("<<<return getGombaTest()");
         return GombaTest;
     }
 
@@ -82,7 +83,7 @@ public class Gomba implements IDestroyable {
     }
 
     public void increaseFonalKeszlet(int val) {
-        System.out.println("<<<return increaseFonalKeszlet()");
+        this.fonalKeszlet += val;
     }
 
     @Override

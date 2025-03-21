@@ -25,11 +25,11 @@ import java.util.*;
 public class Test37 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-    TektonHatas h;
-    Tekton t;
-    Gombasz gsz;
-    Gomba g;
-    GombaTest gt;
+    private TektonHatas h;
+    private Tekton t;
+    private Gombasz gsz;
+    private Gomba g;
+    private GombaTest gt;
 
     //Test init
     /**
@@ -37,7 +37,6 @@ public class Test37 extends TestCase implements ITestCase {
      */
     public Test37(CallTracer callTracer) {
         super(callTracer);
-        callTracer.enter("Test37", "Test37", "");
         //A kommunikációs diagramm sorszámozáa alapján:
         h = new TektonHatas();          //1;
         t = new Tekton(h);              //2;
@@ -47,7 +46,7 @@ public class Test37 extends TestCase implements ITestCase {
         gt = new GombaTest(g, 0);  //6;
         gt.setAlapGomba(g);             //7;
         t.setGomba(g);                  //8;
-        callTracer.exit("Test37", "");
+        g.setGombaTest(gt);
     }
 
     /**
@@ -59,14 +58,24 @@ public class Test37 extends TestCase implements ITestCase {
 
         switch (choice) {
             case 1:
-                gt.addToSporaKeszlet(10);
-                callTracer.enter("addToSporaKeszlet", "GombaTest", "10");
-                gsz.fonalVasarlas(g);       //Ezt a g gombát majd a játékos választja ki.
-                callTracer.exit("addToSporaKeszlet", "");
+                gt.addToSporaKeszlet(1);
+                CallTracer.enter("fonalVasarlas", "Gombasz", "g");
+                boolean val_1 = gsz.fonalVasarlas(this.g);       //Ezt a g gombát majd a játékos választja ki.
+                if (val_1) {
+                    CallTracer.exit("fonalVasarlas", "true");
+                } else {
+                    CallTracer.exit("fonalVasarlas", "HIBA");
+                }
                 break;
 
             case 2:
-
+                CallTracer.enter("fonalVasarlas", "Gombasz", "g");
+                boolean val_2 = gsz.fonalVasarlas(g);       //Ezt a g gombát majd a játékos választja ki.
+                if(val_2) {
+                    CallTracer.exit("fonalVasarlas", "HIBA");
+                } else {
+                    CallTracer.exit("fonalVasarlas", "false");
+                }
                 break;
 
             default:

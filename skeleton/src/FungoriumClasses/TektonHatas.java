@@ -14,6 +14,7 @@ public class TektonHatas {
     }
 
     public void setTekton(Tekton t) {
+        this.tekton = t;
         System.out.println("<<<return setTekton()");
     }
 

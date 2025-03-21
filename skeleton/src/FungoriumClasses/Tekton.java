@@ -108,6 +108,7 @@ public class Tekton implements IDestroyable {
     }
 
     public void setGomba(Gomba g) {
+        this.tektononLevoGomba = g;
         System.out.println("<<<return setGomba()");
     }
 

@@ -1,6 +1,5 @@
 package FungoriumClasses;
-
-import CallTracer.CallTracer;
+import CallTracer.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,22 @@ public class Gombasz {
     }
 
     public boolean fonalVasarlas(Gomba g) {
+        CallTracer.enter("getGombaTest", "Gomba", "");
+        GombaTest gt = g.getGombaTest();
+        CallTracer.exit("getGombaTest", "gt");
 
-        return g.getGombaTest().decreaseSporaKeszlet();
+        CallTracer.enter("decreaseSporaKeszlet", "GombaTest", "");
+        boolean val = gt.decreaseSporaKeszlet();
+        if (val) {
+            CallTracer.exit("decreaseSporaKeszlet", "true");
+
+            CallTracer.enter("increaseFonalKeszlet", "Gomba", "3");
+            g.increaseFonalKeszlet(3);
+            CallTracer.exit("increaseFonalKeszlet", "");
+        } else {
+            CallTracer.exit("decreaseSporaKeszlet", "false");
+        }
+        return val;
     }
 
     public void gombatestNovesztes(Tekton t) {
