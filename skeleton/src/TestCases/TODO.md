@@ -1,8 +1,8 @@
 - [x] ~~1-Játék Indítás Teszt - Tekton inicializálás~~
 - [x] ~~2-Játék Indítás Teszt - Rovarász inicializálás~~
-- [ ] 3: Játék Indítás Teszt - Gombász inicializálás
-- [ ] 6: Gombatest Szintlépés Teszt
-- [ ] 9: Rovar Képességek alaphelyzetbe állítása teszt
+- [x] ~~3: Játék Indítás Teszt - Gombász inicializálás~~
+- [x] ~~6: Gombatest Szintlépés Teszt~~
+- [x] ~~9: Rovar Képességek alaphelyzetbe állítása teszt~~
 - [ ] 10: Tekton Hatás Kifejtés: TektonHatas teszt
 - [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt
 - [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt

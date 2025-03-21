@@ -1,7 +1,8 @@
 package TestCases;
 
 import CallTracer.CallTracer;
-
+import FungoriumClasses.*;
+import java.util.*;
 /**
  * A {@code Test9} osztály a kilencedik szkeleton tesztesetet implementálja.
  *
@@ -20,6 +21,7 @@ public class Test9 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Rovar r;
 
     //Test init
     /**
@@ -27,6 +29,7 @@ public class Test9 extends TestCase implements ITestCase {
      */
     public Test9(CallTracer callTracer) {
         super(callTracer);
+        r = new Rovar();
     }
 
     /**
@@ -34,6 +37,8 @@ public class Test9 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("kepessegekAlaphelyzetbe", "Rovar", "");
+        r.kepessegekAlaphelyzetbe();
+        CallTracer.exit("kepessegekAlaphelyzetbe", "");
     }
 }
