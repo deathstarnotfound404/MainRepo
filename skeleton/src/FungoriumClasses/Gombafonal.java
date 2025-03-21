@@ -10,7 +10,7 @@ public class Gombafonal implements IDestroyable {
         this.celTekton = celTekton;
     }
 
-    void setAlapGomba(Gomba AlapGomba) {
+    public void setAlapGomba(Gomba AlapGomba) {
         this.AlapGomba = AlapGomba;
     }
 

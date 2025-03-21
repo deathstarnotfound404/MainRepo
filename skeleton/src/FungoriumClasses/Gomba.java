@@ -1,5 +1,6 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
@@ -60,7 +61,20 @@ public class Gomba implements IDestroyable {
     }
 
     public void fonalFelszivodas(Gombafonal gf) {
-        //TODO sekvencia szerint megírni
+        Tekton t1 = gf.getStartTekton();
+        Tekton t2 = gf.getCelTekton();
+
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton:t1", "gf");
+        t1.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton:t2", "gf");
+        t2.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+
+        CallTracer.enter("elpusztul", "Gombafonal:gf", "");
+        gf.elpusztul();
+        CallTracer.exit("elpusztul", "");
     }
 
     public void deleteFonal(Gombafonal gf) {

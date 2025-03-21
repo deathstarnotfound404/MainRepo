@@ -38,7 +38,14 @@ public class Tekton implements IDestroyable {
     }
 
     public Rovar tektonTores() {
-        return null;    //TODO szekvenciák alapján implementálni
+        CallTracer.enter("fonalakFelszivasa", "Tekton", "");
+        this.fonalakFelszivasa();
+        CallTracer.exit("fonalakFelszivasa", "");
+
+        CallTracer.enter("elpusztul", "Gomba", "");
+        this.tektononLevoGomba.elpusztul();
+        CallTracer.exit("elpusztul", "");
+        return null;
     }
 
     public boolean vanBogarATektonon() {
@@ -46,7 +53,14 @@ public class Tekton implements IDestroyable {
     }
 
     public void fonalakFelszivasa() {
-        //TODO
+        Gombafonal gf = this.kapcsolodoFonalak.getFirst();
+        CallTracer.enter("getAlapGomba", "Gombafonal", "");
+        Gomba g = gf.getAlapGomba();
+        CallTracer.exit("getAlapGomba", "g");
+
+        CallTracer.enter("fonalFelszivodas", "Gomba", "gf");
+        g.fonalFelszivodas(gf);
+        CallTracer.exit("fonalFelszivodas", "");
     }
 
     public void setVanGombaTest(boolean val) {
@@ -107,8 +121,16 @@ public class Tekton implements IDestroyable {
         return null;    //TODO
     }
 
-    public void removeKapcsolodoFonal() {
-        //TODO
+    public void removeKapcsolodoFonal(Gombafonal gf) {
+        if(this.kapcsolodoFonalak.remove(gf)) {
+            CallTracer.enter("decreaseFokszam", "Tekton", "1");
+            decreaseFokszam(1);
+            CallTracer.exit("decreaseFokszam", "");
+        } else {
+            CallTracer.enter("decreaseFokszam", "Tekton", "1");
+            decreaseFokszam(1);
+            CallTracer.exit("decreaseFokszam", "HIBA");
+        }
     }
 
     public void decreaseFokszam(int val) {
