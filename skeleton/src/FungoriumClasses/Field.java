@@ -27,4 +27,6 @@ public class Field {
     void setAllTektonSzomszed() {
 
     }
+
+    public List<Tekton> getTektonLista(){return tektonLista;}
 }

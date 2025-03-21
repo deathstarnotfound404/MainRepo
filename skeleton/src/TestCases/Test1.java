@@ -1,6 +1,8 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
+
 
 /**
  * A {@code Test1} osztály az első szkeleton tesztesetet implementálja.
@@ -20,6 +22,12 @@ public class Test1 extends TestCase implements ITestCase{
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Field f;
+    Tekton t1, t2, t3, t4;
+    FonalFelszivodoHatas th1;
+    FonalGatloHatas th2;
+    GombaTestGatloHatas th3;
+    TektonHatas th4;
 
     //Test init
     /**
@@ -27,6 +35,19 @@ public class Test1 extends TestCase implements ITestCase{
      */
     public Test1(CallTracer callTracer) {
         super(callTracer);
+        f = new Field();
+        th1 = new FonalFelszivodoHatas();
+        th2 = new FonalGatloHatas();
+        th3 = new GombaTestGatloHatas();
+        th4 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t2 = new Tekton(th2);
+        t3 = new Tekton(th3);
+        t4 = new Tekton(th4);
+        f.addTekton(t1);
+        f.addTekton(t2);
+        f.addTekton(t3);
+        f.addTekton(t4);
     }
 
     /**
@@ -34,5 +55,15 @@ public class Test1 extends TestCase implements ITestCase{
      */
     @Override
     public void runTest() {
+        List<Tekton> tektonList = f.getTektonLista();
+        for(Tekton t : tektonList){
+            for(Tekton tt : tektonList){
+                if(t != tt){
+                    CallTracer.enter("addSzomszedosTekton", "Tekton", "t");
+                    tt.addSzomszedosTekton(t);
+                    CallTracer.exit("addSzomszedosTekton", "");
+                }
+            }
+        }
     }
 }
