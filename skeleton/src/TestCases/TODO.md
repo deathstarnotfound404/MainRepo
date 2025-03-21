@@ -14,7 +14,7 @@
 - [x] ~~18: Spóra Elfogyasztás - GyorsitoSpora teszt~~
 - [x] ~~19: Spóra Elfogyasztás - LassitoSpora teszt~~
 - MEGJEGYZÉS: setEvesHatekonsag-nak ne int legyen a paramétere, mert nem lehet neki 0.25-öt adni --> LassitoSpora osztalyban még meg kell írni a maradékot
-- [ ] 20: Spóra Elfogyasztás - BenitoSpora teszt
+- [x] ~~20: Spóra Elfogyasztás - BenitoSpora teszt~~
 - [ ] 21: Spóra Elfogyasztás - VagastGatloSpora teszt
 - [ ] 22: Spóra Elfogyasztás - Spora teszt
 - [ ] 23: Játék Kiértékelés Teszt
