@@ -20,14 +20,14 @@ import FungoriumClasses.*;
 public class Test30 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-    TektonHatas th1;
-    TektonHatas th2;
-    Gombasz gsz;
-    Field f;
-    Tekton t1;
-    Tekton celTekton;
-    Gomba g;
-    GombaTest gt;
+    private TektonHatas th1;
+    private TektonHatas th2;
+    private Gombasz gsz;
+    private Field f;
+    private Tekton t1;
+    private Tekton celTekton;
+    private Gomba g;
+    private GombaTest gt;
 
     //Test init
     /**
@@ -59,7 +59,7 @@ public class Test30 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-        CallTracer.enter("szoras", "Gombasz", "g, t1");
+        CallTracer.enter("szoras", "Gombasz", "g, celTekton");
         if(!gsz.szoras(g, celTekton)) {
             CallTracer.exit("szoras", "false");
         } else {
