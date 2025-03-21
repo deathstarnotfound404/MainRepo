@@ -3,13 +3,14 @@
 - [x] ~~3: Játék Indítás Teszt - Gombász inicializálás~~
 - [x] ~~6: Gombatest Szintlépés Teszt~~
 - [x] ~~9: Rovar Képességek alaphelyzetbe állítása teszt~~
-- [ ] 10: Tekton Hatás Kifejtés: TektonHatas teszt
+- [x] ~~10: Tekton Hatás Kifejtés: TektonHatas teszt~~
 - [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt
 - [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt
 - [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt
 - [x] ~~15: Tekton Kettétörés Teszt - van Rovar a tektonon~~
 - [x] ~~16: Tekton Kettétörés Teszt - nincs Rovar a tektonon~~
-- [ ] 17: Gomba Spóra Termelés Teszt
+- [x] ~~17: Gomba Spóra Termelés Teszt~~ 
+- MEGJEGYZÉS: nézzük majd meg, hogy kell-e bele decision
 - [ ] 18: Spóra Elfogyasztás - GyorsitoSpora teszt
 - [ ] 19: Spóra Elfogyasztás - LassitoSpora teszt
 - [ ] 20: Spóra Elfogyasztás - BenitoSpora teszt

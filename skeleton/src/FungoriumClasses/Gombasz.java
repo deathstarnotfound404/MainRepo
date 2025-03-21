@@ -25,7 +25,11 @@ public class Gombasz extends Player {
     }
 
     public void sporaTermelesAll() {
-
+        for(Gomba g : gombaLista){
+            CallTracer.enter("sporaTermeles", "Gomba", "");
+            g.sporaTermeles();
+            CallTracer.exit("sporaTermeles", "");
+        }
     }
 
     public boolean fonalLerakasEllenorzes() {

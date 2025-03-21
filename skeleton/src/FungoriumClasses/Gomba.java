@@ -4,6 +4,7 @@ import CallTracer.CallTracer;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Gomba implements IDestroyable {
@@ -49,6 +50,26 @@ public class Gomba implements IDestroyable {
 
     public void sporaTermeles() {
         //TODO sekvencia szerint megírni
+        CallTracer.enter("getSzint", "GombaTest", "");
+        int szint = GombaTest.getSzint();
+        CallTracer.exit("getSzint", "szint");
+        switch (szint){
+            case 1:
+                CallTracer.enter("addToSporaKeszlet", "GombaTest", "2");
+                GombaTest.addToSporaKeszlet(2);
+                CallTracer.exit("addToSporaKeszlet", "");
+                break;
+            case 2:
+                CallTracer.enter("addToSporaKeszlet", "GombaTest", "3");
+                GombaTest.addToSporaKeszlet(3);
+                CallTracer.exit("addToSporaKeszlet", "");
+                break;
+            case 3:
+                CallTracer.enter("addToSporaKeszlet", "GombaTest", "4");
+                GombaTest.addToSporaKeszlet(4);
+                CallTracer.exit("addToSporaKeszlet", "");
+                break;
+        }
     }
 
     public void gombatestSzintlepes() {
