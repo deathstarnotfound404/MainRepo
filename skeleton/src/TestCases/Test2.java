@@ -1,6 +1,7 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
 
 /**
  * A {@code Test2} osztály a második szkeleton tesztesetet implementálja.
@@ -20,6 +21,11 @@ public class Test2 extends TestCase implements ITestCase{
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Field f;
+    Rovarasz rsz;
+    Rovar r;
+    Tekton t1;
+    TektonHatas th1;
 
     //Test init
     /**
@@ -27,6 +33,12 @@ public class Test2 extends TestCase implements ITestCase{
      */
     public Test2(CallTracer callTracer) {
         super(callTracer);
+        f = new Field();
+        rsz = new Rovarasz();
+        r = new Rovar();
+        th1 = new TektonHatas();
+        t1 = new Tekton(th1);
+
     }
 
     /**
@@ -34,6 +46,14 @@ public class Test2 extends TestCase implements ITestCase{
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("setHelyzet", "Rovar", "t1");
+        r.setHelyzet(t1);
+        CallTracer.exit("setHelyzet", "");
+        CallTracer.enter("addRovar", "Rovarasz", "r, t1");
+        rsz.addRovar(r, t1);
+        CallTracer.exit("addRovar", "");
+        CallTracer.enter("addPlayer", "Field", "rsz");
+        f.addPlayer(rsz);
+        CallTracer.exit("addPlayer", "");
     }
 }
