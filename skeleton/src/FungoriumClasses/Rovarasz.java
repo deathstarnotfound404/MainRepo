@@ -1,6 +1,6 @@
 package FungoriumClasses;
 
-public class Rovarasz {
+public class Rovarasz extends Player {
     private Rovar rovaraszRovarja;
     public Rovarasz() {
     }

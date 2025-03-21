@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -120,7 +122,12 @@ public class Tekton implements IDestroyable {
     }
 
     public void removeSporak() {
-        //TODO
+        for (BaseSpora s : this.sporaLista) {
+            CallTracer.enter("elpusztul", "BaseSpora", "");
+            s.elpusztul();
+            CallTracer.exit("elpusztul", "");
+        }
+        this.sporaLista.clear();
     }
 
     public void addSzomszedosTekton(Tekton t) {
