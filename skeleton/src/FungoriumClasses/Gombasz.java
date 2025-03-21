@@ -33,11 +33,27 @@ public class Gombasz extends Player {
     }
 
     public boolean fonalLerakasEllenorzes() {
-        return false;
+        //return false, ha az üzlezi logika szerint a fonal lerakasa nem elvegezhető -> t1 ből t2 be.
+        return true;
     }
 
-    public void szoras(Gomba g, Tekton celTekton) {
+    public boolean szoras(Gomba g, Tekton celTekton) {
+        CallTracer.enter("getGombaTest", "Gomba", "");
+        GombaTest gt = g.getGombaTest();
+        CallTracer.exit("getGombaTest", "gt");
 
+        CallTracer.enter("getTekton", "Gomba", "");
+        Tekton t1 = g.getTekton();
+        CallTracer.exit("getTekton", "t1");
+
+        CallTracer.enter("szor", "Gomba", "t1, gt");
+        if (g.szor(t1, gt)) {
+            CallTracer.exit("szor", "true");
+            return true;
+        } else {
+            CallTracer.exit("szor", "HIBA");
+            return false;
+        }
     }
 
     public boolean fonalVasarlas(Gomba g) {
@@ -98,5 +114,61 @@ public class Gombasz extends Player {
 
     public void gombafonalNovesztes(Gomba g, Tekton startTekton, Tekton celTekton) {
 
+    }
+
+    public boolean gombafonalIranyitas(Tekton t1, Tekton t2, boolean recursively) {
+        CallTracer.enter("fonalLerakasEllenorzes", "Gombasz", "");
+        if (this.fonalLerakasEllenorzes()){
+            CallTracer.exit("fonalLerakasEllenorzes", "true");
+        } else {
+            CallTracer.exit("fonalLerakasEllenorzes", "HIBA");
+        }
+
+        Gomba g = t1.getGomba();
+        //CallTracer.enter("getGombaTest", "Gomba", "");
+        //GombaTest gt = g.getGombaTest();
+        //CallTracer.exit("getGombaTets", "gt");
+
+        CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "t1");
+        if(g.fonalFolytonossagVizsgalat(t1)){
+            CallTracer.exit("fonalFolytonossagVizsgalat", "true");
+        } else {
+            CallTracer.exit("fonalFolytonossagVizsgalat", "HIBA");
+        }
+
+        CallTracer.enter("Gombafonal", "Gombafonal", "t1, t2");
+        Gombafonal gf = new Gombafonal(t1, t2);
+        CallTracer.exit("Gombafonal()", "");
+
+        CallTracer.enter("addKapcsolodoFonalak", "Tekton:t1", "gf");
+        t1.addKapcsolodoFonalak(gf);
+        CallTracer.exit("addKapcsolodoFonalak", "");
+
+        CallTracer.enter("addKapcsolodoFonalak", "Tekton:t2", "gf");
+        t2.addKapcsolodoFonalak(gf);
+        CallTracer.exit("addKapcsolodoFonalak", "");
+
+        CallTracer.enter("increaseFokszam", "Tekton:t1", "");
+        t1.increaseFokszam();
+        CallTracer.exit("increaseFokszam", "");
+
+        CallTracer.enter("increaseFokszam", "Tekton:t2", "");
+        t2.increaseFokszam();
+        CallTracer.exit("increaseFokszam", "");
+
+        CallTracer.enter("addFonal", "Gomba", "gf");
+        g.addFonal(gf);
+        CallTracer.exit("addFonal", "");
+
+        CallTracer.enter("decreaseFonalKeszlet", "Gomba", "");
+        g.decreaseFonalKeszlet();
+        CallTracer.exit("decreaseFonalKeszlet", "");
+
+        if (!recursively) {
+            return true;
+        } else { //Mivel van spóra a céltektonon, ezért 1x folytatódik a művelet az extra fonal lerakásával
+            gombafonalIranyitas(t2, t2.getSzomszedosTektonok().getFirst(), false);
+        }
+        return false;
     }
 }

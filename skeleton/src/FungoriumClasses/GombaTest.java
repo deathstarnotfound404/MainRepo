@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import com.sun.source.tree.BreakTree;
+
 public class GombaTest implements IDestroyable {
     private Gomba AlapGomba;
     private int szint = 1;
@@ -40,7 +42,7 @@ public class GombaTest implements IDestroyable {
     }
 
     public void szintlepes(int szorandoMennyiseg) {
-        //TODO szekvenciák alapján
+        szint += 1;
     }
 
     public void increaseSporaKeszlet() {
@@ -56,8 +58,20 @@ public class GombaTest implements IDestroyable {
         }
     }
 
-    public void sporaSzorzo(int szint) {
-        //TODO követelmények alapján
+    public int sporaSzorzo(int szint) {
+        if(szint == 1) {
+            return 1;
+        }
+
+        if(szint == 2) {
+            return 2;
+        }
+
+        if(szint == 3) {
+            return 3;
+        }
+
+        return 0;
     }
 
     @Override

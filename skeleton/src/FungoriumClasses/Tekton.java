@@ -121,8 +121,8 @@ public class Tekton implements IDestroyable {
         this.tektononLevoGomba = g;
     }
 
-    public List<Tekton> getSzomszedosTekton(Tekton tekton) {
-        return null;    //TODO
+    public List<Tekton> getSzomszedosTektonok() {
+        return this.szomszedosTektonok;
     }
 
     public void removeKapcsolodoFonal(Gombafonal gf) {

@@ -1,10 +1,8 @@
 package FungoriumClasses;
 
 import CallTracer.CallTracer;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Gomba implements IDestroyable {
@@ -76,9 +74,11 @@ public class Gomba implements IDestroyable {
         //TODO sekvencia szerint megírni
     }
 
-    public List<Gombafonal> fonalFolytonossagVizsgalat() {
-        //TODO sekvencia szerint megírni
-        return null;
+    public boolean fonalFolytonossagVizsgalat(Tekton t1) {
+        //Fonalak folytonosak-e t1-ig, el lehet e jutni az alapgombából t1-ig
+        //Az üzleti logika alapján döntjük majd el.
+        //return false, ha nem folytonos
+        return true;
     }
 
     public void fonalFelszivodas(Gombafonal gf) {
@@ -104,7 +104,52 @@ public class Gomba implements IDestroyable {
     }
 
     public boolean szor(Tekton celTekton, GombaTest gt) {
-        return false;       //TODO sekvencia szerint megírni
+        CallTracer.enter("getSzomszedosTektonok", "Tekton", "");
+        List<Tekton> szomszedLista = celTekton.getSzomszedosTektonok();
+        CallTracer.exit("getSzomszedosTektonok", "szomszedLista");
+
+        CallTracer.enter("getSzint", "GombaTest", "");
+        int szint = gt.getSzint();
+        CallTracer.exit("getSzint", "szint");
+
+        CallTracer.enter("sporaSzorzo", "GombaTest", "szint:int");
+        int szorandoMennyiseg = gt.sporaSzorzo(szint);
+        CallTracer.exit("sporaSzorzo", "szorandoMennyiseg : int");
+
+        boolean van_eleg_spora = gt.getSporaKeszlet() >= 3;
+
+        if (van_eleg_spora) {
+            for (int i = 0; i <3; i++) {
+                CallTracer.enter("decreaseSporaKeszlet", "GombaTest", "");
+                gt.decreaseSporaKeszlet(); //3 költség levonása a gombatest től
+                CallTracer.exit("decreaseSporaKeszlet", "");
+            }
+
+            CallTracer.enter("szintlepes", "GombaTest", "szorandoMennyiseg:int");
+            gt.szintlepes(szorandoMennyiseg);
+            CallTracer.exit("szintlepes", "");
+
+            List<BaseSpora> s_list = new ArrayList<>();
+            for (int i = 0; i < szorandoMennyiseg; ++i) {
+                CallTracer.enter("Spora", "Spora", "");
+                s_list.add(new Spora());
+                CallTracer.exit("Spora()", "");
+            }
+
+            for(BaseSpora s : s_list) {
+                CallTracer.enter("addSpora", "Tekton", "s:Spora");
+                celTekton.addSpora(s);
+                CallTracer.exit("addSpora", "");
+            }
+
+            CallTracer.enter("addSzorasCount", "GombaTest", "1");
+            gt.addSzorasCount(1);
+            CallTracer.exit("addSzorasCount", "");
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void addFonal(Gombafonal gf) {

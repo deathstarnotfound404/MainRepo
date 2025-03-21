@@ -24,7 +24,7 @@
 - [ ] 26: Rovar Irány Megadás Teszt
 - [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok
 - [ ] 28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar
-- [ ] 29: Spóra Szórás Teszt
+- [x] ~~29: Spóra Szórás Teszt~~
 - [ ] 30: Spóra Szórás Teszt - Nem szomszédos Tektonok
 - [ ] 31: Spóra Szórás Teszt - Nincs elég spórakészlet
 - [ ] 32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest
