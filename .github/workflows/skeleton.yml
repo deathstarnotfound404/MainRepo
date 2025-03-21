@@ -37,7 +37,7 @@ jobs:
         run: |
           if (Test-Path bin) { Remove-Item -Recurse -Force bin }
           New-Item -ItemType Directory -Path bin
-          $SRC_PATH = "$PWD/src"
+          $SRC_PATH = "$PWD/skeleton/src"
           if (!(Test-Path $SRC_PATH)) { Write-Host "HIBA: A forrásmappa nem található!"; exit 1 }
           javac -d bin (Get-ChildItem -Path "$SRC_PATH/CallTracer" -Recurse -Filter "*.java").FullName
           javac -cp bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
