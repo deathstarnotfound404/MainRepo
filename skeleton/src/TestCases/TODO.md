@@ -1,5 +1,5 @@
-- [ ] 1-Játék Indítás Teszt - Tekton inicializálás
-- [ ] 2-Játék Indítás Teszt - Rovarász inicializálás
+- [x] ~~1-Játék Indítás Teszt - Tekton inicializálás~~
+- [x] ~~2-Játék Indítás Teszt - Rovarász inicializálás~~
 - [ ] 3: Játék Indítás Teszt - Gombász inicializálás
 - [ ] 6: Gombatest Szintlépés Teszt
 - [ ] 9: Rovar Képességek alaphelyzetbe állítása teszt
