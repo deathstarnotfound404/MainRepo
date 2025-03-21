@@ -68,7 +68,7 @@ public class Test29 extends TestCase implements ITestCase {
     @Override
     public void runTest() {
         CallTracer.enter("szoras", "Gombasz", "g, t1");
-        if(gsz.szoras(g, t1)) {
+        if(gsz.szoras(g, celTekton)) {
             CallTracer.exit("szoras", "true");
         } else {
             CallTracer.exit("szoras", "HIBA");
