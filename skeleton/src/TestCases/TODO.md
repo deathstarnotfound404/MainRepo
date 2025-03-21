@@ -1,0 +1,32 @@
+- [ ] 1-Játék Indítás Teszt - Tekton inicializálás
+- [ ] 2-Játék Indítás Teszt - Rovarász inicializálás
+- [ ] 3: Játék Indítás Teszt - Gombász inicializálás
+- [ ] 6: Gombatest Szintlépés Teszt
+- [ ] 9: Rovar Képességek alaphelyzetbe állítása teszt
+- [ ] 10: Tekton Hatás Kifejtés: TektonHatas teszt
+- [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt
+- [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt
+- [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt
+- [x] ~~15: Tekton Kettétörés Teszt - van Rovar a tektonon~~
+- [ ] 16: Tekton Kettétörés Teszt - nincs Rovar a tektonon
+- [ ] 17: Gomba Spóra Termelés Teszt
+- [ ] 18: Spóra Elfogyasztás - GyorsitoSpora teszt
+- [ ] 19: Spóra Elfogyasztás - LassitoSpora teszt
+- [ ] 20: Spóra Elfogyasztás - BenitoSpora teszt
+- [ ] 21: Spóra Elfogyasztás - VagastGatloSpora teszt
+- [ ] 22: Spóra Elfogyasztás - Spora teszt
+- [ ] 23: Játék Kiértékelés Teszt
+- [ ] 24: Gombafonal Elvágás Teszt
+- [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
+- [ ] 26: Rovar Irány Megadás Teszt
+- [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok
+- [ ] 28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar
+- [ ] 29: Spóra Szórás Teszt
+- [ ] 30: Spóra Szórás Teszt - Nem szomszédos Tektonok
+- [ ] 31: Spóra Szórás Teszt - Nincs elég spórakészlet
+- [ ] 32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest
+- [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra
+- [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható
+- [x] 36: ~~Gombatest Növesztés~~
+- [x] 37: ~~Fonal Vásárlás Teszt~~
+- [ ] 38: Gombafonal Folytonosság Megszakadása Teszt - Nincs megszakadás
