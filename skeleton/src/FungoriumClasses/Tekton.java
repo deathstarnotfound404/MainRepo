@@ -26,7 +26,10 @@ public class Tekton implements IDestroyable {
     }
 
     public String hatasKifejtes() {
-        return "Base";  //TODO szekvenciák alapján
+        CallTracer.enter("hatas", "TektonHatas", "");
+        String hatas = tektonHatasa.hatas();
+        CallTracer.exit("hatas", "Base");
+        return hatas;  //TODO szekvenciák alapján
     }
 
     public int sporaCount() {
