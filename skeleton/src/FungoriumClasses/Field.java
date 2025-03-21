@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -24,8 +26,16 @@ public class Field {
         this.tektonLista.add(tekton);
     }
 
-    void setAllTektonSzomszed() {
-
+    public void setAllTektonSzomszed() {
+        for(Tekton t : tektonLista){
+            for(Tekton tt : tektonLista){
+                if(t != tt){
+                    CallTracer.enter("addSzomszedosTekton", "Tekton", "t");
+                    tt.addSzomszedosTekton(t);
+                    CallTracer.exit("addSzomszedosTekton", "");
+                }
+            }
+        }
     }
 
     public List<Tekton> getTektonLista(){return tektonLista;}

@@ -44,10 +44,6 @@ public class Test1 extends TestCase implements ITestCase{
         t2 = new Tekton(th2);
         t3 = new Tekton(th3);
         t4 = new Tekton(th4);
-        f.addTekton(t1);
-        f.addTekton(t2);
-        f.addTekton(t3);
-        f.addTekton(t4);
     }
 
     /**
@@ -55,15 +51,21 @@ public class Test1 extends TestCase implements ITestCase{
      */
     @Override
     public void runTest() {
-        List<Tekton> tektonList = f.getTektonLista();
-        for(Tekton t : tektonList){
-            for(Tekton tt : tektonList){
-                if(t != tt){
-                    CallTracer.enter("addSzomszedosTekton", "Tekton", "t");
-                    tt.addSzomszedosTekton(t);
-                    CallTracer.exit("addSzomszedosTekton", "");
-                }
-            }
-        }
+        CallTracer.enter("addTekton", "Field", "t1");
+        f.addTekton(t1);
+        CallTracer.exit("addTekton", "");
+        CallTracer.enter("addTekton", "Field", "t2");
+        f.addTekton(t2);
+        CallTracer.exit("addTekton", "");
+        CallTracer.enter("addTekton", "Field", "t3");
+        f.addTekton(t3);
+        CallTracer.exit("addTekton", "");
+        CallTracer.enter("addTekton", "Field", "t4");
+        f.addTekton(t4);
+        CallTracer.exit("addTekton", "");
+
+        CallTracer.enter("setAllTektonSzomszed", "Field", "");
+        f.setAllTektonSzomszed();
+        CallTracer.exit("setAllTektonSzomszed", "");
     }
 }
