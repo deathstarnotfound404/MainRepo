@@ -12,7 +12,8 @@
 - [x] ~~17: Gomba Spóra Termelés Teszt~~ 
 - MEGJEGYZÉS: nézzük majd meg, hogy kell-e bele decision
 - [x] ~~18: Spóra Elfogyasztás - GyorsitoSpora teszt~~
-- [ ] 19: Spóra Elfogyasztás - LassitoSpora teszt
+- [x] ~~19: Spóra Elfogyasztás - LassitoSpora teszt~~
+- MEGJEGYZÉS: setEvesHatekonsag-nak ne int legyen a paramétere, mert nem lehet neki 0.25-öt adni --> LassitoSpora osztalyban még meg kell írni a maradékot
 - [ ] 20: Spóra Elfogyasztás - BenitoSpora teszt
 - [ ] 21: Spóra Elfogyasztás - VagastGatloSpora teszt
 - [ ] 22: Spóra Elfogyasztás - Spora teszt
