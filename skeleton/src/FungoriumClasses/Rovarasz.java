@@ -3,30 +3,26 @@ package FungoriumClasses;
 public class Rovarasz {
     private Rovar rovaraszRovarja;
     public Rovarasz() {
-        System.out.println("<<<return Rovarasz()");
     }
 
     public Rovar getRovar() {
-        System.out.println("<<<return getRovar()");
-        return new Rovar();
+        return rovaraszRovarja;
     }
 
     public void addRovar(Rovar r, Tekton t) {
-        System.out.println("<<<return addRovar()");
+        this.rovaraszRovarja = new Rovar();
+        this.rovaraszRovarja.setHelyzet(t); //TODO Pontosan ellenőrizni szekvenciák alapján, hogyan történik ez a folyamat.
     }
 
     public int calcAllTapanyagScore() {
-        System.out.println("<<<return calcAllTapanyagScore()");
-        return 0;
+        return 0;   //TODO szekvenciák alapján implementálni
     }
 
     public boolean rovarIranyitas(Rovar r, Tekton celTekton) {
-        System.out.println("<<<return rovarIranyitas()");
-        return false;
+        return false;   //TODO szekvenciák alapján implementálni
     }
 
     public boolean fonalVagas(Rovar r, Gombafonal gf) {
-        System.out.println("<<<return fonalVagas()");
-        return false;
+        return false;       //TODO szekvenciák alapján implementálni
     }
 }

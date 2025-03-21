@@ -6,31 +6,32 @@ public class Gombafonal implements IDestroyable {
     private Tekton celTekton;
 
     public Gombafonal(Tekton startTekton, Tekton celTekton) {
-        System.out.println("<<<return Gombafonal()");
+        this.startTekton = startTekton;
+        this.celTekton = celTekton;
+    }
+
+    void setAlapGomba(Gomba AlapGomba) {
+        this.AlapGomba = AlapGomba;
     }
 
     public Gomba getAlapGomba() {
-        System.out.println("<<<return getAlapGomba()");
-        return null;
+        return AlapGomba;
     }
 
     public Tekton getStartTekton() {
-        System.out.println("<<<return getStartTekton()");
-        return null;
+        return startTekton;
     }
 
     public Tekton getCelTekton() {
-        System.out.println("<<<return getCelTekton()");
-        return null;
+        return celTekton;
     }
 
     public boolean connectedToAlapGomba() {
-        System.out.println("<<<return connectedToAlapGomba()");
+        //TODO szekvencia alapján implementálni
         return false;
     }
 
     @Override
     public void elpusztul() {
-        System.out.println("<<<return elpusztul()");
     }
 }

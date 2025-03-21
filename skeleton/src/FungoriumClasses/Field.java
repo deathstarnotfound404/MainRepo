@@ -10,23 +10,21 @@ public class Field {
     public Field() {
         this.tektonLista = new ArrayList<>();
         this.players = new ArrayList<>();
-        System.out.println("<<<return Field()");
     }
 
     List<Player> kiertekeles() {
-        System.out.println("<<<return kiertekeles()");
-        return players;
+        return null;    //TODO
     }
 
     public void addPlayer(Player player) {
-        System.out.println("<<<return addPlayer()");
+        this.players.add(player);
     }
 
     public void addTekton(Tekton tekton) {
-        System.out.println("<<<return addTekton()");
+        this.tektonLista.add(tekton);
     }
 
     void setAllTektonSzomszed() {
-        System.out.println("<<<return setAllTektonSzomszed()");
+
     }
 }

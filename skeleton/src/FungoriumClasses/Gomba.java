@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,30 +14,28 @@ public class Gomba implements IDestroyable {
     public Gomba(Tekton t) {
         this.tekton = t;
         fonalLista = new ArrayList<List<Gombafonal>>();
-        System.out.println("<<<return Gomba()");
+        ArrayList<Gombafonal> l = new ArrayList<Gombafonal>();
+        fonalLista.add(l);
     }
 
     public void setTekton(Tekton t) {
-        System.out.println("<<<return setTekton()");
+        this.tekton = t;
     }
 
     public Tekton getTekton() {
-        System.out.println("<<<return getTekton()");
-        return null;
+        return this.tekton;
     }
 
     public void setFonalKeszlet(int val) {
-        System.out.println("<<<return setFonalKeszlet()");
+        this.fonalKeszlet = val;
     }
 
     public int getFonalKeszlet() {
-        System.out.println("<<<return getFonalKeszlet()");
         return fonalKeszlet;
     }
 
     public void setGombaTest(GombaTest gt) {
         this.GombaTest = gt;
-        System.out.println("<<<return setGombaTest()");
     }
 
     public GombaTest getGombaTest() {
@@ -43,42 +43,41 @@ public class Gomba implements IDestroyable {
     }
 
     public List<List<Gombafonal>> getFonalLista() {
-        System.out.println("<<<return getFonalLista()");
         return fonalLista;
     }
 
     public void sporaTermeles() {
-        System.out.println("<<<return sporaTermeles()");
+        //TODO sekvencia szerint megírni
     }
 
     public void gombatestSzintlepes() {
-        System.out.println("<<<return gombatestSzintlepes()");
+        //TODO sekvencia szerint megírni
     }
 
     public List<Gombafonal> fonalFolytonossagVizsgalat() {
-        System.out.println("<<<return fonalFolytonossagVizsgalat()");
+        //TODO sekvencia szerint megírni
         return null;
     }
 
     public void fonalFelszivodas(Gombafonal gf) {
-        System.out.println("<<<return fonalFelszivodas()");
+        //TODO sekvencia szerint megírni
     }
 
     public void deleteFonal(Gombafonal gf) {
-        System.out.println("<<<return deleteFonal()");
+        fonalLista.remove(gf);              //TODO sekvencia szerint megírni
+
     }
 
     public boolean szor(Tekton celTekton, GombaTest gt) {
-        System.out.println("<<<return szor()");
-        return false;
+        return false;       //TODO sekvencia szerint megírni
     }
 
     public void addFonal(Gombafonal gf) {
-        System.out.println("<<<return addFonal()");
+        this.fonalLista.get(0).add(gf); ////TODO kitalálni, hogy a listát hogy bővítsük meg a listák listájával
     }
 
     public boolean decreaseFonalKeszlet() {
-        System.out.println("<<<return decreaseFonalKeszlet()");
+        this.fonalKeszlet--;
         return false;
     }
 
@@ -88,6 +87,5 @@ public class Gomba implements IDestroyable {
 
     @Override
     public void elpusztul() {
-        System.out.println("<<<return elpusztul()");
     }
 }

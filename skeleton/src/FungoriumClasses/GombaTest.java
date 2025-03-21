@@ -9,32 +9,26 @@ public class GombaTest implements IDestroyable {
     public GombaTest(Gomba g, int kezdoSporaSzam) {
         this.AlapGomba = g;
         this.sporaKeszlet = kezdoSporaSzam;
-        System.out.println("<<<return GombaTest()");
     }
 
     public void setAlapGomba(Gomba g) {
         this.AlapGomba = g;
-        System.out.println("<<<return setAlapGomba()");
     }
 
     public Gomba getAlapGomba() {
-        System.out.println("<<<return getAlapGomba()");
-        return null;
+        return this.AlapGomba;
     }
 
     public int getSporaKeszlet() {
-        System.out.println("<<<return getSporaKeszlet()");
-        return 0;
+        return this.sporaKeszlet;
     }
 
     public int getSzorasCount() {
-        System.out.println("<<<return getSzorasCount()");
-        return 0;
+        return this.szorasCount;
     }
 
     public int getSzint() {
-        System.out.println("<<<return getSzint()");
-        return 0;
+        return this.szint;
     }
 
     public void addToSporaKeszlet(int val) {
@@ -42,15 +36,15 @@ public class GombaTest implements IDestroyable {
     }
 
     public void addSzorasCount(int val) {
-        System.out.println("<<<return addSzorasCount()");
+        this.szorasCount += val;
     }
 
     public void szintlepes(int szorandoMennyiseg) {
-        System.out.println("<<<return szintlepes()");
+        //TODO szekvenciák alapján
     }
 
     public void increaseSporaKeszlet() {
-        System.out.println("<<<return increaseSporaKeszlet()");
+        this.sporaKeszlet += 1;
     }
 
     public boolean decreaseSporaKeszlet() {
@@ -63,11 +57,10 @@ public class GombaTest implements IDestroyable {
     }
 
     public void sporaSzorzo(int szint) {
-        System.out.println("<<<return sporaSzorzo()");
+        //TODO követelmények alapján
     }
 
     @Override
     public void elpusztul() {
-        System.out.println("<<<return elpusztul()");
     }
 }

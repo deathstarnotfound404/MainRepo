@@ -4,19 +4,18 @@ public abstract class Player {
     protected int score = 0;
 
     public Player() {
-        System.out.println("<<<return Player()");
+
     }
 
     protected void setScore(int val) {
-        System.out.println("<<<return setScore()");
+        this.score = val;
     }
 
     protected int getScore() {
-        System.out.println("<<<return getScore()");
-        return 0;
+        return this.score;
     }
 
     protected void addScore() {
-        System.out.println("<<<return addScore()");
+        this.score += 1;
     }
 }

@@ -21,129 +21,118 @@ public class Tekton implements IDestroyable {
         this.kapcsolodoFonalak = new ArrayList<>();
         this.szomszedosTektonok = new ArrayList<>();
         this.tektonHatasa = hatas;
-        System.out.println("<<<return Tekton(hatas)");
     }
 
     public String hatasKifejtes() {
-        System.out.println("<<<return hatasKifejtes()");
-        return kapcsolodoFonalak.toString();
+        return "Base";  //TODO szekvenciák alapján
     }
 
     public int sporaCount() {
-        System.out.println("<<<return sporaCount()");
         return sporaLista.size();
     }
 
     public void addSpora(BaseSpora spora) {
-        System.out.println("<<<return addSpora(spora)");
+        this.sporaLista.add(spora);
     }
 
     public Rovar tektonTores() {
-        System.out.println("<<<return tektonTores(rovarLatogatottsag)");
-        return null;
+        return null;    //TODO szekvenciák alapján implementálni
     }
 
     public boolean vanBogarATektonon() {
-        System.out.println("<<<return vanBogarATektonon()");
-        return false;
+        return vanGombaTestTektonon;
     }
 
     public void fonalakFelszivasa() {
-        System.out.println("<<<return fonalakFelszivasa()");
+        //TODO
     }
 
     public void setVanGombaTest(boolean val) {
-        System.out.println("<<<return setVanGombaTest(val)");
+        vanGombaTestTektonon = val;
     }
 
     public boolean getVanGombaTest() {
-        System.out.println("<<<return getVanGombaTest()");
-        return false;
+        return this.vanGombaTestTektonon;
     }
 
     public Gomba getGomba() {
-        System.out.println("<<<return getGomba()");
-        return null;
+        return this.tektononLevoGomba;
     }
 
     public List<BaseSpora> getSporaLista() {
-        System.out.println("<<<return getSporaLista()");
-        return sporaLista;
+        return this.sporaLista;
     }
 
     public void setFokszam(int val) {
-        System.out.println("<<<return elpusztul()");
+        this.fonalFokszam = val;
     }
 
     public int getFokszam() {
-        System.out.println("<<<return getFokszam()");
-        return 0;
+        return this.fonalFokszam;
     }
 
     public void addLatogatottsag() {
-        System.out.println("<<<return addLatpgatottsag()");
+        this.rovarLatogatottsag++;
     }
 
     public int getLatogatottsag() {
-        System.out.println("<<<return getLatogatottsag()");
-        return 0;
+        return this.rovarLatogatottsag;
     }
 
     public List<Gombafonal> getKapcsolodoFonal() {
-        System.out.println("<<<return getKapcsolodFonal()");
         return kapcsolodoFonalak;
     }
 
     public void addKapcsolodoFonalak(Gombafonal fonal) {
-        System.out.println("<<<return addKapcsolodoFonalak()");
+        this.kapcsolodoFonalak.add(fonal);
     }
 
     public void setRovar(Rovar r) {
-        System.out.println("<<<return setRovar(r)");
+        //Kell e this.rovarLatogatottsag++;
+        this.tektononLevoRovar = r;
+        this.vanGombaTestTektonon = true;
     }
 
     public Rovar getRovar() {
-        System.out.println("<<<return getRovar()");
-        return null;
+        return this.tektononLevoRovar;
     }
 
     public void setGomba(Gomba g) {
         this.tektononLevoGomba = g;
-        System.out.println("<<<return setGomba()");
     }
 
     public List<Tekton> getSzomszedosTekton(Tekton tekton) {
-        System.out.println("<<<return addSzomszedosTekton()");
-        return null;
+        return null;    //TODO
     }
 
     public void removeKapcsolodoFonal() {
-        System.out.println("<<<return removeKapcsolodoFonal()");
+        //TODO
     }
 
     public void decreaseFokszam(int val) {
-        System.out.println("<<<return decreaseFokszam(val)");
+        if (this.fonalFokszam > 0) {
+            this.fonalFokszam--;
+        }
     }
 
     public void increaseFokszam() {
-        System.out.println("<<<return increaseFokszam()");
+        this.fonalFokszam++;
     }
 
     public void removeSporak() {
-        System.out.println("<<<return removeSporak()");
+        //TODO
     }
 
     public void addSzomszedosTekton(Tekton t) {
-        System.out.println("<<<return addSzomszedosTekton(t)");
+        this.szomszedosTektonok.add(t);
     }
 
     public boolean removeSzomszedosTekton(Tekton t) {
-        System.out.println("<<<return removeSzomszedosTekton(t)");
-        return false;
+        return(this.szomszedosTektonok.remove(t));
     }
 
     @Override
     public void elpusztul() {
-        System.out.println("<<<return elpusztul()");
+
     }
 }
