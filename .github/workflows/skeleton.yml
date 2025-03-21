@@ -47,4 +47,10 @@ jobs:
       - name: Projekt futtatása
         shell: pwsh
         run: |
-          if (Test-Path bin/Skeleton.class) { java -cp bin Skeleton } else { Write-Host "Skeleton class not found"; exit 1 }
+          if (Test-Path bin/Skeleton.class) { 
+            echo "exit" | java -cp bin Skeleton 
+          } else { 
+            Write-Host "Skeleton class not found"; 
+            exit 1 
+          }
+          
