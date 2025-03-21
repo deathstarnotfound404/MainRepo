@@ -31,7 +31,7 @@ jobs:
         run: |
           if (Test-Path bin) { Remove-Item -Recurse -Force bin }
           New-Item -ItemType Directory -Path bin
-          $SRC_PATH = "skeleton/src"
+          $SRC_PATH = "MainRepo/skeleton/src"
           javac -d bin (Get-ChildItem -Path "$SRC_PATH/CallTracer" -Recurse -Filter "*.java").FullName
           javac -cp bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
           javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestClasses" -Recurse -Filter "*.java").FullName
