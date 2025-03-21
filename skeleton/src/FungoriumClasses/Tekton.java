@@ -45,7 +45,8 @@ public class Tekton implements IDestroyable {
         CallTracer.enter("elpusztul", "Gomba", "");
         this.tektononLevoGomba.elpusztul();
         CallTracer.exit("elpusztul", "");
-        return null;
+
+        return this.tektononLevoRovar;
     }
 
     public boolean vanBogarATektonon() {

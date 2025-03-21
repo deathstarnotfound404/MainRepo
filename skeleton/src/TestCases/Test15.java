@@ -49,8 +49,13 @@ public class Test15 extends TestCase implements ITestCase {
     public void runTest() {
         CallTracer.enter("tektonTores", "Tekton", "");
         Rovar null_r = t1.tektonTores();
-        if (null_r == null) {
-            CallTracer.exit("tektonTores", "null");
+
+        if (null_r != null) {
+            CallTracer.exit("tektonTores", "tektononLevoRovar");
+
+            CallTracer.enter("elpusztul", "Tekton:t1", "");
+            this.t1.elpusztul();
+            CallTracer.exit("elpusztul()", "");
 
             CallTracer.enter("Tekton", "Tekton:t3", "h");
             Tekton t3 = new Tekton(h);
@@ -67,7 +72,7 @@ public class Test15 extends TestCase implements ITestCase {
             t4.addSzomszedosTekton(t3);
             CallTracer.exit("addSzomszedosTekton", "");
             CallTracer.enter("setHelyzet", "Rovar", "t3");
-            r.setHelyzet(t3);
+            null_r.setHelyzet(t3);      //Ami az rí
             CallTracer.exit("setHelyzet", "");
         } else {
             CallTracer.exit("tektonTores", "HIBA");

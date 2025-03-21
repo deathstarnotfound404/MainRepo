@@ -8,7 +8,7 @@
 - [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt
 - [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt
 - [x] ~~15: Tekton Kettétörés Teszt - van Rovar a tektonon~~
-- [ ] 16: Tekton Kettétörés Teszt - nincs Rovar a tektonon
+- [x] ~~16: Tekton Kettétörés Teszt - nincs Rovar a tektonon~~
 - [ ] 17: Gomba Spóra Termelés Teszt
 - [ ] 18: Spóra Elfogyasztás - GyorsitoSpora teszt
 - [ ] 19: Spóra Elfogyasztás - LassitoSpora teszt

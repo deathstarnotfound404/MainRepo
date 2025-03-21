@@ -24,6 +24,7 @@ public class Rovar {
 
     public void setHelyzet(Tekton t) {
         this.helyzet = t;
+        t.setRovar(this);
     }
 
     public Tekton getHelyzet() {
