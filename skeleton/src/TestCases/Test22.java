@@ -1,6 +1,8 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
+import java.util.*;
 
 /**
  * A {@code Test22} osztály a 22. szkeleton tesztesetet implementálja.
@@ -20,6 +22,10 @@ public class Test22 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Rovar r;
+    Spora s1;
+    TektonHatas th1;
+    Tekton t1;
 
     //Test init
     /**
@@ -27,6 +33,12 @@ public class Test22 extends TestCase implements ITestCase {
      */
     public Test22(CallTracer callTracer) {
         super(callTracer);
+        r = new Rovar();
+        s1 = new Spora();
+        th1 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t1.addSpora(s1);
+        r.setHelyzet(t1);
     }
 
     /**
@@ -34,6 +46,8 @@ public class Test22 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("sporaEves", "Rovar", "");
+        r.sporaEves();
+        CallTracer.exit("sporaEves", "");
     }
 }

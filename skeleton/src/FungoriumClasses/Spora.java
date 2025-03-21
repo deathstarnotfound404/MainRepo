@@ -9,6 +9,6 @@ public class Spora extends BaseSpora {
     //hatast implementalo metodus
     @Override
     public void hatas(Rovar r) {
-        //TODO szekvenciák alapján implementálni
+        //ÜRES FÜGGVÉNY - nem fejt ki semmilyen hatást a spóra
     }
 }
