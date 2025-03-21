@@ -17,8 +17,8 @@
 - [x] ~~20: Spóra Elfogyasztás - BenitoSpora teszt~~
 - [x] ~~21: Spóra Elfogyasztás - VagastGatloSpora teszt~~
 - MEGJEGYZÉS: nem kéne minden tulajdonságát állítani a rovarnak?
-- [ ] 22: Spóra Elfogyasztás - Spora teszt
-- [ ] 23: Játék Kiértékelés Teszt
+- [x] ~~22: Spóra Elfogyasztás - Spora teszt~~
+- [x] ~~23: Játék Kiértékelés Teszt~~
 - [ ] 24: Gombafonal Elvágás Teszt
 - [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
 - [ ] 26: Rovar Irány Megadás Teszt

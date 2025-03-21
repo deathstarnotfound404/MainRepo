@@ -14,8 +14,26 @@ public class Field {
         this.players = new ArrayList<>();
     }
 
-    List<Player> kiertekeles() {
-        return null;    //TODO
+    public List<Player> kiertekeles() {
+        //TODO
+        Rovarasz bestRovarasz = null;
+        Gombasz bestGombasz = null;
+        for(Player p : players){
+            //ha rovarasz
+            if(p.getClass() == (Rovarasz.class) && bestRovarasz == null) bestRovarasz = (Rovarasz)p;
+            else if(p.getClass() == (Rovarasz.class) && p.getScore() > bestRovarasz.getScore()){
+                bestRovarasz = (Rovarasz)p;
+            }
+            //ha gombasz
+            if(p.getClass() == (Gombasz.class) && bestGombasz == null) bestGombasz = (Gombasz)p;
+            else if(p.getClass() == (Gombasz.class) && p.getScore() > bestGombasz.getScore()){
+                bestGombasz = (Gombasz)p;
+            }
+        }
+        List<Player> bestPlayers = new ArrayList<Player>();
+        bestPlayers.add(bestGombasz);
+        bestPlayers.add(bestRovarasz);
+        return bestPlayers;
     }
 
     public void addPlayer(Player player) {
