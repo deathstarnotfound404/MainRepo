@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 public class GyorsitoSpora extends BaseSpora {
     //GyorsitoSpora konstruktora
     public GyorsitoSpora() {
@@ -9,6 +11,9 @@ public class GyorsitoSpora extends BaseSpora {
     //a spora hatasanak implementalasa
     @Override
     public void hatas(Rovar r) {
-        return; //TODO szekvenciák alapján
+        //TODO szekvenciák alapján
+        CallTracer.enter("setMaxFogyasztas", "Rovar", "true");
+        r.setMaxFogyasztas(true);
+        CallTracer.exit("setMaxFogyasztas", "");
     }
 }

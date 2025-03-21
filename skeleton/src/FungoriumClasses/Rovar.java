@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,18 @@ public class Rovar {
 
     public void sporaEves() {
         //TODO szekvenciák alapján
+        CallTracer.enter("getSporaLista", "Tekton", "");
+        List<BaseSpora> sporaLista = helyzet.getSporaLista();
+        CallTracer.exit("getSporaLista", "sporaLista");
+        List<BaseSpora> megevendo = sporaLista.subList(0,evesHatekonysag);
+        for(BaseSpora s: megevendo){
+            CallTracer.enter("addTapanyag", "Rovar", "s.tapanyag");
+            addTapanyag(s.tapanyag);
+            CallTracer.exit("addTapanyag", "");
+            CallTracer.enter("hatas", "GyorsitoSpora", "this");
+            s.hatas(this);
+            CallTracer.exit("GyorsitoSpora", "");
+        }
     }
 
     public void setEvesHatekonysag(int val) {
