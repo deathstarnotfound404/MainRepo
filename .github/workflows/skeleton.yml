@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Repository klónozása
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Biztosítja, hogy minden fájl letöltődjön
 
       - name: Java 18 beállítása
         uses: actions/setup-java@v3
@@ -26,12 +28,17 @@ jobs:
         shell: pwsh
         run: javac -version && java -version
 
+      - name: Ellenőrizd a meglévő fájlokat
+        shell: pwsh
+        run: Get-ChildItem -Path . -Recurse
+
       - name: Projekt fordítása
         shell: pwsh
         run: |
           if (Test-Path bin) { Remove-Item -Recurse -Force bin }
           New-Item -ItemType Directory -Path bin
-          $SRC_PATH = "./src"
+          $SRC_PATH = "$PWD/src"
+          if (!(Test-Path $SRC_PATH)) { Write-Host "HIBA: A forrásmappa nem található!"; exit 1 }
           javac -d bin (Get-ChildItem -Path "$SRC_PATH/CallTracer" -Recurse -Filter "*.java").FullName
           javac -cp bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
           javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestCases" -Recurse -Filter "*.java").FullName
