@@ -29,7 +29,9 @@
 - [ ] 31: Spóra Szórás Teszt - Nincs elég spórakészlet
 - [ ] 32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest
 - [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra
+  - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
 - [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható
+  - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
 - [x] 36: ~~Gombatest Növesztés~~
 - [x] 37: ~~Fonal Vásárlás Teszt~~
 - [ ] 38: Gombafonal Folytonosság Megszakadása Teszt - Nincs megszakadás
