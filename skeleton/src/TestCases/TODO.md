@@ -21,7 +21,8 @@
 - [x] ~~23: Játék Kiértékelés Teszt~~
 - [x] ~~24: Gombafonal Elvágás Teszt~~
 - [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
-- [ ] 26: Rovar Irány Megadás Teszt
+- [x] ~~26: Rovar Irány Megadás Teszt~~
+  - MEGJEGYZÉS: Változtatás a getSzomszedosTektonok() hivasban.
 - [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok
 - [ ] 28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar
 - [x] ~~29: Spóra Szórás Teszt~~
