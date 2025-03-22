@@ -99,7 +99,7 @@ public class Tekton implements IDestroyable {
         return this.rovarLatogatottsag;
     }
 
-    public List<Gombafonal> getKapcsolodoFonal() {
+    public List<Gombafonal> getKapcsolodoFonalak() {
         return kapcsolodoFonalak;
     }
 

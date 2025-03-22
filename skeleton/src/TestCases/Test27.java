@@ -1,6 +1,7 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
 
 /**
  * A {@code Test27} osztály a 27. szkeleton tesztesetet implementálja.
@@ -19,7 +20,12 @@ import CallTracer.CallTracer;
 public class Test27 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-
+    private TektonHatas th1;
+    private TektonHatas th2;
+    private Rovarasz rsz;
+    private Rovar r;
+    private Tekton t1;
+    private Tekton t2;
 
     //Test init
     /**
@@ -27,6 +33,20 @@ public class Test27 extends TestCase implements ITestCase {
      */
     public Test27(CallTracer callTracer) {
         super(callTracer);
+        th1 = new TektonHatas(); //1;
+        th2 = new TektonHatas();
+        rsz = new Rovarasz();   //2
+        r = new Rovar();        //3
+        t1 = new Tekton(th2);   //4
+        t2 = new Tekton(th1);   //5
+        th1.setTekton(t1);
+        th2.setTekton(t2);
+        //Fonallal nem kötjük most össze a két tektont!
+        rsz.addRovar(r, t1);    //7 - de kommunikációs diagrammhoz képest változott
+        t1.setRovar(r);  //12    implicit állítja a 13-at   Kommunikációsokon pont fordítva vannak felvéve a rovar és üres tektonok
+        t2.setRovar(null); //14        implicit állitja a 15-öt
+        t1.addSzomszedosTekton(t2);
+        t2.addSzomszedosTekton(t1);
     }
 
     /**
@@ -34,6 +54,11 @@ public class Test27 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("rovarIranyitas", "Rovarasz", "r, t2");
+        if(rsz.rovarIranyitas(r, t2)) {
+            CallTracer.exit("rovarIranyitas", "HIBA");
+        } else {
+            CallTracer.exit("rovarIranyitas", "false");
+        }
     }
 }

@@ -44,6 +44,21 @@ public class Rovar {
         List<Tekton> szomszedLista = t1.getSzomszedosTektonok();
         CallTracer.exit("getSzomszedosTektonok", "szomszedLista:List<Tekton>");
 
+        boolean TektonokOsszekotve = false;
+        for (Tekton tekton : szomszedLista) {
+            for(Gombafonal f : tekton.getKapcsolodoFonalak()){
+                if (f.getStartTekton().equals(t1)) {
+                    TektonokOsszekotve = true;
+                } else {
+                    TektonokOsszekotve = false;
+                }
+            }
+        }
+
+        if (!TektonokOsszekotve) {
+            return false;
+        }
+
         CallTracer.enter("vanBogarATektonon", "Tekton", "");
         if(celTekton.vanBogarATektonon()) {
             CallTracer.exit("vanBogarATektonon", "true");
