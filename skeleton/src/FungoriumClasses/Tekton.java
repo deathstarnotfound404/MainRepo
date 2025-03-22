@@ -57,7 +57,7 @@ public class Tekton implements IDestroyable {
     }
 
     public void fonalakFelszivasa() {
-        Gombafonal gf = this.kapcsolodoFonalak.getFirst();
+        Gombafonal gf = this.kapcsolodoFonalak.get(0);
         CallTracer.enter("getAlapGomba", "Gombafonal", "");
         Gomba g = gf.getAlapGomba();
         CallTracer.exit("getAlapGomba", "g");
