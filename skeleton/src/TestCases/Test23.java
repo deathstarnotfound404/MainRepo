@@ -1,4 +1,8 @@
 package TestCases;
+
+import CallTracer.CallTracer;
+import FungoriumClasses.*;
+import java.util.*;
 /**
  * A {@code Test23} osztály a 23. szkeleton tesztesetet implementálja.
  *
@@ -13,17 +17,30 @@ package TestCases;
  * @since 2025-03-18
  */
 
-public class Test23 implements ITestCase {
+public class Test23 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Field f;
+    Rovarasz rsz;
+    Rovar r;
+    Gombasz gsz;
+    TektonHatas th;
+    Tekton t;
 
     //Test init
     /**
      * Létrehoz egy új {@code Test1} objektumot.
      */
-    public Test23() {
-
+    public Test23(CallTracer callTracer) {
+        super(callTracer);
+        f = new Field();
+        rsz = new Rovarasz();
+        r = new Rovar();
+        gsz = new Gombasz();
+        th = new TektonHatas();
+        t = new Tekton(th);
+        rsz.addRovar(r, t);
     }
 
     /**
@@ -31,6 +48,8 @@ public class Test23 implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("kiertekeles", "Field", "");
+        f.kiertekeles();
+        CallTracer.exit("kiertekeles", "gyoztesJatekosok");
     }
 }

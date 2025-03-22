@@ -1,4 +1,9 @@
 package TestCases;
+
+import CallTracer.CallTracer;
+import FungoriumClasses.*;
+import java.util.*;
+
 /**
  * A {@code Test19} osztály a 19. szkeleton tesztesetet implementálja.
  *
@@ -13,17 +18,27 @@ package TestCases;
  * @since 2025-03-18
  */
 
-public class Test19 implements ITestCase {
+public class Test19 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
 
+    Rovar r;
+    LassitoSpora s1;
+    TektonHatas th1;
+    Tekton t1;
 
     //Test init
     /**
      * Létrehoz egy új {@code Test1} objektumot.
      */
-    public Test19() {
-
+    public Test19(CallTracer callTracer) {
+        super(callTracer);
+        r = new Rovar();
+        s1 = new LassitoSpora();
+        th1 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t1.addSpora(s1);
+        r.setHelyzet(t1);
     }
 
     /**
@@ -31,6 +46,8 @@ public class Test19 implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("sporaEves", "Rovar", "");
+        r.sporaEves();
+        CallTracer.exit("sporaEves", "");
     }
 }

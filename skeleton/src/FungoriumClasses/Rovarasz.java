@@ -1,32 +1,46 @@
 package FungoriumClasses;
 
-public class Rovarasz {
+import CallTracer.CallTracer;
+
+import java.util.Arrays;
+
+public class Rovarasz extends Player {
     private Rovar rovaraszRovarja;
     public Rovarasz() {
-        System.out.println("<<<return Rovarasz()");
     }
 
     public Rovar getRovar() {
-        System.out.println("<<<return getRovar()");
-        return new Rovar();
+        return rovaraszRovarja;
     }
 
     public void addRovar(Rovar r, Tekton t) {
-        System.out.println("<<<return addRovar()");
+        this.rovaraszRovarja = r;
+        this.rovaraszRovarja.setHelyzet(t);
     }
 
     public int calcAllTapanyagScore() {
-        System.out.println("<<<return calcAllTapanyagScore()");
-        return 0;
+        return 0;   //TODO szekvenciák alapján implementálni
     }
 
     public boolean rovarIranyitas(Rovar r, Tekton celTekton) {
-        System.out.println("<<<return rovarIranyitas()");
-        return false;
+        CallTracer.enter("lep", "Rovar", "celTekton:Tekton");
+        boolean val = r.lep(celTekton);
+        if (val) {
+            CallTracer.exit("lep", "true");
+        } else {
+            CallTracer.exit("lep", "false");
+        }
+        return val;
     }
 
     public boolean fonalVagas(Rovar r, Gombafonal gf) {
-        System.out.println("<<<return fonalVagas()");
-        return false;
+        //TODO szekvenciák alapján implementálni
+        if(!r.getTudVagni()) return false;
+        else{
+            CallTracer.enter("vag", "Rovar", "gf");
+            r.vag(gf);
+            CallTracer.exit("vag", "true");
+            return true;
+        }
     }
 }

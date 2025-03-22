@@ -1,15 +1,21 @@
 package FungoriumClasses;
 
 
+import CallTracer.CallTracer;
+
 public class LassitoSpora extends BaseSpora {
     public LassitoSpora() {
         super();
-        System.out.println("<<<return LassitoSpora()");
     }
 
     //hatas kifejtese
     @Override
     public void hatas(Rovar r) {
-        System.out.println("<<<retrun hatas()");
+        CallTracer.enter("setMaxFogyasztas", "Rovar", "false");
+        r.setMaxFogyasztas(false);
+        CallTracer.exit("setMaxFogyasztas", "");
+        CallTracer.enter("setEvesHatekonysag", "Rovar", "0.25");
+        //TODO: r.setEvesHatekonysag(0.25)
+        CallTracer.exit("setEvesHatekonysag", "");
     }
 }

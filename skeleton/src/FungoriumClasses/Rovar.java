@@ -1,82 +1,157 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rovar {
-    private Rovarasz rovaraszRovarja;
     private int tapanyag = 0;
     private int evesHatekonysag = 1;
-    private boolean maxFogyasztas;
+    private boolean maxFogyasztas = false;
     private Tekton helyzet;
     private boolean tudVagni = true;
 
     public Rovar() {
-        System.out.println("<<<return Rovar()");
+
     }
 
     public void vag(Gombafonal gf) {
-        System.out.println("<<<return vag()");
+        //TODO szekvenciák alapján
+        CallTracer.enter("getStartTekton", "Gombafonal", "");
+        Tekton start = gf.getStartTekton();
+        CallTracer.exit("getStartTekton", "");
+        CallTracer.enter("getCelTekton", "GombaFonal", "");
+        Tekton cel = gf.getCelTekton();
+        CallTracer.exit("getCelTekton", "");
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton", "gf");
+        start.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+        CallTracer.enter("removeKapcsolodoFonal", "Tekton", "gf");
+        cel.removeKapcsolodoFonal(gf);
+        CallTracer.exit("removeKapcsolodoFonal", "");
+        CallTracer.enter("getAlapGomba", "Gombafonal", "");
+        Gomba g = gf.getAlapGomba();
+        CallTracer.exit("getAlapGomba", "Gomba");
+        CallTracer.enter("deleteFonal", "Gomba", "gf");
+        g.deleteFonal(gf);
+        CallTracer.exit("deleteFonal", "");
     }
 
-    public void lep(Tekton celTekton) {
-        System.out.println("<<<return lep()");
+    public boolean lep(Tekton celTekton) {
+        Tekton t1 = helyzet;
+        CallTracer.enter("getSzomszedosTektonok", "Tekton", "");
+        List<Tekton> szomszedLista = t1.getSzomszedosTektonok();
+        CallTracer.exit("getSzomszedosTektonok", "szomszedLista:List<Tekton>");
+
+        boolean TektonokOsszekotve = false;
+        for (Tekton tekton : szomszedLista) {
+            for(Gombafonal f : tekton.getKapcsolodoFonalak()){
+                if (f.getStartTekton().equals(t1)) {
+                    TektonokOsszekotve = true;
+                } else {
+                    TektonokOsszekotve = false;
+                }
+            }
+        }
+
+        if (!TektonokOsszekotve) {
+            return false;
+        }
+
+        CallTracer.enter("vanBogarATektonon", "Tekton", "");
+        if(celTekton.vanBogarATektonon()) {
+            CallTracer.exit("vanBogarATektonon", "true");
+            return false;
+        } else {
+            CallTracer.exit("vanBogarATektonon", "false");
+
+            Rovar r = t1.getRovar();
+
+            CallTracer.enter("setRovar", "Tekton", "null");
+            t1.setRovar(null);
+            CallTracer.exit("setRovar", "");
+
+            CallTracer.enter("addLatogatottsag", "Tekton", "");
+            t1.addLatogatottsag();
+            CallTracer.exit("addLatogatottsag", "");
+
+            CallTracer.enter("setRovar", "Tekton", "r:Rovar");
+            celTekton.setRovar(r);
+            CallTracer.exit("setRovar", "");
+
+            CallTracer.enter("setHelyzet", "Rovar", "celTekton:Tekton");
+            r.setHelyzet(celTekton);
+            CallTracer.exit("setHelyzet", "");
+
+            return true;
+        }
     }
 
     public void setHelyzet(Tekton t) {
-        System.out.println("<<<return setHelyzet()");
+        this.helyzet = t;
+        t.setRovar(this);
     }
 
     public Tekton getHelyzet() {
-        System.out.println("<<<return getHelyzet()");
-        return null;
+        return this.helyzet;
     }
 
     public void setTapanyag(int val) {
-        System.out.println("<<<return setTapanyag()");
+        this.tapanyag = val;
     }
 
     public int getTapanyag() {
-        System.out.println("<<<return getTapanyag()");
-        return 0;
+        return this.tapanyag;
     }
 
     public void addTapanyag(int val) {
-        System.out.println("<<<return addTapanyag()");
+        this.tapanyag += val;
     }
 
     public void kepessegekAlaphelyzetbe() {
-        System.out.println("<<<return kepessegekAlaphelyzetbe()");
+        evesHatekonysag = 1;
+        maxFogyasztas = false;
+        tudVagni = true;
     }
 
     public void sporaEves() {
-        System.out.println("<<<return sporaEves()");
+        //TODO szekvenciák alapján
+        CallTracer.enter("getSporaLista", "Tekton", "");
+        List<BaseSpora> sporaLista = helyzet.getSporaLista();
+        CallTracer.exit("getSporaLista", "sporaLista");
+        List<BaseSpora> megevendo = sporaLista.subList(0,evesHatekonysag);
+        for(BaseSpora s: megevendo){
+            CallTracer.enter("addTapanyag", "Rovar", "s.tapanyag");
+            addTapanyag(s.tapanyag);
+            CallTracer.exit("addTapanyag", "");
+            CallTracer.enter("hatas", "GyorsitoSpora", "this");
+            s.hatas(this);
+            CallTracer.exit("GyorsitoSpora", "");
+        }
     }
 
     public void setEvesHatekonysag(int val) {
-        System.out.println("<<<return setEvesHatekonysag()");
+        this.evesHatekonysag = val;
     }
 
     public int getEvesHatekonysag(List<ArrayList> sporaLista) {
-        System.out.println("<<<return getEvesHatekonysag()");
-        return 0;
+        return this.evesHatekonysag;
     }
 
     public void setMaxFogyasztas(boolean val) {
-        System.out.println("<<<return setMaxFogyasztas()");
+        this.maxFogyasztas = val;
     }
 
     public boolean getMaxFogyasztas() {
-        System.out.println("<<<return getMaxFogyasztas()");
-        return false;
+        return this.maxFogyasztas;
     }
 
     public void setTudVagni(boolean val) {
-        System.out.println("<<<return setTudVagni()");
+        this.tudVagni = val;
     }
 
     public boolean getTudVagni() {
-        System.out.println("<<<return getTudVagni()");
-        return false;
+        return this.tudVagni;
     }
 }

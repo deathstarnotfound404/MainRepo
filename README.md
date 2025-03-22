@@ -20,18 +20,21 @@ A program fordítása és futtatásához a skeleton mappából az alábbi paranc
 git clone https://github.com/deathstarnotfound404/MainRepo.git
 ```
 
-```Windows```
+```Windows cmd```
 ```shell
 mkdir bin
-javac src\FungoriumClasses\*.java -d bin
+javac src\CallTracer\*.java -d bin
+javac -cp bin src\FungoriumClasses\*.java -d bin
 javac -cp bin src\TestCases\*.java -d bin
 javac -cp bin src\Skeleton.java -d bin
 java -cp bin Skeleton
+
 ```
 
 ```Linux```
 ```shell
-javac src/FungoriumClasses/*.java -d bin
+javac src/CallTracer/*.java -d bin
+javac -cp bin src/FungoriumClasses/*.java -d bin
 javac -cp bin src/TestCases/*.java -d bin
 javac -cp bin src/Skeleton.java -d bin
 java -cp bin Skeleton

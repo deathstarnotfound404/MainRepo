@@ -2,11 +2,10 @@ package FungoriumClasses;
 
 public class GombaTestGatloHatas extends TektonHatas {
     public GombaTestGatloHatas() {
-        System.out.println("<<<return GombaTestGatloHatas()");
+        super();
     }
 
     public String hatas() {
-        System.out.println("<<<return hatas()");
-        return null;
+        return null;    //TODO szekvenciák alapján
     }
 }

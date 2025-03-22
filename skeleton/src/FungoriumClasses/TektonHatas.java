@@ -5,20 +5,18 @@ public class TektonHatas {
     private Tekton tekton;
 
     public TektonHatas() {
-        System.out.println("<<<return TektonHatas()");
+
     }
 
     public String hatas() {
-        System.out.println("<<<return hatas()");
-        return null;
+        return "Base";  //TODO
     }
 
     public void setTekton(Tekton t) {
-        System.out.println("<<<return setTekton()");
+        this.tekton = t;
     }
 
     public Tekton getTekton() {
-        System.out.println("<<<return getTekton()");
-        return null;
+        return this.tekton;
     }
 }

@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import com.sun.source.tree.BreakTree;
+
 public class GombaTest implements IDestroyable {
     private Gomba AlapGomba;
     private int szint = 1;
@@ -7,60 +9,72 @@ public class GombaTest implements IDestroyable {
     private int szorasCount = 0;
 
     public GombaTest(Gomba g, int kezdoSporaSzam) {
-        System.out.println("<<<return GombaTest()");
+        this.AlapGomba = g;
+        this.sporaKeszlet = kezdoSporaSzam;
     }
 
     public void setAlapGomba(Gomba g) {
-        System.out.println("<<<return setAlapGomba()");
+        this.AlapGomba = g;
     }
 
     public Gomba getAlapGomba() {
-        System.out.println("<<<return getAlapGomba()");
-        return null;
+        return this.AlapGomba;
     }
 
     public int getSporaKeszlet() {
-        System.out.println("<<<return getSporaKeszlet()");
-        return 0;
+        return this.sporaKeszlet;
     }
 
     public int getSzorasCount() {
-        System.out.println("<<<return getSzorasCount()");
-        return 0;
+        return this.szorasCount;
     }
 
     public int getSzint() {
-        System.out.println("<<<return getSzint()");
-        return 0;
+        return this.szint;
     }
 
     public void addToSporaKeszlet(int val) {
-        System.out.println("<<<return addToSporaKeszlet()");
+        this.sporaKeszlet += val;
     }
 
     public void addSzorasCount(int val) {
-        System.out.println("<<<return addSzorasCount()");
+        this.szorasCount += val;
     }
 
     public void szintlepes(int szorandoMennyiseg) {
-        System.out.println("<<<return szintlepes()");
+        szint += 1;
     }
 
     public void increaseSporaKeszlet() {
-        System.out.println("<<<return increaseSporaKeszlet()");
+        this.sporaKeszlet += 1;
     }
 
     public boolean decreaseSporaKeszlet() {
-        System.out.println("<<<return decreaseSporaKeszlet()");
-        return false;
+        if (sporaKeszlet <= 0) {
+            return false;
+        } else {
+            sporaKeszlet--;
+            return true;
+        }
     }
 
-    public void sporaSzorzo(int szint) {
-        System.out.println("<<<return sporaSzorzo()");
+    public int sporaSzorzo(int szint) {
+        if(szint == 1) {
+            return 1;
+        }
+
+        if(szint == 2) {
+            return 2;
+        }
+
+        if(szint == 3) {
+            return 3;
+        }
+
+        return 0;
     }
 
     @Override
     public void elpusztul() {
-        System.out.println("<<<return elpusztul()");
     }
 }

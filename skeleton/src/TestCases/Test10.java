@@ -1,4 +1,10 @@
 package TestCases;
+
+import CallTracer.CallTracer;
+import FungoriumClasses.*;
+import java.util.*;
+
+
 /**
  * A {@code Test10} osztály a tizedik szkeleton tesztesetet implementálja.
  *
@@ -13,17 +19,22 @@ package TestCases;
  * @since 2025-03-18
  */
 
-public class Test10 implements ITestCase {
+public class Test10 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
+
+    Tekton t;
+    TektonHatas th;
 
 
     //Test init
     /**
      * Létrehoz egy új {@code Test1} objektumot.
      */
-    public Test10() {
-
+    public Test10(CallTracer callTracer) {
+        super(callTracer);
+        th = new TektonHatas();
+        t = new Tekton(th);
     }
 
     /**
@@ -31,6 +42,8 @@ public class Test10 implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("hatasKifejtes", "Tekton", "");
+        t.hatasKifejtes();
+        CallTracer.exit("hatasKifejtes", "");
     }
 }
