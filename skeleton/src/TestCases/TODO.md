@@ -1,3 +1,6 @@
+# Skeleton Implementálása
+### Skeleton szekvencia tesztesetek
+
 - [x] ~~1-Játék Indítás Teszt - Tekton inicializálás~~
 - [x] ~~2-Játék Indítás Teszt - Rovarász inicializálás~~
 - [x] ~~3: Játék Indítás Teszt - Gombász inicializálás~~
@@ -23,7 +26,8 @@
 - [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
 - [x] ~~26: Rovar Irány Megadás Teszt~~
   - MEGJEGYZÉS: Változtatás a getSzomszedosTektonok() hivasban.
-- [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok
+- [x] ~~27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok~~
+  - MEGJEGYZÉS: Ha 2x futtatjuk egymás után, akkor másodjára hibás, elméletileg itt javítottam a reset()-el, de ezt szebben kéne megoldani ha lesz időnk.
 - [x] ~~28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar~~
 - [x] ~~29: Spóra Szórás Teszt~~
   - MEGJEGYZÉS: Változás a szekvencia diagrammhoz képest
@@ -39,3 +43,10 @@
 - [x] 36: ~~Gombatest Növesztés~~
 - [x] 37: ~~Fonal Vásárlás Teszt~~
 - [ ] 38: Gombafonal Folytonosság Megszakadása Teszt - Nincs megszakadás
+
+
+### Feladatok
+- [ ] Tesztek implementációja
+- [ ] Tesztek JavaDoc dokumentációja
+- [ ] Run config update windows virtual host-ra
+- [ ] Új diagrammok felvétele, amik pixelesek voltak
