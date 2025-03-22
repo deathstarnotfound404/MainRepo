@@ -24,7 +24,7 @@
 - [x] ~~26: Rovar Irány Megadás Teszt~~
   - MEGJEGYZÉS: Változtatás a getSzomszedosTektonok() hivasban.
 - [ ] 27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok
-- [ ] 28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar
+- [x] ~~28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar~~
 - [x] ~~29: Spóra Szórás Teszt~~
   - MEGJEGYZÉS: Változás a szekvencia diagrammhoz képest
 - [x] ~~30: Spóra Szórás Teszt - Nem szomszédos Tektonok~~

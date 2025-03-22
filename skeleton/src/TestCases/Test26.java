@@ -63,7 +63,7 @@ public class Test26 extends TestCase implements ITestCase {
         if(rsz.rovarIranyitas(r, t2)) {
             CallTracer.exit("rovarIranyitas", "true");
         } else {
-            CallTracer.exit("rovarIranyitas", "false");
+            CallTracer.exit("rovarIranyitas", "HIBA");
         }
     }
 }
