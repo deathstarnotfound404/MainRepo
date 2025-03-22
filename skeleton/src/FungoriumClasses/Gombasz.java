@@ -167,7 +167,7 @@ public class Gombasz extends Player {
         if (!recursively) {
             return true;
         } else { //Mivel van spóra a céltektonon, ezért 1x folytatódik a művelet az extra fonal lerakásával
-            gombafonalIranyitas(t2, t2.getSzomszedosTektonok().getFirst(), false);
+            gombafonalIranyitas(t2, t2.getSzomszedosTektonok().get(0), false);
         }
         return false;
     }
