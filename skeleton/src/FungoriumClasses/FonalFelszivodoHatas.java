@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import CallTracer.CallTracer;
+
 public class FonalFelszivodoHatas extends TektonHatas{
 
     public FonalFelszivodoHatas() {
@@ -7,6 +9,10 @@ public class FonalFelszivodoHatas extends TektonHatas{
     }
 
     public String hatas() {
-        return null;    //TODO szekvenciák szerint visszaadni
+        Tekton t1 = this.getTekton();
+        CallTracer.enter("fonalakFelszivasa", "Tekton", "");
+        t1.fonalakFelszivasa();
+        CallTracer.exit("fonalakFelszivasa", "");
+        return "Felszivas";
     }
 }

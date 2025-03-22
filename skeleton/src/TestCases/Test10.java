@@ -43,7 +43,11 @@ public class Test10 extends TestCase implements ITestCase {
     @Override
     public void runTest() {
         CallTracer.enter("hatasKifejtes", "Tekton", "");
-        t.hatasKifejtes();
-        CallTracer.exit("hatasKifejtes", "");
+        String hatas = t.hatasKifejtes();
+        if (hatas.equals("Base")) {
+            CallTracer.exit("hatasKifejtes", hatas);
+        } else {
+            CallTracer.exit("hatasKifejtes", "HIBA");
+        }
     }
 }

@@ -9,7 +9,7 @@ public class TektonHatas {
     }
 
     public String hatas() {
-        return "Base";  //TODO
+        return "Base";  //Alapértelmezett működés
     }
 
     public void setTekton(Tekton t) {

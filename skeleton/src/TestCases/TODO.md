@@ -7,9 +7,9 @@
 - [x] ~~6: Gombatest Szintlépés Teszt~~
 - [x] ~~9: Rovar Képességek alaphelyzetbe állítása teszt~~
 - [x] ~~10: Tekton Hatás Kifejtés: TektonHatas teszt~~
-- [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt
-- [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt
-- [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt
+- [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt 🚨
+- [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt 🚨
+- [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt 🚨
 - [x] ~~15: Tekton Kettétörés Teszt - van Rovar a tektonon~~
 - [x] ~~16: Tekton Kettétörés Teszt - nincs Rovar a tektonon~~
 - [x] ~~17: Gomba Spóra Termelés Teszt~~ 
@@ -23,7 +23,7 @@
 - [x] ~~22: Spóra Elfogyasztás - Spora teszt~~
 - [x] ~~23: Játék Kiértékelés Teszt~~
 - [x] ~~24: Gombafonal Elvágás Teszt~~
-- [ ] 25: Gombafonal Folytonosság Megszakadása Teszt
+- [ ] 25: Gombafonal Folytonosság Megszakadása Teszt  🚨
 - [x] ~~26: Rovar Irány Megadás Teszt~~
   - MEGJEGYZÉS: Változtatás a getSzomszedosTektonok() hivasban.
 - [x] ~~27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok~~
@@ -36,13 +36,13 @@
 - [x] ~~32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest~~
   - MEGJEGYZÉS: Itt nem volt jó a szekvenciadiagramm, de a programban javítottam, valamint nem volt felvéve a decrease menet közben amikor megtörtént a szórás. Mind a 4 spóraszórás teszt együttesen is jól működik.
   - MEGJEGYZÉS2: A Tekton.VanGombaTestATektonon boolean nem biztos h. jó megoldás, mert a setGomba() állítja, de egy Gomba gt = null GombaTest-tel elronthat sokmindent.
-- [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra
+- [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra  🚨
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
-- [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható
+- [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható  🚨
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
 - [x] 36: ~~Gombatest Növesztés~~
 - [x] 37: ~~Fonal Vásárlás Teszt~~
-- [ ] 38: Gombafonal Folytonosság Megszakadása Teszt - Nincs megszakadás
+- [ ] 38: Gombafonal Folytonosság Megszakadása Teszt - Nincs megszakadás  🚨
 
 
 ### Feladatok
