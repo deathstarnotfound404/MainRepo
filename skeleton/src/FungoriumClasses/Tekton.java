@@ -119,6 +119,9 @@ public class Tekton implements IDestroyable {
 
     public void setGomba(Gomba g) {
         this.tektononLevoGomba = g;
+        if(g!=null) {
+            this.vanGombaTestTektonon = true;
+        }
     }
 
     public List<Tekton> getSzomszedosTektonok() {

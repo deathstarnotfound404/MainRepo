@@ -143,10 +143,17 @@ public class Gomba implements IDestroyable {
                 CallTracer.exit("Spora()", "");
             }
 
-            for(BaseSpora s : s_list) {
-                CallTracer.enter("addSpora", "Tekton", "s:Spora");
-                celTekton.addSpora(s);
-                CallTracer.exit("addSpora", "");
+            if(celTekton.getVanGombaTest()) {
+                GombaTest tmp_gt = celTekton.getGomba().getGombaTest(); // A gombatest ahova szorunk
+                CallTracer.enter("addToSporaKeszlet", "GombaTest", "szorandoMennyiseg:int");
+                tmp_gt.addToSporaKeszlet(szorandoMennyiseg);
+                CallTracer.exit("addToSporaKeszlet", "");
+            } else {
+                for(BaseSpora s : s_list) {
+                    CallTracer.enter("addSpora", "Tekton", "s:Spora");
+                    celTekton.addSpora(s);
+                    CallTracer.exit("addSpora", "");
+                }
             }
 
             CallTracer.enter("addSzorasCount", "GombaTest", "1");
