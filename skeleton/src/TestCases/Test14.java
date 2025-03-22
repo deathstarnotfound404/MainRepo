@@ -1,6 +1,9 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.GombaTestGatloHatas;
+import FungoriumClasses.Tekton;
+import FungoriumClasses.TektonHatas;
 
 /**
  * A {@code Test14} osztály a 14. szkeleton tesztesetet implementálja.
@@ -19,7 +22,8 @@ import CallTracer.CallTracer;
 public class Test14 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-
+    GombaTestGatloHatas h;
+    Tekton t1;
 
     //Test init
     /**
@@ -27,6 +31,9 @@ public class Test14 extends TestCase implements ITestCase {
      */
     public Test14(CallTracer callTracer) {
         super(callTracer);
+        h = new GombaTestGatloHatas();
+        t1 = new Tekton(h);
+        h.setTekton(t1);
     }
 
     /**
@@ -34,6 +41,12 @@ public class Test14 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-
+        CallTracer.enter("hatasKifejtes", "Tekton", "");
+        String hatas = t1.hatasKifejtes();
+        if (hatas.equals("GombaTestGatlo")) {
+            CallTracer.exit("hatasKifejtes", hatas);
+        } else {
+            CallTracer.exit("hatasKifejtes", "HIBA");
+        }
     }
 }
