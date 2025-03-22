@@ -21,7 +21,7 @@ import java.util.*;
 public class Test1 extends TestCase implements ITestCase{
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-
+    /** Környezet létrehozása a teszthez*/
     Field f;
     Tekton t1, t2, t3, t4;
     FonalFelszivodoHatas th1;
