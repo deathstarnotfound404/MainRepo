@@ -14,8 +14,8 @@ public class Rovarasz extends Player {
     }
 
     public void addRovar(Rovar r, Tekton t) {
-        this.rovaraszRovarja = new Rovar();
-        this.rovaraszRovarja.setHelyzet(t); //TODO Pontosan ellenőrizni szekvenciák alapján, hogyan történik ez a folyamat.
+        this.rovaraszRovarja = r;
+        this.rovaraszRovarja.setHelyzet(t);
     }
 
     public int calcAllTapanyagScore() {
@@ -23,7 +23,14 @@ public class Rovarasz extends Player {
     }
 
     public boolean rovarIranyitas(Rovar r, Tekton celTekton) {
-        return false;   //TODO szekvenciák alapján implementálni
+        CallTracer.enter("lep", "Rovar", "celTekton:Tekton");
+        boolean val = r.lep(celTekton);
+        if (val) {
+            CallTracer.exit("lep", "true");
+        } else {
+            CallTracer.exit("lep", "false");
+        }
+        return val;
     }
 
     public boolean fonalVagas(Rovar r, Gombafonal gf) {

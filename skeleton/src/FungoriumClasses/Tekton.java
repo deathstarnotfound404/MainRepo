@@ -53,7 +53,7 @@ public class Tekton implements IDestroyable {
     }
 
     public boolean vanBogarATektonon() {
-        return vanGombaTestTektonon;
+        return tektononLevoRovar != null;
     }
 
     public void fonalakFelszivasa() {

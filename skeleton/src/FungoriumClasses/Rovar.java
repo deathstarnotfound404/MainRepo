@@ -38,8 +38,39 @@ public class Rovar {
         CallTracer.exit("deleteFonal", "");
     }
 
-    public void lep(Tekton celTekton) {
-        //TODO szekvenciák alapján
+    public boolean lep(Tekton celTekton) {
+        Tekton t1 = helyzet;
+        CallTracer.enter("getSzomszedosTektonok", "Tekton", "");
+        List<Tekton> szomszedLista = t1.getSzomszedosTektonok();
+        CallTracer.exit("getSzomszedosTektonok", "szomszedLista:List<Tekton>");
+
+        CallTracer.enter("vanBogarATektonon", "Tekton", "");
+        if(celTekton.vanBogarATektonon()) {
+            CallTracer.exit("vanBogarATektonon", "true");
+            return false;
+        } else {
+            CallTracer.exit("vanBogarATektonon", "false");
+
+            Rovar r = t1.getRovar();
+
+            CallTracer.enter("setRovar", "Tekton", "null");
+            t1.setRovar(null);
+            CallTracer.exit("setRovar", "");
+
+            CallTracer.enter("addLatogatottsag", "Tekton", "");
+            t1.addLatogatottsag();
+            CallTracer.exit("addLatogatottsag", "");
+
+            CallTracer.enter("setRovar", "Tekton", "r:Rovar");
+            celTekton.setRovar(r);
+            CallTracer.exit("setRovar", "");
+
+            CallTracer.enter("setHelyzet", "Rovar", "celTekton:Tekton");
+            r.setHelyzet(celTekton);
+            CallTracer.exit("setHelyzet", "");
+
+            return true;
+        }
     }
 
     public void setHelyzet(Tekton t) {
