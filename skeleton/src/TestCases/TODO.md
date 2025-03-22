@@ -7,7 +7,7 @@
 - [x] ~~6: Gombatest Szintlépés Teszt~~
 - [x] ~~9: Rovar Képességek alaphelyzetbe állítása teszt~~
 - [x] ~~10: Tekton Hatás Kifejtés: TektonHatas teszt~~
-- [ ] 11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt 🚨
+- [x] ~~11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt~~
 - [ ] 13: Tekton Hatás Kifejtés: FonalGatloHatas teszt 🚨
 - [ ] 14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt 🚨
 - [x] ~~15: Tekton Kettétörés Teszt - van Rovar a tektonon~~
