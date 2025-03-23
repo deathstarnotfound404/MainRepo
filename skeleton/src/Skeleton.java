@@ -134,10 +134,20 @@ public class Skeleton {
             testNumber = entry.getKey();
             ITestCase testCase = TEST_CASE_CLASSES.get(testNumber);
             if (TEST_CASE_NAMES.containsKey(testNumber)) {
-                System.out.println("---------------------------------[Test" + testNumber + "]---------------------------------");
-                System.out.println("Running test: " + TEST_CASE_NAMES.get(testNumber));
-                executeTest(testNumber, testCase);
-                System.out.println();
+                if (auto) {
+                    if (testNumber != 6 && testNumber != 13 && testNumber != 37) {      //Tesztek inputot várnak, nem automatizálhatók
+                        System.out.println("---------------------------------[Test" + testNumber + "]---------------------------------");
+                        System.out.println("Running test: " + TEST_CASE_NAMES.get(testNumber));
+                        executeTest(testNumber, testCase);
+                        System.out.println();
+                    }
+                } else {
+                    System.out.println("---------------------------------[Test" + testNumber + "]---------------------------------");
+                    System.out.println("Running test: " + TEST_CASE_NAMES.get(testNumber));
+                    executeTest(testNumber, testCase);
+                    System.out.println();
+                }
+
             } else {
                 System.out.println("Test" + testNumber + " not found.");
             }
