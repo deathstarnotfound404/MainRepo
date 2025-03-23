@@ -1,23 +1,45 @@
 package TestCases;
 import CallTracer.*;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+/**
+ * A {@code TestCase} egy absztrakt osztály, amely egy teszteset alapstruktúráját biztosítja.
+ *
+ * <p>Ez az osztály tartalmazza a tesztesetekhez szükséges közös funkcionalitásokat,
+ * például a híváskövetést és a felhasználói döntések kezelését.</p>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *   <li>{@link CallTracer} - Híváskövetés és logolás.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
+ * @version 1.0
+ * @since 2025-03-20
+ */
 public abstract class TestCase {
+    /** A tesztesethez kapcsolódó híváskövető. */
     CallTracer callTracer;
 
+    /**
+     * Létrehoz egy új {@code TestCase} objektumot egy adott hívásnyomkövető példánnyal.
+     *
+     * @param callTracer a híváskövetéshez használt objektum
+     */
     public TestCase(CallTracer callTracer) {
         this.callTracer = callTracer;
     }
 
-    public void intiInfo() {
-
-    }
-
-    public void testInfo() {
-
-    }
-
+    /**
+     * Felhasználói döntést kér a konzolon keresztül egy adott opciólistából.
+     *
+     * <p>A metódus kiírja a döntési lehetőségeket, majd bekér a felhasználótól egy érvényes választást.
+     * A bevitt adatot validálja, és csak számként megadott, érvényes opciókat fogad el.</p>
+     *
+     * @param dontes a döntés szöveges leírása
+     * @param actions az elérhető lehetőségek szöveges listája
+     * @return a felhasználó által kiválasztott opció sorszáma
+     */
     public int makeDecision(String dontes, List<String> actions) {
         System.out.println("Decision: " + dontes);
         int i = 1;
