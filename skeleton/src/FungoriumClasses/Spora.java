@@ -1,14 +1,25 @@
 package FungoriumClasses;
 
+/**
+ * A {@code Spora} osztály a spórák egy alapvető típusát reprezentálja a játékban.
+ * Ez a spóra nem fejt ki semmilyen hatást a rovarokra.
+ */
 public class Spora extends BaseSpora {
-    //Spora konstruktora
+    /**
+     * Létrehoz egy új {@code Spora} objektumot.
+     */
     public Spora() {
         super();
     }
 
-    //hatast implementalo metodus
+    /**
+     * A spóra hatása a rovarokra.
+     * Ez a metódus üres, mert ez a spóra nem fejt ki semmilyen hatást.
+     *
+     * @param r A rovar, amelyre a spóra hatna (de jelen esetben nincs hatás).
+     */
     @Override
     public void hatas(Rovar r) {
-        //ÜRES FÜGGVÉNY - nem fejt ki semmilyen hatást a spóra
+        //Implementáció később
     }
 }
