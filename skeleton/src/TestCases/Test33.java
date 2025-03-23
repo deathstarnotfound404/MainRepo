@@ -1,30 +1,41 @@
 package TestCases;
-
 import CallTracer.CallTracer;
 import FungoriumClasses.*;
 
 /**
- * A {@code Test33} osztály a 33. szkeleton tesztesetet implementálja, amely a Gombafonal Irányítás Teszt - Cél Tektonon van Spóra szekvencia tesztelése.
- * <p>
- * Rövid leírás:
- *     Ekkor +1 fonal lerakható, rendszer bekér kontrollertől még egy t3-at újabb célnak, folytatólagosan az előző fonal folytatásának
- * <p>
- * Forgatókönyv:<p>
- *      1; Ha a céltektonon van elszórt Spóra, akkor a Gombász az először lerakott fonalat meghosszabbíthatja még 1 fonallal, a fonalkészlet felhasználása nélkül (növekedés gyorsítás)<p>
- *      2; Ekkor a kiinduló tekton adott, és ennek függvényében választható meg a céltekton<p>
- *      3; Gombafonal létrehozása<p>
- *      4; Gombafonal felvétel a Tektonokon és fokszámok növelése<p>
- *      5; Fonal felvétele a Gombán<p>
- *      6; A Gombász fonalkészletét ekkor NEM csökkentjük.<p>
- * <p>
+ * A {@code Test33} osztály a 33. szkeleton tesztesetet implementálja.
+ *
+ * <p><b>33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra</b></p>
+ *
+ * <p><b>Rövid leírás:</b><br>
+ * Ha a céltektonon van elszórt Spóra, akkor a Gombász az első lerakott fonalat
+ * meghosszabbíthatja még 1 fonallal, a fonalkészlet felhasználása nélkül (növekedés gyorsítás).</p>
+ *
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Gombafonal létrehozása.</li>
+ *     <li>Gombafonal felvétel a Tektonokon és fokszámok növelése.</li>
+ *     <li>Fonal felvétele a Gombán.</li>
+ *     <li>A Gombász fonalkészletét ekkor NEM csökkentjük.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A tesztelt objektum, amely a gombafonal irányítását végzi.</li>
+ *     <li>{@link Tekton} - Tekton.</li>
+ *     <li>{@link Gomba} - A gomba, amelynek gombafonalait vizsgáljuk.</li>
+ * </ul>
+ *
  * @author Czene Zsombor
  * @version 1.0
  * @since 2025-03-21
  */
-
 public class Test33 extends TestCase implements ITestCase {
     //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** Tetszt attribútumok. */
     Gombasz gsz;
     TektonHatas th1;
     TektonHatas th2;
@@ -33,9 +44,10 @@ public class Test33 extends TestCase implements ITestCase {
     Gomba g;
     Gombafonal gf;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test33} objektumot és inicializálja a tesztkörnyezetet.
+     *
+     * @param callTracer a függvényhívások nyomon követésére szolgáló objektum
      */
     public Test33(CallTracer callTracer) {
         super(callTracer);
@@ -57,7 +69,7 @@ public class Test33 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely a gombafonal irányítását ellenőrzi.
      */
     @Override
     public void runTest() {
