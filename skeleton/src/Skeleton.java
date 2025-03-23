@@ -106,7 +106,11 @@ public class Skeleton {
             } else if (input.equalsIgnoreCase("run test --all") || input.equalsIgnoreCase("run test -a")){
                 System.out.println("#######################################################################################");
                 System.out.println("Run all the tests");
-                testDump();
+                testDump(false);
+            } else if (input.equalsIgnoreCase("run test --auto")) {
+                System.out.println("#######################################################################################");
+                System.out.println("Run all the tests automatically");
+                testDump(true);
             } else if (input.startsWith("run test")) {
                 System.out.println("------------------");
                 runTest(input);
@@ -123,7 +127,7 @@ public class Skeleton {
         scanner.close();
     }
 
-    private static void testDump() {
+    private static void testDump(boolean auto) {
         int testNumber = 0;
         Scanner scanner = new Scanner(System.in); // Scanner inicializálása
         for (Map.Entry<Integer, String> entry : TEST_CASE_NAMES.entrySet()) {
@@ -139,19 +143,21 @@ public class Skeleton {
             }
 
             String input;
-            while (true) {
-                System.out.println("Press 'n' to continue or 'q' to quit:");
-                System.out.print("> ");
-                input = scanner.nextLine().trim().toLowerCase(); // Kisbetűsítés és felesleges szóközök eltávolítása
+            if (!auto) {
+                while (true) {
+                    System.out.println("Press 'n' to continue or 'q' to quit:");
+                    System.out.print("> ");
+                    input = scanner.nextLine().trim().toLowerCase(); // Kisbetűsítés és felesleges szóközök eltávolítása
 
-                if (input.equals("n")) {
-                    break; // Folytatja a ciklust
-                } else if (input.equals("q")) {
-                    System.out.println("Exiting execution dump.");
-                    System.out.println("#######################################################################################");
-                    return; // Kilép a függvényből
-                } else {
-                    System.out.println("Invalid input. Please enter 'n' to continue or 'q' to quit.");
+                    if (input.equals("n")) {
+                        break; // Folytatja a ciklust
+                    } else if (input.equals("q")) {
+                        System.out.println("Exiting execution dump.");
+                        System.out.println("#######################################################################################");
+                        return; // Kilép a függvényből
+                    } else {
+                        System.out.println("Invalid input. Please enter 'n' to continue or 'q' to quit.");
+                    }
                 }
             }
         }
