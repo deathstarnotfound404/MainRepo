@@ -4,36 +4,57 @@ import FungoriumClasses.*;
 import java.util.*;
 
 /**
- * A {@code Test37} osztály a 37. szkeleton tesztesetet implementálja.
- * <p>
- *     Az osztály tartalmazza a 37. teszteset Fonal Vásárlás Teszt végrehajtását.
- *     A teszteset ellenőrzi a Gombász által kezdeményezhető Fonal Vásárlás tevékenység hívási láncolatát.
- * <p>
- *      1; Fonal vásárlás esetén csökkentjük az adott GombaTest Spóra készletét <p>
- *      2; 1 spóráért 3 fonalat kapunk a GombaTest fonal készletébe.<p>
- *      3; Döntés: Van-e spórakészlete a (min 1) a Gombásznak:<p>
- *          1. Van minimum 1<p>
- *          2. Nincs 1 sem<p>
- *      4; Ha nincs akkor a decrease SporaKeszlet nem hajtódik végre és false-al tér vissza. Ekkor terminálunk false-al.<p>
- *      5; Ha van, akkor a spóra készlet csökkentése megtörténik 1-el és ezt követően a fonal készlet növelése 3-al. Ekkor terminálunk true-val.<p>
+ * A {@code Test37} osztály a 37.szkeleton tesztesetet implementálja.
+ *
+ * <p><b>37: Fonal Vásárlás Teszt</b></p>
+ *
+ * <p><b>Rövid leírás:</b><br>
+ * A teszteset ellenőrzi a Gombász által kezdeményezhető Fonal Vásárlás tevékenység hívási láncolatát.</p>
+ *
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Fonal vásárlás esetén csökkentjük az adott GombaTest Spóra készletét.</li>
+ *     <li>1 spóráért 3 fonalat kapunk a GombaTest fonal készletébe.</li>
+ *     <li>Döntés: Van-e spórakészlete (min 1) a Gombásznak:</li>
+ *         <ol>
+ *             <li>Van minimum 1</li>
+ *             <li>Nincs 1 sem</li>
+ *         </ol>
+ *     <li>Ha nincs, akkor a decrease SporaKeszlet nem hajtódik végre és false-al tér vissza. Ekkor terminálunk false-al.</li>
+ *     <li>Ha van, akkor a spóra készlet csökkentése megtörténik 1-el és ezt követően a fonal készlet növelése 3-al. Ekkor terminálunk true-val.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A tesztelt objektum, amely a fonal vásárlását végzi.</li>
+ *     <li>{@link GombaTest} - A gomba állapotát és készleteit tároló osztály.</li>
+ *     <li>{@link Tekton} - Tekton.</li>
+ * </ul>
  *
  * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-20
+ * @since 2025-03-21
  */
-
 public class Test37 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    // Test attributes
+    /** A tesztben szereplő hatás. */
     private TektonHatas h;
+    /** A tesztben szereplő tekton. */
     private Tekton t;
+    /** A tesztben szereplő gombász. */
     private Gombasz gsz;
+    /** A tesztben szereplő gomba. */
     private Gomba g;
+    /** A tesztben szereplő GombaTest. */
     private GombaTest gt;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test37} objektumot, amely inicializálja a szükséges tesztadatokat.
+     *
+     * @param callTracer a függvényhívások nyomon követésére és logolásra szolgáló objektum
      */
     public Test37(CallTracer callTracer) {
         super(callTracer);
@@ -50,7 +71,7 @@ public class Test37 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely során a fonal vásárlás mechanizmusát ellenőrizzük.
      */
     @Override
     public void runTest() {
