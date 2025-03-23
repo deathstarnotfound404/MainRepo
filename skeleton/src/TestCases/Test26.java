@@ -6,31 +6,58 @@ import FungoriumClasses.*;
 /**
  * A {@code Test26} osztály a 26. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>26: Rovar Irány Megadás Teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * Kiválasztott céltekton fonallal összekötött start tektonnal, céltektonon nincs Rovar</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *          <li>Rovarász irányítja a rovart</li>
+ *          <li>Rovar lépés megkezdése</li>
+ *          <li>szomszédos tektont kapott célnak, ahol nincs rovar</li>
+ *          <li>A lépést elvégezzük</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link TektonHatas} - A teszt során használt TektonHatas objektum.</li>
+ *     <li>{@link Rovarasz} - A teszt során használt Rovarasz objektum.</li>
+ *     <li>{@link Rovar} - A teszt során használt Rovar objektum.</li>
+ *     <li>{@link Gombafonal} - A teszt során használt Gombafonal objektum.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
 
 public class Test26 extends TestCase implements ITestCase {
     //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** A tesztben használt egyik TektonHatas*/
     private TektonHatas th1;
+    /** A tesztben használt másik TektonHatas*/
     private TektonHatas th2;
+    /** A tesztben használt Rovarasz*/
     private Rovarasz rsz;
+    /** A tesztben használt Rovar*/
     private Rovar r;
+    /** A tesztben használt egyik Tekton*/
     private Tekton t1;
+    /** A tesztben használt másik Tekton*/
     private Tekton t2;
+    /** A tesztben használt Gombafonal*/
     private Gombafonal gf;
 
     //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test26} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test26(CallTracer callTracer) {
         super(callTracer);
@@ -55,7 +82,7 @@ public class Test26 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a rovar irány megadást teszteli
      */
     @Override
     public void runTest() {
