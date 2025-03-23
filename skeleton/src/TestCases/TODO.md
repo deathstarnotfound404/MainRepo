@@ -15,7 +15,7 @@
 - [x] ~~17: Gomba Spóra Termelés Teszt~~ 
 - [x] ~~18: Spóra Elfogyasztás - GyorsitoSpora teszt~~
 - [x] ~~19: Spóra Elfogyasztás - LassitoSpora teszt~~
-- MEGJEGYZÉS: setEvesHatekonsag-nak ne int legyen a paramétere, mert nem lehet neki 0.25-öt adni --> LassitoSpora osztalyban még meg kell írni a maradékot
+- ~~MEGJEGYZÉS: setEvesHatekonsag-nak ne int legyen a paramétere, mert nem lehet neki 0.25-öt adni --> LassitoSpora osztalyban még meg kell írni a maradékot~~
 - [x] ~~20: Spóra Elfogyasztás - BenitoSpora teszt~~
 - [x] ~~21: Spóra Elfogyasztás - VagastGatloSpora teszt~~
 - [x] ~~22: Spóra Elfogyasztás - Spora teszt~~
@@ -24,7 +24,7 @@
 - [x] ~~25: Gombafonal Folytonosság Megszakadása Teszt~~ 
 - [x] ~~26: Rovar Irány Megadás Teszt~~
 - [x] ~~27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok~~
-  - MEGJEGYZÉS: Ha 2x futtatjuk egymás után, akkor másodjára hibás, elméletileg itt javítottam a reset()-el, de ezt szebben kéne megoldani ha lesz időnk.
+  - ~~MEGJEGYZÉS~~: Ha 2x futtatjuk egymás után, akkor másodjára hibás, elméletileg itt javítottam a reset()-el, de ezt szebben kéne megoldani ha lesz időnk.
 - [x] ~~28: Rovar Irány Megadás Teszt - Cél tektonon van Rovar~~
 - [x] ~~29: Spóra Szórás Teszt~~
 - [x] ~~30: Spóra Szórás Teszt - Nem szomszédos Tektonok~~
