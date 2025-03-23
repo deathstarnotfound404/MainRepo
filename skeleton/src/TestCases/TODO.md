@@ -38,7 +38,7 @@
   - MEGJEGYZÉS2: A Tekton.VanGombaTestATektonon boolean nem biztos h. jó megoldás, mert a setGomba() állítja, de egy Gomba gt = null GombaTest-tel elronthat sokmindent.
 - [x] ~~33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra~~
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
-- [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható  🚨
+- [x] ~~34: Gombafonal Irányítás Teszt - Fonal nem lerakható~~
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
 - [x] ~~36: Gombatest Növesztés~~
 - [x] ~~37: Fonal Vásárlás Teszt~~
@@ -46,7 +46,7 @@
 
 
 ### Feladatok
-- [ ] Tesztek implementációja
+- [x] ~~Tesztek implementációja~~
 - [x] ~~Tesztek JavaDoc dokumentációja~~
 - [ ] Run config update windows virtual host-ra
 - [ ] Új diagrammok felvétele, amik pixelesek voltak

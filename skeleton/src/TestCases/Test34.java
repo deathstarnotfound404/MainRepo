@@ -31,7 +31,7 @@ import FungoriumClasses.*;
  *     <li>{@link Tekton} - A tesztben szereplő környezeti elem.</li>
  * </ul>
  *
- * @author Your Name
+ * @author Czene Zsombor
  * @version 1.0
  * @since 2025-03-18
  */

@@ -34,16 +34,20 @@ import FungoriumClasses.*;
  * @since 2025-03-21
  */
 public class Test33 extends TestCase implements ITestCase {
-    //Test attributes
     /** Tetszt attribútumok. */
+    /** Gombászt reprezentáló objektum. */
     Gombasz gsz;
+    /** Tekton hatások az egyes Tektonokhoz. */
     TektonHatas th1;
     TektonHatas th2;
     TektonHatas th3;
+    /** A tesztben szereplő Tektonok. */
     Tekton t1;
     Tekton t2;
     Tekton t3;
+    /** A tesztben szereplő Gomba. */
     Gomba g;
+    /** Gombafonal az irányítás teszteléséhez. */
     Gombafonal gf;
 
     /**
