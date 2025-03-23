@@ -15,24 +15,43 @@ jobs:
     steps:
       - name: Repository klónozása
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Biztosítja, hogy minden fájl letöltődjön
 
       - name: Java 18 beállítása
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '18.0.2.1'
+          java-version: '18'
 
       - name: Java verzió ellenőrzés
-        shell: cmd
+        shell: pwsh
         run: javac -version && java -version
 
-      - name: Projekt fordítása
-        shell: cmd
-        run: |
-          mkdir out
-          for /r src %f in (*.java) do javac -d out %f
+      - name: Ellenőrizd a meglévő fájlokat
+        shell: pwsh
+        run: Get-ChildItem -Path . -Recurse
 
-      - name: Tesztfájl futtatása (ha van Main class)
-        shell: cmd
+      - name: Projekt fordítása
+        shell: pwsh
         run: |
-          java -cp out Skeleton || exit /b 1
+          if (Test-Path bin) { Remove-Item -Recurse -Force bin }
+          New-Item -ItemType Directory -Path bin
+          $SRC_PATH = "$PWD/skeleton/src"
+          if (!(Test-Path $SRC_PATH)) { Write-Host "HIBA: A forrásmappa nem található!"; exit 1 }
+          javac -d bin (Get-ChildItem -Path "$SRC_PATH/CallTracer" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/FungoriumClasses" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestCases" -Recurse -Filter "*.java").FullName
+          javac -cp bin -d bin "$SRC_PATH/Skeleton.java"
+
+      - name: Projekt futtatása
+        shell: pwsh
+        run: |
+          if (Test-Path bin/Skeleton.class) { 
+            echo "run test --auto`nexit" | java -cp bin Skeleton 
+          } else { 
+            Write-Host "Skeleton class not found"; 
+            exit 1 
+          }
+
+
