@@ -6,38 +6,69 @@ import java.util.*;
 /**
  * A {@code Test25} osztály a 25. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>25: Gombafonal Folytonosság Megszakadása Teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * Ha tekton törés, felszívódás, vagy fonal vágás hatására egy összefüggő fonal sorozat megszakad, akkor a Gombászának ezt újra folytonossá kell tennie, különben az elszakadt rész törlődik.
+ * ConnectedToAlapGomba: A föggvény ellenőrzi, hogy az adott Gombafonal összeköttetésben áll-e az alap gombájával.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *          <li>Folytonosság ellenőrzése</li>
+ *          <li>Gombafonal listájának ellenőrzése</li>
+ *          <li>Ebben az esetben nem folytonos a fonal szakasz (T3 és T4 között nincs Gombafonal).</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link TektonHatas} - A teszt során használt TektonHatas objektum.</li>
+ *     <li>{@link Gombafonal} - A teszt során használt Gombafonal objektum.</li>
+ *     <li>{@link Gomba} - A teszt során használt Gomba objektum.</li>
+ *     <li>{@link GombaTest} - A teszt során használt GombaTest objektum.</li>
+ * </ul>
+ *
+ * @author Kozma Szabolcs
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
 
 public class Test25 extends TestCase implements ITestCase {
     //Test attributes
-    /** Javadoc, attributumok leirasa. */
-
+    /** A teszt során használt első TektonHatas*/
     TektonHatas th1;
+    /** A teszt során használt második TektonHatas*/
     TektonHatas th2;
+    /** A teszt során használt harmadik TektonHatas*/
     TektonHatas th3;
+    /** A teszt során használt negyedik TektonHatas*/
     TektonHatas th4;
+    /** A teszt során használt első Tekton*/
     Tekton t1;
+    /** A teszt során használt második Tekton*/
     Tekton t2;
+    /** A teszt során használt harmadik Tekton*/
     Tekton t3;
+    /** A teszt során használt negyedik Tekton*/
     Tekton t4;
+    /** A teszt során használt első Gombafonal*/
     Gombafonal gf1;
+    /** A teszt során használt második Gombafonal*/
     Gombafonal gf2;
+    /** A teszt során használt Gomba*/
     Gomba g;
+    /** A teszt során használt Gombatest*/
     GombaTest gt;
 
 
     //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test25} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test25(CallTracer callTracer) {
         super(callTracer);
@@ -76,7 +107,7 @@ public class Test25 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a Gombafonal folytonosság megszakadását teszteli
      */
     @Override
     public void runTest() {
