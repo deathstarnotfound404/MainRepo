@@ -62,9 +62,9 @@ public class Gombasz extends Player {
      *
      * @return {@code true}, ha a fonal lerakása lehetséges, különben {@code false}.
      */
-    public boolean fonalLerakasEllenorzes() {
+    public boolean fonalLerakasEllenorzes(Tekton t1, Tekton t2) {
         //return false, ha az üzlezi logika szerint a fonal lerakasa nem elvegezhető -> t1 ből t2 be.
-        return true;
+        return (t1.getSzomszedosTektonok().contains(t2) && t2.getSzomszedosTektonok().contains(t1));
     }
 
     /**
@@ -180,11 +180,11 @@ public class Gombasz extends Player {
      * @return {@code true}, ha a művelet sikeres, különben {@code false}.
      */
     public boolean gombafonalIranyitas(Gomba g, Tekton t1, Tekton t2, boolean bonus) {
-        CallTracer.enter("fonalLerakasEllenorzes", "Gombasz", "");
-        if (this.fonalLerakasEllenorzes()){
+        CallTracer.enter("fonalLerakasEllenorzes", "Gombasz", "t1, t2");
+        if (this.fonalLerakasEllenorzes(t1, t2)){
             CallTracer.exit("fonalLerakasEllenorzes", "true");
         } else {
-            CallTracer.exit("fonalLerakasEllenorzes", "HIBA");
+            CallTracer.exit("fonalLerakasEllenorzes", "false");
             return false;
         }
 

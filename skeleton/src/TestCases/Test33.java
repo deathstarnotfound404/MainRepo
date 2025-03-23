@@ -80,7 +80,7 @@ public class Test33 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-        CallTracer.enter("gombafonalIranyitas", "Gombasz", "t1, t2");
+        CallTracer.enter("gombafonalIranyitas", "Gombasz", "g, t1, t2");
         if (gsz.gombafonalIranyitas(g, t1, t2, false)) {    //előre tudjuk, hogy t2-n van spóra, ezért állítjuk true-ra
             CallTracer.exit("gombafonalIranyitas", "true");
         } else {

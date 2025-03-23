@@ -1,6 +1,7 @@
 package TestCases;
 
 import CallTracer.CallTracer;
+import FungoriumClasses.*;
 
 /**
  * A {@code Test34} osztály a 34. szkeleton tesztesetet implementálja.
@@ -37,7 +38,13 @@ import CallTracer.CallTracer;
 public class Test34 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
-
+    Gombasz gsz;
+    TektonHatas th1;
+    TektonHatas th2;
+    Tekton t1;
+    Tekton t2;
+    Gomba g;
+    Gombafonal gf;
 
     //Test init
     /**
@@ -45,6 +52,19 @@ public class Test34 extends TestCase implements ITestCase {
      */
     public Test34(CallTracer callTracer) {
         super(callTracer);
+        gsz = new Gombasz();            //1
+        th1 = new TektonHatas();        //2
+        th2 = new TektonHatas();        //3
+        t1 = new Tekton(th1);           //4
+        t2 = new Tekton(th2);           //5
+        g = new Gomba(t1);              //6
+        t1.setGomba(g);
+        th1.setTekton(t1);
+        th2.setTekton(t2);
+        gsz.addGomba(g);
+        GombaTest gt = new GombaTest(g, 5);
+        gt.setAlapGomba(g);
+        g.setGombaTest(gt);
     }
 
     /**
@@ -52,8 +72,12 @@ public class Test34 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
-        CallTracer.enter("gombafonalIranyitas", "Gombasz", "t1, t2");
+        CallTracer.enter("gombafonalIranyitas", "Gombasz", "g, t1, t2");
+        if (!gsz.gombafonalIranyitas(g, t1, t2, false)) {
+            CallTracer.exit("gombafonalIranyitas", "false");
+        } else {
+            CallTracer.exit("gombafonalIranyitas", "HIBA");
+        }
 
-        CallTracer.exit("gombafonalIranyitas", "HIBA: Not Implemented");
     }
 }
