@@ -1,5 +1,7 @@
 package FungoriumClasses;
 
+import java.util.*;
+
 public class Gombafonal implements IDestroyable {
     private Gomba AlapGomba;
     private Tekton startTekton;
@@ -27,7 +29,30 @@ public class Gombafonal implements IDestroyable {
     }
 
     public boolean connectedToAlapGomba() {
-        //TODO szekvencia alapján implementálni
+        List<List<Gombafonal>> listaLista = AlapGomba.getFonalLista();
+        Tekton alapTekton = AlapGomba.getTekton();
+        for(List<Gombafonal> l : listaLista){
+            if(l.contains(this)) {
+                List<Gombafonal> reversedList = l.reversed();           // this.startTekton--- ... --- AlapTekton
+                int indexOfThis = reversedList.indexOf(this);
+                List<Gombafonal> subList = reversedList.subList(indexOfThis, reversedList.size());
+                for(Gombafonal f : subList){
+                    Gombafonal next;
+                    if(f != subList.get(subList.size()-1)) {
+                        next = subList.get(subList.indexOf(f)+1);
+                    }
+                    else{ //ha az utolsó
+                        if(f.getAlapGomba().getTekton() == alapTekton)
+                            return true;
+                        else return false;
+                    }
+
+                    if(f.celTekton != next.startTekton) { //összehasonlítása a start és cél Tektonoknak
+                        return false;
+                    }
+                }
+            }
+        }
         return false;
     }
 

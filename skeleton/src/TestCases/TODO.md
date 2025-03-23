@@ -23,7 +23,7 @@
 - [x] ~~22: Spóra Elfogyasztás - Spora teszt~~
 - [x] ~~23: Játék Kiértékelés Teszt~~
 - [x] ~~24: Gombafonal Elvágás Teszt~~
-- [ ] 25: Gombafonal Folytonosság Megszakadása Teszt  🚨
+- [x] ~~25: Gombafonal Folytonosság Megszakadása Teszt~~ 
 - [x] ~~26: Rovar Irány Megadás Teszt~~
   - MEGJEGYZÉS: Változtatás a getSzomszedosTektonok() hivasban.
 - [x] ~~27: Rovar Irány Megadás Teszt - Fonallal nem összekötött tektonok~~

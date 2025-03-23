@@ -130,11 +130,11 @@ public class Gombasz extends Player {
         //CallTracer.exit("getGombaTets", "gt");
 
         CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "t1");
-        if(g.fonalFolytonossagVizsgalat(t1)){
+        /**if(g.fonalFolytonossagVizsgalat()){
             CallTracer.exit("fonalFolytonossagVizsgalat", "true");
         } else {
             CallTracer.exit("fonalFolytonossagVizsgalat", "HIBA");
-        }
+        }**/
 
         CallTracer.enter("Gombafonal", "Gombafonal", "t1, t2");
         Gombafonal gf = new Gombafonal(t1, t2);

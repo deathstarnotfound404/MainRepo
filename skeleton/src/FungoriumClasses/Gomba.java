@@ -1,7 +1,6 @@
 package FungoriumClasses;
 
 import CallTracer.CallTracer;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,11 +73,23 @@ public class Gomba implements IDestroyable {
         //TODO sekvencia szerint megírni
     }
 
-    public boolean fonalFolytonossagVizsgalat(Tekton t1) {
+    public List<Gombafonal> fonalFolytonossagVizsgalat() {
         //Fonalak folytonosak-e t1-ig, el lehet e jutni az alapgombából t1-ig
         //Az üzleti logika alapján döntjük majd el.
         //return false, ha nem folytonos
-        return true;
+        List<Gombafonal> listOfDisconnectedFonalak = new ArrayList<Gombafonal>();
+        for(List<Gombafonal> l : fonalLista){
+            for(Gombafonal f : l){
+                CallTracer.enter("connectedToAlapGomba", "Gombafonal", "");
+                if(!f.connectedToAlapGomba()){
+                    listOfDisconnectedFonalak.add(f);
+                    CallTracer.exit("connectedToAlapGomba", "false");
+                }else {
+                    CallTracer.exit("connectedToAlapGomba", "true");
+                }
+            }
+        }
+        return listOfDisconnectedFonalak;
     }
 
     public void fonalFelszivodas(Gombafonal gf) {
