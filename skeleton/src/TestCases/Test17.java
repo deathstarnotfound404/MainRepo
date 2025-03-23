@@ -6,34 +6,65 @@ import java.util.*;
 /**
  * A {@code Test17} osztály a 17. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>17: Gomba Spóra Termelés Teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A teszt ellenőrzi a Gombák spóra temelésekor hivatkozott hívási láncot.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *          <li>Gombászon meghívjuk az összes GombaTest termelését</li>
+ *          <li>A Gombákon egyesével meghívódik a termelés</li>
+ *          <li>Döntés: A Gombatest Szintje:</li>
+ *          <li>1. 1. szint</li>
+ *          <li>2. 2. szint</li>
+ *          <li>3. 3. szint</li>
+ *          <li>A termelés szinttől függően növeli a GombaTest spórakészletét</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link Gombasz} - A teszt során használt Gombasz objektum.</li>
+ *     <li>{@link Gomba} - A teszt során használt Gomba objektum.</li>
+ *     <li>{@link TektonHatas} - A teszt során használt TektonHatas objektum.</li>
+ *     <li>{@link GombaTest} - A teszt során használt GombaTest objektum.</li>
+ * </ul>
+ *
+ * @author Kozma Szabolcs
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
 
 public class Test17 extends TestCase implements ITestCase {
     //Test attributes
-    /** Javadoc, attributumok leirasa. */
-
+    /** A tesztben használt Gombász objektum*/
     Gombasz gsz;
+    /** Az egyik Gomba*/
     Gomba g1;
+    /** A másik Gomba*/
     Gomba g2;
+    /** Az egyik Gombához tartozó Gombatest*/
     GombaTest gt1;
+    /** A másik Gombához tartozó Gombatest*/
     GombaTest gt2;
+    /** Az egyik Tekton*/
     Tekton t1;
+    /** A másik Tekton*/
     Tekton t2;
+    /** Az egyik TektonHatás*/
     TektonHatas th1;
+    /** A másik TektonHatás*/
     TektonHatas th2;
 
     //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test17} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test17(CallTracer callTracer) {
         super(callTracer);
@@ -53,7 +84,7 @@ public class Test17 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amelyben a Gombák spóratermelését ellenőrizzük
      */
     @Override
     public void runTest() {
