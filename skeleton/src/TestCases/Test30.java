@@ -1,25 +1,42 @@
 package TestCases;
-
-import CallTracer.CallTracer;
+import CallTracer.*;
 import FungoriumClasses.*;
 
 /**
  * A {@code Test30} osztály a 30. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>30: Spóra Szórás Teszt - Nem szomszédos Tektonok</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * Nem lehetséges a spóraszórás, mert nem szomszédos a céltekton.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Nem szomszédos tekton célként történő kiválasztása.</li>
+ *     <li>A Gombatest szintjétől függően különböző helyzetek lépnek fel:</li>
+ *     <ul>
+ *         <li>1. szintű Gombatest: céltekton nem közvetlen szomszéd.</li>
+ *         <li>2. szintű Gombatest: céltekton nem közvetlen szomszéd.</li>
+ *         <li>3. szintű Gombatest: céltekton nem szomszéd vagy annak szomszédja.</li>
+ *     </ul>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A tesztelt objektum, amely a spóraszórást végzi.</li>
+ *     <li>{@link Tekton} - Tekton.</li>
+ *     <li>{@link Gomba} - A gomba, amelynek a szórását vizsgáljuk.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-21
  */
-
 public class Test30 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** Teszt attributumok. */
     private TektonHatas th1;
     private TektonHatas th2;
     private Gombasz gsz;
@@ -29,9 +46,10 @@ public class Test30 extends TestCase implements ITestCase {
     private Gomba g;
     private GombaTest gt;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test30} objektumot és inicializálja a tesztkörnyezetet.
+     * Fontos, hogy nem állítjuk be szomszédoknak a tektonokat
+     * @param callTracer a függvényhívások nyomon követésére szolgáló objektum
      */
     public Test30(CallTracer callTracer) {
         super(callTracer);
@@ -51,11 +69,10 @@ public class Test30 extends TestCase implements ITestCase {
         gt = new GombaTest(g, 5);  //10
         gt.setAlapGomba(g);
         g.setGombaTest(gt);
-       //Most nem állítjuk be szo,szédoknak a tektonokat
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely a spóraszórást ellenőrzi.
      */
     @Override
     public void runTest() {
