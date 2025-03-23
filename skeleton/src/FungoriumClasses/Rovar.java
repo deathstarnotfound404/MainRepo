@@ -1,23 +1,50 @@
 package FungoriumClasses;
+import CallTracer.*;
+import java.util.*;
 
-import CallTracer.CallTracer;
-
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * A {@code Rovar} osztály egy rovart reprezentál a játékban.
+ * A rovar képes mozogni, gombafonalakat elvágni, spórákat enni és tápanyagot gyűjteni.
+ */
 public class Rovar {
+    /**
+     * A rovar által gyűjtött tápanyag mennyisége.
+     */
     private int tapanyag = 0;
+
+    /**
+     * A rovar evési hatékonysága.
+     */
     private int evesHatekonysag = 1;
+
+    /**
+     * Jelzi, hogy a rovar maximális fogyasztási módba van-e kapcsolva.
+     */
     private boolean maxFogyasztas = false;
+
+    /**
+     * A rovar aktuális helyzete, amely egy {@code Tekton} objektum.
+     */
     private Tekton helyzet;
+
+    /**
+     * Jelzi, hogy a rovar képes-e gombafonalakat elvágni.
+     */
     private boolean tudVagni = true;
 
+    /**
+     * Létrehoz egy új {@code Rovar} objektumot alapértelmezett értékekkel.
+     */
     public Rovar() {
 
     }
 
+    /**
+     * A rovar elvág egy adott gombafonalat és eltávolítva azt a játékból.
+     *
+     * @param gf A vágandó gombafonal.
+     */
     public void vag(Gombafonal gf) {
-        //TODO szekvenciák alapján
         CallTracer.enter("getStartTekton", "Gombafonal", "");
         Tekton start = gf.getStartTekton();
         CallTracer.exit("getStartTekton", "");
@@ -38,6 +65,12 @@ public class Rovar {
         CallTracer.exit("deleteFonal", "");
     }
 
+    /**
+     * A rovar megpróbál egy szomszédos {@code Tekton}-ra lépni.
+     *
+     * @param celTekton A cél Tekton, ahová a rovar lépni szeretne.
+     * @return {@code true}, ha a mozgás sikeres, különben {@code false}.
+     */
     public boolean lep(Tekton celTekton) {
         Tekton t1 = helyzet;
         CallTracer.enter("getSzomszedosTektonok", "Tekton", "");
@@ -88,35 +121,65 @@ public class Rovar {
         }
     }
 
+    /**
+     * Beállítja a rovar aktuális helyzetét.
+     *
+     * @param t Az új helyzetet reprezentáló {@code Tekton} objektum.
+     */
     public void setHelyzet(Tekton t) {
         this.helyzet = t;
         t.setRovar(this);
     }
 
+    /**
+     * Visszaadja a rovar aktuális helyzetét.
+     *
+     * @return A rovar aktuális helyzetét reprezentáló {@code Tekton}.
+     */
     public Tekton getHelyzet() {
         return this.helyzet;
     }
 
+    /**
+     * Beállítja a rovar tápanyagának mennyiségét.
+     *
+     * @param val Az új tápanyagszint.
+     */
     public void setTapanyag(int val) {
         this.tapanyag = val;
     }
 
+    /**
+     * Visszaadja a rovar aktuális tápanyagszintjét.
+     *
+     * @return A rovar tápanyagszintje.
+     */
     public int getTapanyag() {
         return this.tapanyag;
     }
 
+    /**
+     * Növeli a rovar tápanyagát a megadott értékkel.
+     *
+     * @param val A növelés mértéke.
+     */
     public void addTapanyag(int val) {
         this.tapanyag += val;
     }
 
+    /**
+     * Visszaállítja a rovar képességeit az alapértékekre.
+     */
     public void kepessegekAlaphelyzetbe() {
         evesHatekonysag = 1;
         maxFogyasztas = false;
         tudVagni = true;
     }
 
+    /**
+     * A rovar elfogyasztja az elérhető spórákat a jelenlegi helyén.
+     */
     public void sporaEves() {
-        //TODO szekvenciák alapján
         CallTracer.enter("getSporaLista", "Tekton", "");
         List<BaseSpora> sporaLista = helyzet.getSporaLista();
         CallTracer.exit("getSporaLista", "sporaLista");
@@ -131,6 +194,9 @@ public class Rovar {
         }
     }
 
+    /**
+     * További setterek és getterek
+     */
     public void setEvesHatekonysag(int val) {
         this.evesHatekonysag = val;
     }
