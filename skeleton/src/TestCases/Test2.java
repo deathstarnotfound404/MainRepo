@@ -22,7 +22,7 @@ import FungoriumClasses.*;
  * @author Kozma Szabolcs
  * @version 1.0
  * @since 2025-03-21
- */
+ **/
 
 public class Test2 extends TestCase implements ITestCase{
     /** A tesztben szereplő mező */

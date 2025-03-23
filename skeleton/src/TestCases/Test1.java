@@ -21,7 +21,7 @@ import java.util.*;
  * @author Kozma Szabolcs
  * @version 1.0
  * @since 2025-03-22
- */
+ **/
 
 public class Test1 extends TestCase implements ITestCase{
     /** A tesztben szereplő mező */
