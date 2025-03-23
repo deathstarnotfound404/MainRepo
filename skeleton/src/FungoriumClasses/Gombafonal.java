@@ -33,7 +33,8 @@ public class Gombafonal implements IDestroyable {
         Tekton alapTekton = AlapGomba.getTekton();
         for(List<Gombafonal> l : listaLista){
             if(l.contains(this)) {
-                List<Gombafonal> reversedList = l.reversed();           // this.startTekton--- ... --- AlapTekton
+                List<Gombafonal> reversedList = new ArrayList<Gombafonal>(l);
+                Collections.reverse(reversedList);
                 int indexOfThis = reversedList.indexOf(this);
                 List<Gombafonal> subList = reversedList.subList(indexOfThis, reversedList.size());
                 for(Gombafonal f : subList){
