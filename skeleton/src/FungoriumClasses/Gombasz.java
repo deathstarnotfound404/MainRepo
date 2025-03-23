@@ -1,29 +1,50 @@
 package FungoriumClasses;
 import CallTracer.*;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * A {@code Gombasz} osztály a játékosokat reprezentálja, akik gombákat irányítanak.
+ */
 public class Gombasz extends Player {
     private List<Gomba> gombaLista;
 
+    /**
+     * Létrehoz egy új {@code Gombasz} objektumot és inicializálja az üres gombalistát.
+     */
     public Gombasz() {
         gombaLista = new ArrayList<Gomba>();
     }
 
+    /**
+     * Hozzáad egy gombát a gombászhoz.
+     *
+     * @param g A hozzáadandó {@code Gomba}.
+     */
     public void addGomba(Gomba g) {
         gombaLista.add(g);
     }
 
+    /**
+     * Visszaadja a gombászhoz tartozó gombák listáját.
+     *
+     * @return A gombák listája.
+     */
     public List<Gomba> getGombaLista() {
         return gombaLista;
     }
 
+    /**
+     * Kiszámítja az összes gombatest pontszámát.
+     *
+     * @return Az összesített pontszám.
+     */
     public int calcAllGombatestScore() {
-        //TODO szekvenciákkal egyeztetni
         return 0;
     }
 
+    /**
+     * Az összes gomba elvégzi a spóratermelési folyamatot.
+     */
     public void sporaTermelesAll() {
         for(Gomba g : gombaLista){
             CallTracer.enter("sporaTermeles", "Gomba", "");
@@ -32,11 +53,23 @@ public class Gombasz extends Player {
         }
     }
 
+    /**
+     * Ellenőrzi, hogy a fonal lerakása végrehajtható-e.
+     *
+     * @return {@code true}, ha a fonal lerakása lehetséges, különben {@code false}.
+     */
     public boolean fonalLerakasEllenorzes() {
         //return false, ha az üzlezi logika szerint a fonal lerakasa nem elvegezhető -> t1 ből t2 be.
         return true;
     }
 
+    /**
+     * Szórást hajt végre egy adott gombával egy céltektonra.
+     *
+     * @param g         A szórást végző {@code Gomba}.
+     * @param celTekton A cél {@code Tekton}.
+     * @return {@code true}, ha a szórás sikeres, különben {@code false}.
+     */
     public boolean szoras(Gomba g, Tekton celTekton) {
         CallTracer.enter("getGombaTest", "Gomba", "");
         GombaTest gt = g.getGombaTest();
@@ -56,6 +89,12 @@ public class Gombasz extends Player {
         }
     }
 
+    /**
+     * Fonalat vásárol egy adott gombával.
+     *
+     * @param g A vásárlást végző {@code Gomba}.
+     * @return {@code true}, ha a vásárlás sikeres, különben {@code false}.
+     */
     public boolean fonalVasarlas(Gomba g) {
         CallTracer.enter("getGombaTest", "Gomba", "");
         GombaTest gt = g.getGombaTest();
@@ -75,6 +114,12 @@ public class Gombasz extends Player {
         return val;
     }
 
+    /**
+     * Gombatest növesztése egy adott tektonon.
+     *
+     * @param t A cél {@code Tekton}.
+     * @return {@code true}, ha a növesztés sikeres, különben {@code false}.
+     */
     public boolean gombatestNovesztes(Tekton t) {
         CallTracer.enter("getVanGombaTest", "Tekton", "");
         if (!t.getVanGombaTest()) {
@@ -112,10 +157,25 @@ public class Gombasz extends Player {
         return true;
     }
 
+    /**
+     * Gombafonal növesztése két tekton között.
+     *
+     * @param g          A növesztést végző {@code Gomba}.
+     * @param startTekton A kezdő {@code Tekton}.
+     * @param celTekton   A cél {@code Tekton}.
+     */
     public void gombafonalNovesztes(Gomba g, Tekton startTekton, Tekton celTekton) {
-
+        //Implementáció később
     }
 
+    /**
+     * Gombafonal irányítását végzi két tekton között.
+     *
+     * @param t1         A kiindulási {@code Tekton}.
+     * @param t2         A cél {@code Tekton}.
+     * @param recursively Ha igaz, akkor a folyamat rekurzívan folytatódik, ha hamis akkor az első végrehajtás után visszatér.
+     * @return {@code true}, ha a művelet sikeres, különben {@code false}.
+     */
     public boolean gombafonalIranyitas(Tekton t1, Tekton t2, boolean recursively) {
         CallTracer.enter("fonalLerakasEllenorzes", "Gombasz", "");
         if (this.fonalLerakasEllenorzes()){
