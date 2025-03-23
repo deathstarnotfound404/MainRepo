@@ -1,33 +1,47 @@
 package TestCases;
-
 import CallTracer.CallTracer;
-import FungoriumClasses.GombaTestGatloHatas;
-import FungoriumClasses.Tekton;
-import FungoriumClasses.TektonHatas;
+import FungoriumClasses.*;
 
 /**
  * A {@code Test14} osztály a 14. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>14: Tekton Hatás Kifejtés: GombatestGatloHatas teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A {@link Tekton} hatás kifejtésének tesztelése {@link GombaTestGatloHatas} objektummal.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Előzmények: {@code GombaTestGatloHatas} típusú hatással rendelkező {@code Tekton} létrehozása.</li>
+ *     <li>Hatás beállítása a Tektonon.</li>
+ *     <li>Hatás kifejtése a Tektonon.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link GombaTestGatloHatas} - A Tekton hatását befolyásoló gátló hatás.</li>
+ *     <li>{@link TektonHatas} - Általános Tekton hatás.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-21
  */
-
 public class Test14 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** A GombatestGátló hatás objektum. */
     GombaTestGatloHatas h;
+
+    /** A Tekton objektum, amelyre a hatás kifejtődik. */
     Tekton t1;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test14} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test14(CallTracer callTracer) {
         super(callTracer);
@@ -37,7 +51,7 @@ public class Test14 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely során a Tekton gátló hatás kifejtését teszteljük.
      */
     @Override
     public void runTest() {
