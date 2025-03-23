@@ -48,7 +48,14 @@ jobs:
         shell: pwsh
         run: |
           if (Test-Path bin/Skeleton.class) { 
-            echo "run test --auto`n1`n1`n1`nexit" | java -cp bin Skeleton 
+            $commands = @"
+            run test --auto
+            1
+            1
+            1
+            exit
+            "@
+            $commands | java -cp bin Skeleton 
           } else { 
             Write-Host "Skeleton class not found"; 
             exit 1 
