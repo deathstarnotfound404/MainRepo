@@ -6,30 +6,59 @@ import FungoriumClasses.*;
 /**
  * A {@code Test11} osztály a 11. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>11: Tekton Hatás Kifejtés: FonalFelszivodoHatas teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A {@link Tekton} hatás kifejtésének tesztelése {@link FonalFelszivodoHatas} objektummal.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Előzmények: {@code FonalFelszivodoHatas} típusú hatással rendelkező {@code Tekton} létrehozása.</li>
+ *     <li>Legalább két szomszédos {@code Tekton} létrehozása, kapcsolódó fonalakkal.</li>
+ *     <li>{@code Gomba} létrehozása valamelyik {@code Tekton}-on.</li>
+ *     <li>Hatás kifejtése a {@code Tekton}-on.</li>
+ *     <li>Fonalak felszívása a szomszédos {@code Tekton}-okon.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link FonalFelszivodoHatas} - A Tektonhoz kapcsolódó fonalakat felszívó hatás.</li>
+ *     <li>{@link TektonHatas} - Általános Tekton hatás.</li>
+ *     <li>{@link Gombafonal} - A gombafonal objektum, amely összeköti a Tektonokat.</li>
+ *     <li>{@link Gomba} - A gomba objektum, amely egy Tektonon helyezkedik el.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
-
 public class Test11 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** Az első Tekton objektum. */
     Tekton t1;
+
+    /** A FonalFelszivodoHatas típusú hatás. */
     FonalFelszivodoHatas h1;
-    TektonHatas h2;
+
+    /** A gombafonal objektum. */
     Gombafonal gf;
+
+    /** A gomba objektum. */
     Gomba g;
+
+    /** A második Tekton objektum. */
     Tekton t2;
 
-    //Test init
+    /** Egy általános TektonHatas objektum. */
+    TektonHatas h2;
+
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test11} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test11(CallTracer callTracer) {
         super(callTracer);
@@ -52,7 +81,7 @@ public class Test11 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely során a Tekton fonal felszívó hatáskifejtését teszteljük.
      */
     @Override
     public void runTest() {
