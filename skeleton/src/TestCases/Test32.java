@@ -1,22 +1,37 @@
 package TestCases;
-
 import CallTracer.CallTracer;
 import FungoriumClasses.*;
 
 /**
  * A {@code Test32} osztály a 32. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A spóraszórás során a céltektonon már van egy gombatest.
+ * A céltektonon levő gombatest megkapja a spórákat.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>A spóraszórás sikeres elvégzése.</li>
+ *     <li>Az érkező spóra objektumokat a listából átveszi a GombaTest.</li>
+ *     <li>A Spórákat a művelet elpusztítja a GombaTestekbe történő átvezetést követően.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A tesztelt objektum, amely a spóraszórást végzi.</li>
+ *     <li>{@link Tekton} - Tekton.</li>
+ *     <li>{@link Gomba} - A gomba, amelynek spóráit vizsgáljuk.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
-
 public class Test32 extends TestCase implements ITestCase {
     //Test attributes
     /** Javadoc, attributumok leirasa. */
@@ -31,9 +46,10 @@ public class Test32 extends TestCase implements ITestCase {
     private Gomba g2;
     private GombaTest gt2;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test32} objektumot és inicializálja a tesztkörnyezetet.
+     *
+     * @param callTracer a függvényhívások nyomon követésére szolgáló objektum
      */
     public Test32(CallTracer callTracer) {
         super(callTracer);
@@ -65,7 +81,7 @@ public class Test32 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely a spóraszórást ellenőrzi.
      */
     @Override
     public void runTest() {
@@ -78,6 +94,9 @@ public class Test32 extends TestCase implements ITestCase {
         reset();
     }
 
+    /**
+     * Visszaállítja a tesztkörnyezetet az alapállapotba.
+     */
     public void reset() {
         th1 = new TektonHatas();     //1;
         gsz = new Gombasz();        //2;
