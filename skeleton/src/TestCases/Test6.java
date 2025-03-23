@@ -6,31 +6,56 @@ import java.util.*;
 
 /**
  * A {@code Test6} osztály a hatodik szkeleton tesztesetet implementálja.
+ * <p><b>6: Gombatest Szintlépés Teszt</b></p>
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A gombatest szintlépésének ellenőrzése.</p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
  *
- * @author Your Name
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Előzmények: Gombatest 1. szintű, valamint spóra szórás 3-mal osztható</li>
+ *     <li>Gomba spórát szór</li>
+ *     <li>GombaTest szintlépése megtörténik</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A gombászt reprezentáló osztály.</li>
+ *     <li>{@link Gomba} - A gomba objektum, amit a gombász irányít.</li>
+ *     <li>{@link GombaTest} - A gomba növekedési és fejlődési fázisait kezelő osztály.</li>
+ *     <li>{@link Tekton} - A gomba elhelyezkedését reprezentáló objektum.</li>
+ *     <li>{@link TektonHatas} - A Tektonhoz kapcsolódó hatások osztálya.</li>
+ * </ul>
+ *
+ * @author Kozma Szabolcs
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-21
  */
-
 public class Test6 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
-
+    // Teszt attribútumok
+    /** A gombászt reprezentáló objektum. */
     Gombasz gsz;
+
+    /** A gomba. */
     Gomba g;
+
+    /** A gomba növekedéséért felelős GombaTest objektum. */
     GombaTest gt;
+
+    /** A Tektonhoz tartozó hatás. */
     TektonHatas th2;
+
+    /** Tekton. */
     Tekton t2;
 
-    //Test init
+    // Teszt inicializálás
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test6} objektumot, amely előkészíti a gombát és a gombászt a teszthez.
+     *
+     * @param callTracer A híváskövetőt tartalmazó objektum.
      */
     public Test6(CallTracer callTracer) {
         super(callTracer);
@@ -42,7 +67,7 @@ public class Test6 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely során a Gombatest szintlépését ellenőrizzük.
      */
     @Override
     public void runTest() {
