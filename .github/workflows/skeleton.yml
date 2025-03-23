@@ -44,24 +44,14 @@ jobs:
           javac -cp bin -d bin (Get-ChildItem -Path "$SRC_PATH/TestCases" -Recurse -Filter "*.java").FullName
           javac -cp bin -d bin "$SRC_PATH/Skeleton.java"
 
-      - name: Input előkészítése
-        shell: pwsh
-        run: |
-          @"
-          run test --auto
-          1
-          1
-          1
-          exit
-          "@ | Out-File -Encoding utf8 input.txt
-
-      - name: Projekt futtatása input fájlból
+      - name: Projekt futtatása
         shell: pwsh
         run: |
           if (Test-Path bin/Skeleton.class) { 
-            Get-Content input.txt | java -cp bin Skeleton 
+            echo "run test --auto`nexit" | java -cp bin Skeleton 
           } else { 
             Write-Host "Skeleton class not found"; 
             exit 1 
           }
+
 
