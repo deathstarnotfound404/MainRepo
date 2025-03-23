@@ -103,6 +103,10 @@ public class Skeleton {
                 System.out.println(HELP_MESSAGE);
             } else if (input.equalsIgnoreCase("ls")) {
                 listTests();
+            } else if (input.equalsIgnoreCase("run test --all") || input.equalsIgnoreCase("run test -a")){
+                System.out.println("#######################################################################################");
+                System.out.println("Run all the tests");
+                testDump();
             } else if (input.startsWith("run test")) {
                 System.out.println("------------------");
                 runTest(input);
@@ -117,6 +121,43 @@ public class Skeleton {
         }
 
         scanner.close();
+    }
+
+    private static void testDump() {
+        int testNumber = 0;
+        Scanner scanner = new Scanner(System.in); // Scanner inicializálása
+        for (Map.Entry<Integer, String> entry : TEST_CASE_NAMES.entrySet()) {
+            testNumber = entry.getKey();
+            ITestCase testCase = TEST_CASE_CLASSES.get(testNumber);
+            if (TEST_CASE_NAMES.containsKey(testNumber)) {
+                System.out.println("---------------------------------[Test" + testNumber + "]---------------------------------");
+                System.out.println("Running test: " + TEST_CASE_NAMES.get(testNumber));
+                executeTest(testNumber, testCase);
+                System.out.println();
+            } else {
+                System.out.println("Test" + testNumber + " not found.");
+            }
+
+            String input;
+            while (true) {
+                System.out.println("Press 'n' to continue or 'q' to quit:");
+                System.out.print("> ");
+                input = scanner.nextLine().trim().toLowerCase(); // Kisbetűsítés és felesleges szóközök eltávolítása
+
+                if (input.equals("n")) {
+                    break; // Folytatja a ciklust
+                } else if (input.equals("q")) {
+                    System.out.println("Exiting execution dump.");
+                    System.out.println("#######################################################################################");
+                    return; // Kilép a függvényből
+                } else {
+                    System.out.println("Invalid input. Please enter 'n' to continue or 'q' to quit.");
+                }
+            }
+        }
+
+        System.out.println("All tests completed.");
+        System.out.println("#######################################################################################");
     }
 
     private static void listTests() {
@@ -137,7 +178,7 @@ public class Skeleton {
             int testNumber = Integer.parseInt(parts[2]);
             ITestCase testCase = TEST_CASE_CLASSES.get(testNumber);
             if (TEST_CASE_NAMES.containsKey(testNumber)) {
-                System.out.println("Running test: " + TEST_CASE_NAMES.get(testNumber));
+                System.out.println("Running test " + testNumber + ": " + TEST_CASE_NAMES.get(testNumber));
                 executeTest(testNumber, testCase);
             } else {
                 System.out.println("Test not found. Use 'ls' to list available tests.");

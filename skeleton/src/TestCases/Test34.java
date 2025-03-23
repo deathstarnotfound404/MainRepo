@@ -34,6 +34,8 @@ public class Test34 extends TestCase implements ITestCase {
      */
     @Override
     public void runTest() {
+        CallTracer.enter("gombafonalIranyitas", "Gombasz", "t1, t2");
 
+        CallTracer.exit("gombafonalIranyitas", "HIBA: Not Implemented");
     }
 }

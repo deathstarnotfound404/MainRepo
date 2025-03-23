@@ -62,10 +62,13 @@ public class Test33 extends TestCase implements ITestCase {
     @Override
     public void runTest() {
         CallTracer.enter("gombafonalIranyitas", "Gombasz", "t1, t2");
+        /*
         if (gsz.gombafonalIranyitas(t1, t2, true)) {    //előre tudjuk, hogy t2-n van spóra, ezért állítjuk true-ra
             CallTracer.exit("gombafonalIranyitas", "true");
         } else {
             CallTracer.exit("gombafonalIranyitas", "HIBA");
         }
+        */
+        CallTracer.exit("gombafonalIranyitas", "HIBA: Not Implemented");
     }
 }
