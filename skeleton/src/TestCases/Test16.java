@@ -4,26 +4,56 @@ import CallTracer.CallTracer;
 import FungoriumClasses.*;
 
 /**
- * A {@code Test16} osztály a 16. szkeleton tesztesetet implementálja. Tekton Kettétörés Teszt - nincs Rovar a tektonon implementálása
+ * A {@code Test16} osztály a 16. szkeleton tesztesetet implementálja.
+ *
+ * <p><b>16: Tekton Kettétörés Teszt - nincs Rovar a tektonon</b></p>
+ *
+ * <p><b>Rövid leírás:</b><br>
+ * A {@link Tekton} törés szimuláció, úgy, hogy nincs a Tektonon {@link Rovar}</p>
+ *
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *          <li>Fonalak felszívása a kettétörő Tektonon</li>
+ *          <li>Fokszám és kapcsolódó fonalak csökkentése a fonallal kapcsolt Tektonokon.</li>Fokszám és kapcsolódó fonalak csökkentése a fonallal kapcsolt Tektonokon.
+ *          <li>A Tektonon lévő Gomba vagy Spórák törlése.</li>
+ *          <li>Két új tekton létrehozása</li>
+ *          <li>A régi tekton szomszédai, a létrejövő két új szomszidaivá válnak</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektumok.</li>
+ *     <li>{@link TektonHatas} - A Tektonon ható hatás objektum.</li>
+ * </ul>
  *
  * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-21
+ * @since 2025-03-22
  */
 
 public class Test16 extends TestCase implements ITestCase {
     //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** A Tektonokon ható tektonhatás*/
     private TektonHatas h;
+    /** Az egyik Tekton*/
     private Tekton t1;
+    /** A másik tekton*/
     private Tekton t2;
+    /** A Rovar*/
     Rovar r;
+    /** A Gombafonal ami a tektonok között húzódik*/
     Gombafonal gf;
+    /** A Gomba ami az egyik tektonon helyezkedik el*/
     Gomba g;
 
     //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test16} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test16(CallTracer callTracer) {
         super(callTracer);
@@ -44,7 +74,7 @@ public class Test16 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, ami a tektontörést szimulálja úgy, hogy nincsen rajta Rovar
      */
     @Override
     public void runTest() {
