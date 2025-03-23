@@ -4,6 +4,10 @@ package FungoriumClasses;
 /**
  * A {@code GombaTest} osztály egy gombatestet reprezentál a játékban.
  * Tartalmazza a kapcsolódó gombát, a spórakészletet, a szintet és a szórási számlálót.
+ *
+ * @author Botos Dániel
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class GombaTest implements IDestroyable {
     private Gomba AlapGomba;

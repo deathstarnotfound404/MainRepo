@@ -4,6 +4,10 @@ import java.util.*;
 
 /**
  * A {@code Gombasz} osztály a játékosokat reprezentálja, akik gombákat irányítanak.
+ *
+ * @author Botos Dániel, Kozma Szabolcs, Czene Zsombor
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class Gombasz extends Player {
     private List<Gomba> gombaLista;

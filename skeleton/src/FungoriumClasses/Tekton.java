@@ -5,6 +5,10 @@ import java.util.*;
 /**
  * A {@code Tekton} osztály egy Tektont, mint csomópontot reprezentál a játékban.
  * Egy tekton különböző spórákat és gombafonalakat tartalmazhat, valamint egy rovar vagy egy gomba is tartózkodhat rajta.
+ *
+ * @author Bekő Máté
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class Tekton implements IDestroyable {
     //private int id = 0; -

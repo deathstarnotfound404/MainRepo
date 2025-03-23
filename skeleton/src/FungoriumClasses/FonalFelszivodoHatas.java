@@ -13,7 +13,7 @@ import CallTracer.CallTracer;
  *     <li>{@link CallTracer} - A híváskövetési mechanizmust biztosító osztály.</li>
  * </ul>
  *
- * @author NAME
+ * @author Bekő Máté
  * @version 1.0
  * @since 2025-03-19
  */

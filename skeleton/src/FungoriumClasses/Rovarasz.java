@@ -4,6 +4,10 @@ import CallTracer.*;
 /**
  * A {@code Rovarasz} osztály egy játékost reprezentál, aki egy rovart irányít a játékban.
  * A rovarász képes mozgatni a rovarját, gombafonalakat vágni és pontokat gyűjteni a tápanyagok alapján.
+ *
+ * @author Botos Dániel
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class Rovarasz extends Player {
     /**

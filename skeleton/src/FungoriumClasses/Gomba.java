@@ -17,7 +17,7 @@ import java.util.*;
  *     <li>{@link CallTracer} - A program futásának nyomon követésére szolgáló osztály.</li>
  * </ul>
  *
- * @author NAME
+ * @author Botos Dániel, Kozma Szabolcs, Czene Zsombor
  * @version 1.0
  * @since 2025-03-19
  */

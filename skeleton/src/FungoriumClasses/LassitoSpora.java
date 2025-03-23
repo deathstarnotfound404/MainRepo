@@ -3,6 +3,10 @@ import CallTracer.*;
 
 /**
  * A {@code LassitoSpora} osztály a lassító hatású spórát reprezentálja, amely csökkenti a rovarok fogyasztási képességét.
+ *
+ * @author Pünkösti Györk
+ * @version 1.0
+ * @since 2025-03-19
  */
 public class LassitoSpora extends BaseSpora {
     /**

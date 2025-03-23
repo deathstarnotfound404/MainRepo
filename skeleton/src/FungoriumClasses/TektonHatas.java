@@ -3,6 +3,10 @@ package FungoriumClasses;
 /**
  * A TektonHatas osztály egy tektonhoz társított hatást reprezentál.
  * Az osztály lehetőséget biztosít egy tekton tárolására és egy alapértelmezett hatás visszaadására.
+ *
+ * @author Bekő Máté
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class TektonHatas {
 

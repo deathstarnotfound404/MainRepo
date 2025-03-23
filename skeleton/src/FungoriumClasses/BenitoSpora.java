@@ -7,7 +7,7 @@ import CallTracer.*;
  * <p>Az osztály a {@link BaseSpora} leszármazottja, és felülírja annak {@code hatas()} metódusát,
  * amely a rovar fogyasztásának képességeit nullára csökkenti.</p>
  *
- * @author NAME
+ * @author Pünkösti Györk
  * @version 1.0
  * @since 2025-03-19
  */

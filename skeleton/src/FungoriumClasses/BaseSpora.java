@@ -7,7 +7,7 @@ package FungoriumClasses;
  *
  * <p>Az osztály az {@link IDestroyable} interfészt valósítja meg, így minden spóra elpusztítható.</p>
  *
- * @author NAME
+ * @author Pünkösti Györk
  * @version 1.0
  * @since 2025-03-19
  */

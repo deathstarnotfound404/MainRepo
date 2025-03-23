@@ -5,6 +5,10 @@ import java.util.*;
 /**
  * A {@code Gombafonal} osztály egy gombafonalat reprezentál, amely két {@code Tekton} között húzódik.
  * A fonalak kapcsolatot teremtenek a gombák között és biztosítják az összeköttetést a tektonok között.
+ *
+ * @author Botos Dániel, Kozma Szabolcs, Czene ZSombor
+ * @version 1.0
+ * @since 2025-03-18
  */
 public class Gombafonal implements IDestroyable {
     private Gomba AlapGomba;

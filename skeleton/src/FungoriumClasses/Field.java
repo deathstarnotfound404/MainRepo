@@ -15,7 +15,7 @@ import java.util.*;
  *     <li>{@link Gombasz} - A gombász szerepű játékosokat reprezentáló osztály.</li>
  * </ul>
  *
- * @author NAME
+ * @author Bekő Máté, Kozma Szabolcs, Czene Zsombor
  * @version 1.0
  * @since 2025-03-18
  */

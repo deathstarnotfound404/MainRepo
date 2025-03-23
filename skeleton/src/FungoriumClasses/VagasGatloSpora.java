@@ -5,6 +5,9 @@ import CallTracer.*;
  * A VagasGatloSpora osztály egy speciális spórát reprezentál, amely
  * megakadályozza a rovarok vágási képességét.
  * A BaseSpora osztályból származik, és felülírja a hatás metódust.
+ * @author Pünkösti Györk
+ * @version 1.0
+ * @since 2025-03-19
  */
 public class VagasGatloSpora extends BaseSpora {
     /**

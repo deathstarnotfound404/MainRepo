@@ -3,6 +3,10 @@ package FungoriumClasses;
 /**
  * A {@code Player} absztrakt osztály egy játékost reprezentál a játékban.
  * Minden játékos rendelkezik egy pontszámmal, amelyet növelhet vagy beállíthat.
+ *
+ * @author Botos Dániel
+ * @version 1.0
+ * @since 2025-03-18
  */
 public abstract class Player {
     /**
