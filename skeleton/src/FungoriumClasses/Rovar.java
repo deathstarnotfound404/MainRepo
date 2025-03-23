@@ -19,7 +19,7 @@ public class Rovar {
     /**
      * A rovar evési hatékonysága.
      */
-    private int evesHatekonysag = 1;
+    private double evesHatekonysag = 1;
 
     /**
      * Jelzi, hogy a rovar maximális fogyasztási módba van-e kapcsolva.
@@ -187,7 +187,11 @@ public class Rovar {
         CallTracer.enter("getSporaLista", "Tekton", "");
         List<BaseSpora> sporaLista = helyzet.getSporaLista();
         CallTracer.exit("getSporaLista", "sporaLista");
-        List<BaseSpora> megevendo = sporaLista.subList(0,evesHatekonysag);
+        int mennyiseg = (int) Math.floor(sporaLista.size() * evesHatekonysag);
+        if(sporaLista.size() == 1){
+            mennyiseg = 1;
+        }
+        List<BaseSpora> megevendo = sporaLista.subList(0,mennyiseg);
         for(BaseSpora s: megevendo){
             CallTracer.enter("addTapanyag", "Rovar", "s.tapanyag");
             addTapanyag(s.tapanyag);
@@ -201,11 +205,11 @@ public class Rovar {
     /**
      * További setterek és getterek
      */
-    public void setEvesHatekonysag(int val) {
+    public void setEvesHatekonysag(double val) {
         this.evesHatekonysag = val;
     }
 
-    public int getEvesHatekonysag(List<ArrayList> sporaLista) {
+    public double getEvesHatekonysag(List<ArrayList> sporaLista) {
         return this.evesHatekonysag;
     }
 

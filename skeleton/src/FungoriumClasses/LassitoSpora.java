@@ -28,7 +28,7 @@ public class LassitoSpora extends BaseSpora {
         r.setMaxFogyasztas(false);
         CallTracer.exit("setMaxFogyasztas", "");
         CallTracer.enter("setEvesHatekonysag", "Rovar", "0.25");
-        //TODO: r.setEvesHatekonysag(0.25)
+        r.setEvesHatekonysag(0.25);
         CallTracer.exit("setEvesHatekonysag", "");
     }
 }
