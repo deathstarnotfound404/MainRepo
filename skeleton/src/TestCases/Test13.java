@@ -1,34 +1,52 @@
 package TestCases;
-
-import CallTracer.CallTracer;
-import FungoriumClasses.FonalGatloHatas;
-import FungoriumClasses.Tekton;
-
+import CallTracer.*;
+import FungoriumClasses.*;
 import java.util.Arrays;
 
 /**
  * A {@code Test13} osztály a 13. szkeleton tesztesetet implementálja.
  *
- * <p>Az osztály tartalmazza a ... (attribútumok felsorolása).
- * Lehetőséget biztosít az /num/. teszteset végrehajtására ami ... (mit csinál).</p>
+ * <p><b>13: Tekton Hatás Kifejtés: FonalGatloHatas teszt</b></p>
  *
- * <p>Kapcsolódó osztályok:
- * {@link Osztaly} - ... (funkcio: pl: EGy gombafonalhoz tartozó start és céltekton).</p>
+ * <p><b>Rövid leírás:</b><br>
+ * A {@link Tekton} hatás kifejtésének tesztelése {@link FonalGatloHatas} objektummal.</p>
  *
- * @author Your Name
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>Hatás kifejtése a {@code Tekton}-on.</li>
+ *     <li>Interakció a felhasználóval:</li>
+ *     <ul>
+ *         <li>Döntés: A Tektonon már van fonal?</li>
+ *         <li>1. Igen - a gátló hatás érvényesül, nem növeszthető több fonal.</li>
+ *         <li>2. Nem - a gátló hatás nem érvényesül, lehet még egy fonalat növeszteni.</li>
+ *     </ul>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Tekton} - A teszt során használt Tekton objektum.</li>
+ *     <li>{@link FonalGatloHatas} - A Tektonhoz kapcsolódó fonalnövekedést gátló hatás.</li>
+ * </ul>
+ *
+ * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-18
+ * @since 2025-03-22
  */
-
 public class Test13 extends TestCase implements ITestCase{
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** A FonalGatloHatas típusú hatás. */
     FonalGatloHatas h;
+
+    /** Tekton objektum. */
     Tekton t1;
 
-    //Test init
+
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test13} objektumot, amely inicializálja a szükséges objektumokat a teszthez.
+     *
+     * @param callTracer A híváskövető és logoló objektum.
      */
     public Test13(CallTracer callTracer) {
         super(callTracer);
@@ -38,7 +56,7 @@ public class Test13 extends TestCase implements ITestCase{
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely során a Tekton fonal gátló hatáskifejtését teszteljük.
      */
     @Override
     public void runTest() {
