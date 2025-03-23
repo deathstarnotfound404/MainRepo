@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 public class Tekton implements IDestroyable {
+    //private int id = 0; -
     private int rovarLatogatottsag = 0;
     private int fonalFokszam = 0;
     private List<BaseSpora> sporaLista;
@@ -24,6 +25,20 @@ public class Tekton implements IDestroyable {
         this.szomszedosTektonok = new ArrayList<>();
         this.tektonHatasa = hatas;
     }
+
+    /*
+    public Tekton(TektonHatas hatas, int id) {
+        this.sporaLista = new ArrayList<>();
+        this.kapcsolodoFonalak = new ArrayList<>();
+        this.szomszedosTektonok = new ArrayList<>();
+        this.tektonHatasa = hatas;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+    */
 
     public String hatasKifejtes() {
         CallTracer.enter("hatas", "TektonHatas", "");

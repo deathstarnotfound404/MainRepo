@@ -89,7 +89,11 @@ public class Gomba implements IDestroyable {
                 }
             }
         }
-        return listOfDisconnectedFonalak;
+        if (listOfDisconnectedFonalak.isEmpty()){
+            return null;
+        } else {
+            return listOfDisconnectedFonalak;
+        }
     }
 
     public void fonalFelszivodas(Gombafonal gf) {

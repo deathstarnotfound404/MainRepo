@@ -28,6 +28,13 @@ public class Gombafonal implements IDestroyable {
         return celTekton;
     }
 
+    private void switchStartCel() {
+        Tekton uj_start = this.celTekton;
+        Tekton uj_cel = this.startTekton;
+        this.celTekton = uj_cel;
+        this.startTekton = uj_start;
+    }
+
     public boolean connectedToAlapGomba() {
         List<List<Gombafonal>> listaLista = AlapGomba.getFonalLista();
         Tekton alapTekton = AlapGomba.getTekton();
@@ -35,14 +42,18 @@ public class Gombafonal implements IDestroyable {
             if(l.contains(this)) {
                 List<Gombafonal> reversedList = new ArrayList<Gombafonal>(l);
                 Collections.reverse(reversedList);
+                //Teljes revese művelet
                 int indexOfThis = reversedList.indexOf(this);
+                for(Gombafonal f : reversedList){
+                    this.switchStartCel();
+                }
+                //Reverse vége
                 List<Gombafonal> subList = reversedList.subList(indexOfThis, reversedList.size());
                 for(Gombafonal f : subList){
                     Gombafonal next;
                     if(f != subList.get(subList.size()-1)) {
                         next = subList.get(subList.indexOf(f)+1);
-                    }
-                    else{ //ha az utolsó
+                    } else{ //ha az utolsó
                         if(f.getAlapGomba().getTekton() == alapTekton)
                             return true;
                         else return false;
