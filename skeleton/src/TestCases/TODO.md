@@ -36,7 +36,7 @@
 - [x] ~~32: Spóra Szórás Teszt - Cél Tektonon már van GombaTest~~
   - MEGJEGYZÉS: Itt nem volt jó a szekvenciadiagramm, de a programban javítottam, valamint nem volt felvéve a decrease menet közben amikor megtörtént a szórás. Mind a 4 spóraszórás teszt együttesen is jól működik.
   - MEGJEGYZÉS2: A Tekton.VanGombaTestATektonon boolean nem biztos h. jó megoldás, mert a setGomba() állítja, de egy Gomba gt = null GombaTest-tel elronthat sokmindent.
-- [ ] 33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra  🚨
+- [x] ~~33: Gombafonal Irányítás Teszt - Cél Tektonon van Spóra~~
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
 - [ ] 34: Gombafonal Irányítás Teszt - Fonal nem lerakható  🚨
   - MEGJEGYZÉS: nem t1 - t2 között, hanem f1, és t között kellene húzni a fonalat -> így a list[list] is bővíthető
@@ -47,6 +47,6 @@
 
 ### Feladatok
 - [ ] Tesztek implementációja
-- [ ] Tesztek JavaDoc dokumentációja
+- [x] ~~Tesztek JavaDoc dokumentációja~~
 - [ ] Run config update windows virtual host-ra
 - [ ] Új diagrammok felvétele, amik pixelesek voltak

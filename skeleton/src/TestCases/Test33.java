@@ -39,8 +39,10 @@ public class Test33 extends TestCase implements ITestCase {
     Gombasz gsz;
     TektonHatas th1;
     TektonHatas th2;
+    TektonHatas th3;
     Tekton t1;
     Tekton t2;
+    Tekton t3;
     Gomba g;
     Gombafonal gf;
 
@@ -54,14 +56,19 @@ public class Test33 extends TestCase implements ITestCase {
         gsz = new Gombasz();            //1
         th1 = new TektonHatas();        //2
         th2 = new TektonHatas();        //3
+        th3 = new TektonHatas();
         t1 = new Tekton(th1);           //4
         t2 = new Tekton(th2);           //5
+        t3 = new Tekton(th3);
         g = new Gomba(t1);              //6
         t1.addSzomszedosTekton(t2);
         t1.setGomba(g);
         t2.addSzomszedosTekton(t1);
         th1.setTekton(t1);
         th2.setTekton(t2);
+        th3.setTekton(t3);
+        t3.addSzomszedosTekton(t2);
+        t2.addSzomszedosTekton(t3);
         gsz.addGomba(g);
         GombaTest gt = new GombaTest(g, 5);
         gt.setAlapGomba(g);
@@ -74,13 +81,17 @@ public class Test33 extends TestCase implements ITestCase {
     @Override
     public void runTest() {
         CallTracer.enter("gombafonalIranyitas", "Gombasz", "t1, t2");
-        /*
-        if (gsz.gombafonalIranyitas(t1, t2, true)) {    //előre tudjuk, hogy t2-n van spóra, ezért állítjuk true-ra
+        if (gsz.gombafonalIranyitas(g, t1, t2, false)) {    //előre tudjuk, hogy t2-n van spóra, ezért állítjuk true-ra
             CallTracer.exit("gombafonalIranyitas", "true");
         } else {
             CallTracer.exit("gombafonalIranyitas", "HIBA");
         }
-        */
-        CallTracer.exit("gombafonalIranyitas", "HIBA: Not Implemented");
+
+        CallTracer.enter("gombafonalIranyitas", "Gombasz", "t2, t3");
+        if (gsz.gombafonalIranyitas(g, t2, t3, true)) {    //előre tudjuk, hogy t2-n van spóra, ezért állítjuk true-ra
+            CallTracer.exit("gombafonalIranyitas", "true");
+        } else {
+            CallTracer.exit("gombafonalIranyitas", "HIBA");
+        }
     }
 }
