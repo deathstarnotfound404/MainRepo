@@ -2,32 +2,47 @@ package TestCases;
 import CallTracer.CallTracer;
 import FungoriumClasses.*;
 
+
 /**
- * A {@code Test29} osztály a 29. szkeleton tesztesetet implementálja, Spóra Szórás Teszt szzekvenciája.<p>
+ * A {@code Test29} osztály a 29. szkeleton tesztesetet implementálja, amely a spóra szórás tesztelésére szolgál.
  *
- * Spora létrehozása, gombatestből való szórása másik céltektonra.<p>
+ * <p><b>29: Spóra Szórás Teszt</b></p>
  *
- * Szomszédos tektont kapott célnak és van elég Spórája a GombaTestnek a művelet elvégzéséhez
- * A Gombatest  szintjének megfelelő mennyiségű spórát tud szórni, és szintnek megfelelően szomszéd szomszédra is szórhat adott esetben
- * Döntés: A Gombatest Szintje:
- *   1. 1. szint
- *   2. 2. szint
- *   3. 3. szint
- * Ha 1. szintű, akkor 2 spóra a szórás ára, és 1 spórát szórhat a szomszédos tektonra.
- * Ha 2.szintű, akkor 1 spóra a szórás ára, és 2 spórát szórhat a szomszédos tektonra.
- * Ha 3.szintű, akkor 0 spóra a szórás ára, és 3 spórát szórhat a szomszédos vagy szomszéd szomszédos tektonjára.
- * A szórás növeli a gombatest szórásCount-ját
- * A szórás létrehozza a Spora objektumokat
- * A létrehozott Sporákat beállítja az adott tekton spóra listájában
+ * <p><b>Rövid leírás:</b><br>
+ * A teszt során egy gombatestből spórát szórunk egy szomszédos tektonra. A művelet sikeressége a gombatest szintjétől és a rendelkezésre álló spórák mennyiségétől függ.</p>
+ *
+ * <p><b>Aktorok:</b><br>
+ * Tesztelő, Skeleton</p>
+ *
+ * <p><b>Forgatókönyv:</b></p>
+ * <ol>
+ *     <li>A céltekton egy szomszédos tekton.</li>
+ *     <li>A gombatest rendelkezik elegendő spórával.</li>
+ *     <li>A gombatest szintje meghatározza a szórás feltételeit:
+ *         <ul>
+ *             <li><b>1. szint:</b> 2 spóra szükséges, és 1 spórát szórhat a szomszédos tektonra.</li>
+ *             <li><b>2. szint:</b> 1 spóra szükséges, és 2 spórát szórhat a szomszédos tektonra.</li>
+ *             <li><b>3. szint:</b> 0 spóra szükséges, és 3 spórát szórhat akár a szomszédos, akár a szomszéd szomszédos tektonra.</li>
+ *         </ul>
+ *     </li>
+ *     <li>A szórás sikeres esetben növeli a gombatest szórás számlálóját.</li>
+ *     <li>Új spóra objektumok jönnek létre, amelyek bekerülnek a céltekton spóra listájába.</li>
+ * </ol>
+ *
+ * <p><b>Kapcsolódó osztályok:</b></p>
+ * <ul>
+ *     <li>{@link Gombasz} - A tesztelt objektum, amely a spóraszórást végzi.</li>
+ *     <li>{@link Tekton} - Tekton</li>
+ *     <li>{@link Gomba} - Gomba osztály.</li>
+ *     <li>{@link Spora} - A szórás során létrejövő spóra objektumok.</li>
+ * </ul>
  *
  * @author Czene Zsombor
  * @version 1.0
- * @since 2025-03-21
+ * @since 2025-03-20
  */
-
 public class Test29 extends TestCase implements ITestCase {
-    //Test attributes
-    /** Javadoc, attributumok leirasa. */
+    /** Teszt attribútumok */
     private TektonHatas th1;
     private TektonHatas th2;
     private Gombasz gsz;
@@ -37,9 +52,10 @@ public class Test29 extends TestCase implements ITestCase {
     private Gomba g;
     private GombaTest gt;
 
-    //Test init
     /**
-     * Létrehoz egy új {@code Test1} objektumot.
+     * Létrehoz egy új {@code Test29} objektumot és inicializálja a tesztkörnyezetet.
+     *
+     * @param callTracer a függvényhívások nyomon követésére szolgáló objektum
      */
     public Test29(CallTracer callTracer) {
         super(callTracer);
@@ -63,7 +79,7 @@ public class Test29 extends TestCase implements ITestCase {
     }
 
     /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet.
+     * Végrehajtja a tesztesetet, amely ellenőrzi a spóraszórás sikerességét.
      */
     @Override
     public void runTest() {
