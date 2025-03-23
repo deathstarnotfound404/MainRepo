@@ -1,22 +1,47 @@
 package FungoriumClasses;
 
+/**
+ * A {@code Player} absztrakt osztály egy játékost reprezentál a játékban.
+ * Minden játékos rendelkezik egy pontszámmal, amelyet növelhet vagy beállíthat.
+ *
+ * @author Botos Dániel
+ * @version 1.0
+ * @since 2025-03-18
+ */
 public abstract class Player {
+    /**
+     * A játékos aktuális pontszáma.
+     */
     protected int score = 0;
 
+    /**
+     * Létrehoz egy új {@code Player} objektumot alapértelmezett pontszámmal.
+     */
     public Player() {
-        System.out.println("<<<return Player()");
     }
 
+    /**
+     * Beállítja a játékos pontszámát egy adott értékre.
+     *
+     * @param val Az új pontszám.
+     */
     protected void setScore(int val) {
-        System.out.println("<<<return setScore()");
+        this.score = val;
     }
 
+    /**
+     * Visszaadja a játékos aktuális pontszámát.
+     *
+     * @return A játékos pontszáma.
+     */
     protected int getScore() {
-        System.out.println("<<<return getScore()");
-        return 0;
+        return this.score;
     }
 
+    /**
+     * Növeli a játékos pontszámát eggyel.
+     */
     protected void addScore() {
-        System.out.println("<<<return addScore()");
+        this.score += 1;
     }
 }

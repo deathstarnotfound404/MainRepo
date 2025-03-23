@@ -1,15 +1,31 @@
 package FungoriumClasses;
+import CallTracer.*;
 
+/**
+ * A VagasGatloSpora osztály egy speciális spórát reprezentál, amely
+ * megakadályozza a rovarok vágási képességét.
+ * A BaseSpora osztályból származik, és felülírja a hatás metódust.
+ * @author Pünkösti Györk
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class VagasGatloSpora extends BaseSpora {
-    //VagasGatloSpora konstruktora
+    /**
+     * Létrehoz egy új VagasGatloSpora objektumot.
+     */
     public VagasGatloSpora() {
         super();
-        System.out.println("<<<return VagasGatloSpora()");
     }
 
-    //hatas kifejtese
+    /**
+     * A spóra hatása a rovarra: letiltja a vágási képességét.
+     *
+     * @param r A rovar, amelyre a hatás kifejtődik.
+     */
     @Override
     public void hatas(Rovar r) {
-        System.out.println("<<< return hatas()");
+        CallTracer.enter("setTudVagni", "Rovar", "false");
+        r.setTudVagni(false);
+        CallTracer.exit("setTudVagni", "");
     }
 }

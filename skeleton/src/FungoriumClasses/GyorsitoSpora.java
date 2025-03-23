@@ -1,15 +1,31 @@
 package FungoriumClasses;
+import CallTracer.*;
 
+/**
+ * A {@code GyorsitoSpora} osztály egy speciális spóra, amely hatással van a rovarokra.
+ * Hatására a rovarnak maximális fogyasztása lesz.
+ *
+ * @author Pünkösti Györk
+ * @version 1.0
+ * @since 2025-03-19
+ */
 public class GyorsitoSpora extends BaseSpora {
-    //GyorsitoSpora konstruktora
+    /**
+     * Létrehoz egy új {@code GyorsitoSpora} objektumot.
+     */
     public GyorsitoSpora() {
         super();
-        System.out.println("<<<return GyorsitoSpora()");
     }
 
-    //a spora hatasanak implementalasa
+    /**
+     * A spóra hatásának alkalmazása egy adott rovarra.
+     *
+     * @param r Az érintett {@code Rovar} objektum.
+     */
     @Override
     public void hatas(Rovar r) {
-        System.out.println("<<<return hatas()");
+        CallTracer.enter("setMaxFogyasztas", "Rovar", "true");
+        r.setMaxFogyasztas(true);
+        CallTracer.exit("setMaxFogyasztas", "");
     }
 }
