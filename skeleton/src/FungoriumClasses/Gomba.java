@@ -110,7 +110,6 @@ public class Gomba implements IDestroyable {
      * A gomba spórákat termel a szintjétől függően.
      */
     public void sporaTermeles() {
-        //TODO sekvencia szerint megírni
         CallTracer.enter("getSzint", "GombaTest", "");
         int szint = GombaTest.getSzint();
         CallTracer.exit("getSzint", "szint");
