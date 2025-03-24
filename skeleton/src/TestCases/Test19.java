@@ -58,12 +58,7 @@ public class Test19 extends TestCase implements ITestCase {
      */
     public Test19(CallTracer callTracer) {
         super(callTracer);
-        r = new Rovar();
-        s1 = new LassitoSpora();
-        th1 = new TektonHatas();
-        t1 = new Tekton(th1);
-        t1.addSpora(s1);
-        r.setHelyzet(t1);
+        reset();
     }
 
     /**
@@ -74,5 +69,15 @@ public class Test19 extends TestCase implements ITestCase {
         CallTracer.enter("sporaEves", "Rovar", "");
         r.sporaEves();
         CallTracer.exit("sporaEves", "");
+        reset();
+    }
+
+    private void reset(){
+        r = new Rovar();
+        s1 = new LassitoSpora();
+        th1 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t1.addSpora(s1);
+        r.setHelyzet(t1);
     }
 }

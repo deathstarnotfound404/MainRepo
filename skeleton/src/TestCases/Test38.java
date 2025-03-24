@@ -65,6 +65,25 @@ public class Test38 extends TestCase implements ITestCase {
      */
     public Test38(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely a gombafonalak folytonosságát vizsgálja.
+     * Ha nincs fonalszakadás, akkor a teszt sikeres.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "");
+        if(g.fonalFolytonossagVizsgalat() == null) {
+            CallTracer.exit("fonalFolytonossagVizsgalat", "null");
+        } else {
+            CallTracer.exit("fonalFolytonossagVizsgalat", "HIBA");
+        }
+        reset();
+    }
+
+    private void reset(){
         th1 = new TektonHatas();
         th2 = new TektonHatas();
         th3 = new TektonHatas();
@@ -110,19 +129,5 @@ public class Test38 extends TestCase implements ITestCase {
         g.addFonal(gf1);
         g.addFonal(gf2);
         g.addFonal(gf3);
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely a gombafonalak folytonosságát vizsgálja.
-     * Ha nincs fonalszakadás, akkor a teszt sikeres.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "");
-        if(g.fonalFolytonossagVizsgalat() == null) {
-            CallTracer.exit("fonalFolytonossagVizsgalat", "null");
-        } else {
-            CallTracer.exit("fonalFolytonossagVizsgalat", "HIBA");
-        }
     }
 }

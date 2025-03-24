@@ -59,11 +59,7 @@ public class Test6 extends TestCase implements ITestCase {
      */
     public Test6(CallTracer callTracer) {
         super(callTracer);
-        gsz = new Gombasz();
-        th2 = new TektonHatas();
-        t2 = new Tekton(th2);
-        g = new Gomba(t2);
-        gt = new GombaTest(g, 3);
+        reset();
     }
 
     /**
@@ -97,5 +93,14 @@ public class Test6 extends TestCase implements ITestCase {
             default:
                 break;
         }
+        reset();
+    }
+
+    private void reset () {
+        gsz = new Gombasz();
+        th2 = new TektonHatas();
+        t2 = new Tekton(th2);
+        g = new Gomba(t2);
+        gt = new GombaTest(g, 3);
     }
 }

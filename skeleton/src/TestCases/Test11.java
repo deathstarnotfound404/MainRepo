@@ -62,6 +62,25 @@ public class Test11 extends TestCase implements ITestCase {
      */
     public Test11(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely során a Tekton fonal felszívó hatáskifejtését teszteljük.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("hatasKifejtes", "Tekton", "");
+        String hatas = t1.hatasKifejtes();
+        if (hatas.equals("Felszivas")) {
+            CallTracer.exit("hatasKifejtes", hatas);
+        } else {
+            CallTracer.exit("hatasKifejtes", "HIBA");
+        }
+        reset();
+    }
+
+    private void reset() {
         h1 = new FonalFelszivodoHatas();
         t1 = new Tekton(h1);
         h1.setTekton(t1);
@@ -78,19 +97,5 @@ public class Test11 extends TestCase implements ITestCase {
         t1.increaseFokszam();
         t2.addKapcsolodoFonalak(gf);
         t2.increaseFokszam();
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely során a Tekton fonal felszívó hatáskifejtését teszteljük.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("hatasKifejtes", "Tekton", "");
-        String hatas = t1.hatasKifejtes();
-        if (hatas.equals("Felszivas")) {
-            CallTracer.exit("hatasKifejtes", hatas);
-        } else {
-            CallTracer.exit("hatasKifejtes", "HIBA");
-        }
     }
 }

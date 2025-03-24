@@ -51,15 +51,7 @@ public class Test1 extends TestCase implements ITestCase{
      */
     public Test1(CallTracer callTracer) {
         super(callTracer);
-        f = new Field();
-        th1 = new FonalFelszivodoHatas();
-        th2 = new FonalGatloHatas();
-        th3 = new GombaTestGatloHatas();
-        th4 = new TektonHatas();
-        t1 = new Tekton(th1);
-        t2 = new Tekton(th2);
-        t3 = new Tekton(th3);
-        t4 = new Tekton(th4);
+        reset();
     }
 
     /**
@@ -84,5 +76,18 @@ public class Test1 extends TestCase implements ITestCase{
         CallTracer.enter("setAllTektonSzomszed", "Field", "");
         f.setAllTektonSzomszed();
         CallTracer.exit("setAllTektonSzomszed", "");
+        reset();
+    }
+
+    private void reset() {
+        f = new Field();
+        th1 = new FonalFelszivodoHatas();
+        th2 = new FonalGatloHatas();
+        th3 = new GombaTestGatloHatas();
+        th4 = new TektonHatas();
+        t1 = new Tekton(th1);
+        t2 = new Tekton(th2);
+        t3 = new Tekton(th3);
+        t4 = new Tekton(th4);
     }
 }

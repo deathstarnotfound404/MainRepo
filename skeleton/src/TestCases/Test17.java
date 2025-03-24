@@ -68,6 +68,22 @@ public class Test17 extends TestCase implements ITestCase {
      */
     public Test17(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amelyben a Gombák spóratermelését ellenőrizzük
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("sporaTermelesAll", "Gombasz", "");
+        gsz.sporaTermelesAll();
+        CallTracer.exit("sporaTermelesAll", "");
+
+        reset();
+    }
+
+    private void reset() {
         gsz = new Gombasz();
         th1 = new TektonHatas();
         th2 = new TektonHatas();
@@ -81,15 +97,5 @@ public class Test17 extends TestCase implements ITestCase {
         g2.setGombaTest(gt2);
         gsz.addGomba(g1);
         gsz.addGomba(g2);
-    }
-
-    /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet, amelyben a Gombák spóratermelését ellenőrizzük
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("sporaTermelesAll", "Gombasz", "");
-        gsz.sporaTermelesAll();
-        CallTracer.exit("sporaTermelesAll", "");
     }
 }

@@ -52,19 +52,7 @@ public class Test34 extends TestCase implements ITestCase {
      */
     public Test34(CallTracer callTracer) {
         super(callTracer);
-        gsz = new Gombasz();            //1
-        th1 = new TektonHatas();        //2
-        th2 = new TektonHatas();        //3
-        t1 = new Tekton(th1);           //4
-        t2 = new Tekton(th2);           //5
-        g = new Gomba(t1);              //6
-        t1.setGomba(g);
-        th1.setTekton(t1);
-        th2.setTekton(t2);
-        gsz.addGomba(g);
-        GombaTest gt = new GombaTest(g, 5);
-        gt.setAlapGomba(g);
-        g.setGombaTest(gt);
+        reset();
     }
 
     /**
@@ -79,5 +67,22 @@ public class Test34 extends TestCase implements ITestCase {
             CallTracer.exit("gombafonalIranyitas", "HIBA");
         }
 
+        reset();
+    }
+
+    private void reset(){
+        gsz = new Gombasz();            //1
+        th1 = new TektonHatas();        //2
+        th2 = new TektonHatas();        //3
+        t1 = new Tekton(th1);           //4
+        t2 = new Tekton(th2);           //5
+        g = new Gomba(t1);              //6
+        t1.setGomba(g);
+        th1.setTekton(t1);
+        th2.setTekton(t2);
+        gsz.addGomba(g);
+        GombaTest gt = new GombaTest(g, 5);
+        gt.setAlapGomba(g);
+        g.setGombaTest(gt);
     }
 }

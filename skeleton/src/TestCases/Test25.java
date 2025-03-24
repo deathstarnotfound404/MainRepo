@@ -72,6 +72,21 @@ public class Test25 extends TestCase implements ITestCase {
      */
     public Test25(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a Gombafonal folytonosság megszakadását teszteli
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "");
+        List<Gombafonal> fonalLista = g.fonalFolytonossagVizsgalat();
+        CallTracer.exit("fonalFolytonossagVizsgalat", "listOfDisconnectedFonalak");
+        reset();
+    }
+
+    private void reset() {
         th1 = new TektonHatas();
         th2 = new TektonHatas();
         th3 = new TektonHatas();
@@ -104,15 +119,5 @@ public class Test25 extends TestCase implements ITestCase {
         gt.setAlapGomba(g);
         g.addFonal(gf1);
         g.addFonal(gf2);
-    }
-
-    /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a Gombafonal folytonosság megszakadását teszteli
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("fonalFolytonossagVizsgalat", "Gomba", "");
-        List<Gombafonal> fonalLista = g.fonalFolytonossagVizsgalat();
-        CallTracer.exit("fonalFolytonossagVizsgalat", "listOfDisconnectedFonalak");
     }
 }

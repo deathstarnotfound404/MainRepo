@@ -58,16 +58,7 @@ public class Test37 extends TestCase implements ITestCase {
      */
     public Test37(CallTracer callTracer) {
         super(callTracer);
-        //A kommunikációs diagramm sorszámozáa alapján:
-        h = new TektonHatas();          //1;
-        t = new Tekton(h);              //2;
-        h.setTekton(t);                 //3;
-        gsz = new Gombasz();            //4;
-        g = new Gomba(t);               //5;
-        gt = new GombaTest(g, 0);  //6;
-        gt.setAlapGomba(g);             //7;
-        t.setGomba(g);                  //8;
-        g.setGombaTest(gt);
+        reset();
     }
 
     /**
@@ -102,5 +93,19 @@ public class Test37 extends TestCase implements ITestCase {
             default:
                 break;
         }
+        reset();
+    }
+
+    private void reset(){
+        //A kommunikációs diagramm sorszámozáa alapján:
+        h = new TektonHatas();          //1;
+        t = new Tekton(h);              //2;
+        h.setTekton(t);                 //3;
+        gsz = new Gombasz();            //4;
+        g = new Gomba(t);               //5;
+        gt = new GombaTest(g, 0);  //6;
+        gt.setAlapGomba(g);             //7;
+        t.setGomba(g);                  //8;
+        g.setGombaTest(gt);
     }
 }

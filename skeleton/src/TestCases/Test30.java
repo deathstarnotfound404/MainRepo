@@ -53,6 +53,24 @@ public class Test30 extends TestCase implements ITestCase {
      */
     public Test30(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely a spóraszórást ellenőrzi.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("szoras", "Gombasz", "g, celTekton");
+        if(!gsz.szoras(g, celTekton)) {
+            CallTracer.exit("szoras", "false");
+        } else {
+            CallTracer.exit("szoras", "HIBA");
+        }
+        reset();
+    }
+
+    private void reset(){
         th1 = new TektonHatas();     //1;
         gsz = new Gombasz();        //2;
         f = new Field();            //3;
@@ -69,18 +87,5 @@ public class Test30 extends TestCase implements ITestCase {
         gt = new GombaTest(g, 5);  //10
         gt.setAlapGomba(g);
         g.setGombaTest(gt);
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely a spóraszórást ellenőrzi.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("szoras", "Gombasz", "g, celTekton");
-        if(!gsz.szoras(g, celTekton)) {
-            CallTracer.exit("szoras", "false");
-        } else {
-            CallTracer.exit("szoras", "HIBA");
-        }
     }
 }

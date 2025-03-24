@@ -68,6 +68,21 @@ public class Test24 extends TestCase implements ITestCase {
      */
     public Test24(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a Gombafonal elvágását szimulálja
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("fonalVagas", "Rovarasz", "r, gf");
+        rsz.fonalVagas(r,gf);
+        CallTracer.exit("fonalVagas", "");
+        reset();
+    }
+
+    private void reset() {
         rsz = new Rovarasz();
         r = new Rovar();
         th1 = new TektonHatas();
@@ -80,15 +95,5 @@ public class Test24 extends TestCase implements ITestCase {
         r.setHelyzet(t2);
         t2.setRovar(r);
         gf.setAlapGomba(g);
-    }
-
-    /**
-     * Végrehajtja a TestCase-hez tartozó tesztesetet, amely a Gombafonal elvágását szimulálja
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("fonalVagas", "Rovarasz", "r, gf");
-        rsz.fonalVagas(r,gf);
-        CallTracer.exit("fonalVagas", "");
     }
 }

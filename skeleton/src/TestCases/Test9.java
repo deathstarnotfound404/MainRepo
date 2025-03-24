@@ -38,7 +38,7 @@ public class Test9 extends TestCase implements ITestCase {
      */
     public Test9(CallTracer callTracer) {
         super(callTracer);
-        r = new Rovar();
+        reset();
     }
 
     /**
@@ -49,5 +49,9 @@ public class Test9 extends TestCase implements ITestCase {
         CallTracer.enter("kepessegekAlaphelyzetbe", "Rovar", "");
         r.kepessegekAlaphelyzetbe();
         CallTracer.exit("kepessegekAlaphelyzetbe", "");
+        reset();
+    }
+    private void reset() {
+        r = new Rovar();
     }
 }

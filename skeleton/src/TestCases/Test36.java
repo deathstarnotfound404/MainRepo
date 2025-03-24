@@ -71,6 +71,22 @@ public class Test36 extends TestCase implements ITestCase {
      */
     public Test36(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely során a gombatest növesztésének mechanizmusát ellenőrizzük.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("gombatestNovesztes", "Gombasz", "t1");
+        gsz.gombatestNovesztes(t1);     //A felhasználó választja ki az adott t1-et
+        CallTracer.exit("gombatestNovesztes", "true");
+
+        reset();
+    }
+
+    private void reset(){
         gsz = new Gombasz();            //1;
         h = new TektonHatas();          //2;
         t_alap = new Tekton(h);             //3;
@@ -91,16 +107,5 @@ public class Test36 extends TestCase implements ITestCase {
         gt.setAlapGomba(g);
         t_alap.setGomba(g);
         t1 = new Tekton(h);
-
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely során a gombatest növesztésének mechanizmusát ellenőrizzük.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("gombatestNovesztes", "Gombasz", "t1");
-        gsz.gombatestNovesztes(t1);     //A felhasználó választja ki az adott t1-et
-        CallTracer.exit("gombatestNovesztes", "true");
     }
 }

@@ -54,6 +54,24 @@ public class Test28 extends TestCase implements ITestCase {
      */
     public Test28(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely során egy rovar nem tud átlépni egy másik rovart tartalmazó tektonra.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("rovarIranyitas", "Rovarasz", "r, t2");
+        if(rsz.rovarIranyitas(r, t2)) {
+            CallTracer.exit("rovarIranyitas", "HIBA");
+        } else {
+            CallTracer.exit("rovarIranyitas", "false");
+        }
+        reset();
+    }
+
+    private void reset() {
         th1 = new TektonHatas(); //1;
         th2 = new TektonHatas();
         rsz = new Rovarasz();   //2
@@ -75,18 +93,5 @@ public class Test28 extends TestCase implements ITestCase {
         t2.setRovar(r2); //14        implicit állitja a 15-öt
         t1.addSzomszedosTekton(t2);
         t2.addSzomszedosTekton(t1);
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely során egy rovar nem tud átlépni egy másik rovart tartalmazó tektonra.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("rovarIranyitas", "Rovarasz", "r, t2");
-        if(rsz.rovarIranyitas(r, t2)) {
-            CallTracer.exit("rovarIranyitas", "HIBA");
-        } else {
-            CallTracer.exit("rovarIranyitas", "false");
-        }
     }
 }

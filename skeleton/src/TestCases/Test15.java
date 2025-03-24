@@ -60,20 +60,7 @@ public class Test15 extends TestCase implements ITestCase {
      */
     public Test15(CallTracer callTracer) {
         super(callTracer);
-        h = new TektonHatas();      //1;
-        t1= new Tekton(h);          //2
-        t2= new Tekton(h);          //3
-        r = new Rovar();            //4
-        r.setHelyzet(t1);           //5
-        gf = new Gombafonal(t1, t2);    //6
-        t1.addKapcsolodoFonalak(gf);    //7
-        t1.increaseFokszam();           //8
-        t2.addKapcsolodoFonalak(gf);    //9
-        t2.increaseFokszam();           //10
-        g = new Gomba(t1);              //11
-        g.addFonal(gf);                 //12
-        gf.setAlapGomba(g);
-        t1.setGomba(g);
+        reset();
     }
 
     /**
@@ -111,5 +98,22 @@ public class Test15 extends TestCase implements ITestCase {
         } else {
             CallTracer.exit("tektonTores", "HIBA");
         }
+        reset();
+    }
+    private void reset() {
+        h = new TektonHatas();      //1;
+        t1= new Tekton(h);          //2
+        t2= new Tekton(h);          //3
+        r = new Rovar();            //4
+        r.setHelyzet(t1);           //5
+        gf = new Gombafonal(t1, t2);    //6
+        t1.addKapcsolodoFonalak(gf);    //7
+        t1.increaseFokszam();           //8
+        t2.addKapcsolodoFonalak(gf);    //9
+        t2.increaseFokszam();           //10
+        g = new Gomba(t1);              //11
+        g.addFonal(gf);                 //12
+        gf.setAlapGomba(g);
+        t1.setGomba(g);
     }
 }

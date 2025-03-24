@@ -60,10 +60,7 @@ public class Test3 extends TestCase implements ITestCase {
      */
     public Test3(CallTracer callTracer) {
         super(callTracer);
-        f = new Field();
-        gsz = new Gombasz();
-        th1 = new TektonHatas();
-        t1 = new Tekton(th1);
+        reset();
     }
 
     /**
@@ -77,5 +74,13 @@ public class Test3 extends TestCase implements ITestCase {
         CallTracer.enter("addPlayer", "Field", "gsz");
         f.addPlayer(gsz);
         CallTracer.exit("addPlayer", "");
+        reset();
+    }
+
+    private void reset() {
+        f = new Field();
+        gsz = new Gombasz();
+        th1 = new TektonHatas();
+        t1 = new Tekton(th1);
     }
 }

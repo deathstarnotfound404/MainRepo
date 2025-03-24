@@ -59,6 +59,24 @@ public class Test29 extends TestCase implements ITestCase {
      */
     public Test29(CallTracer callTracer) {
         super(callTracer);
+        reset();
+    }
+
+    /**
+     * Végrehajtja a tesztesetet, amely ellenőrzi a spóraszórás sikerességét.
+     */
+    @Override
+    public void runTest() {
+        CallTracer.enter("szoras", "Gombasz", "g, t1");
+        if(gsz.szoras(g, celTekton)) {
+            CallTracer.exit("szoras", "true");
+        } else {
+            CallTracer.exit("szoras", "HIBA");
+        }
+        reset();
+    }
+
+    private void reset() {
         th1 = new TektonHatas();     //1;
         gsz = new Gombasz();        //2;
         f = new Field();            //3;
@@ -76,18 +94,5 @@ public class Test29 extends TestCase implements ITestCase {
         g.setGombaTest(gt);
         celTekton.addSzomszedosTekton(t1);  //11
         t1.addSzomszedosTekton(celTekton);  //12
-    }
-
-    /**
-     * Végrehajtja a tesztesetet, amely ellenőrzi a spóraszórás sikerességét.
-     */
-    @Override
-    public void runTest() {
-        CallTracer.enter("szoras", "Gombasz", "g, t1");
-        if(gsz.szoras(g, celTekton)) {
-            CallTracer.exit("szoras", "true");
-        } else {
-            CallTracer.exit("szoras", "HIBA");
-        }
     }
 }

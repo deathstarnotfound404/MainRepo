@@ -45,9 +45,7 @@ public class Test14 extends TestCase implements ITestCase {
      */
     public Test14(CallTracer callTracer) {
         super(callTracer);
-        h = new GombaTestGatloHatas();
-        t1 = new Tekton(h);
-        h.setTekton(t1);
+        reset();
     }
 
     /**
@@ -62,5 +60,12 @@ public class Test14 extends TestCase implements ITestCase {
         } else {
             CallTracer.exit("hatasKifejtes", "HIBA");
         }
+        reset();
+    }
+
+    private void reset(){
+        h = new GombaTestGatloHatas();
+        t1 = new Tekton(h);
+        h.setTekton(t1);
     }
 }

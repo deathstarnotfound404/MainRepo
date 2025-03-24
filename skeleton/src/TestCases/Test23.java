@@ -68,13 +68,7 @@ public class Test23 extends TestCase implements ITestCase {
      */
     public Test23(CallTracer callTracer) {
         super(callTracer);
-        f = new Field();
-        rsz = new Rovarasz();
-        r = new Rovar();
-        gsz = new Gombasz();
-        th = new TektonHatas();
-        t = new Tekton(th);
-        rsz.addRovar(r, t);
+        reset();
     }
 
     /**
@@ -85,5 +79,16 @@ public class Test23 extends TestCase implements ITestCase {
         CallTracer.enter("kiertekeles", "Field", "");
         f.kiertekeles();
         CallTracer.exit("kiertekeles", "gyoztesJatekosok");
+        reset();
+    }
+
+    private void reset(){
+        f = new Field();
+        rsz = new Rovarasz();
+        r = new Rovar();
+        gsz = new Gombasz();
+        th = new TektonHatas();
+        t = new Tekton(th);
+        rsz.addRovar(r, t);
     }
 }

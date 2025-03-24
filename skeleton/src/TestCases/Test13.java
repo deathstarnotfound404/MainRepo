@@ -50,9 +50,7 @@ public class Test13 extends TestCase implements ITestCase{
      */
     public Test13(CallTracer callTracer) {
         super(callTracer);
-        h = new FonalGatloHatas();
-        t1 = new Tekton(h);
-        h.setTekton(t1);
+        reset();
     }
 
     /**
@@ -85,5 +83,12 @@ public class Test13 extends TestCase implements ITestCase{
             default:
                 break;
         }
+        reset();
+    }
+
+    private void reset(){
+        h = new FonalGatloHatas();
+        t1 = new Tekton(h);
+        h.setTekton(t1);
     }
 }
