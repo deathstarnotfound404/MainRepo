@@ -8,11 +8,11 @@ public class CommandHandler {
     private enum Mode { GAME, TEST }
 
     private final Map<String, Consumer<List<String>>> parancsok = new HashMap<>();
-    private final Field jatekAllapot;
+    private final Field field;
     private Mode currentMode = Mode.GAME;
 
-    public CommandHandler(Field jatekAllapot) {
-        this.jatekAllapot = jatekAllapot;
+    public CommandHandler(Field field) {
+        this.field = field;
         initParancsok();
     }
 

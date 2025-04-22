@@ -1,9 +1,14 @@
 package model;
 
 public class FonalFelszivodoHatas extends TektonHatas {
+
     public FonalFelszivodoHatas() {
         super();
     }
+
     @Override
-    public String hatas() { return null; }
+    public String hatas() {
+        //TODO
+        return null;
+    }
 }

@@ -4,6 +4,10 @@ public class FonalDefenderHatas extends TektonHatas {
     public FonalDefenderHatas() {
         super();
     }
+
     @Override
-    public String hatas() { return null; }
+    public String hatas() {
+        //TODO
+        return null;
+    }
 }
