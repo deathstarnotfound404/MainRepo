@@ -29,7 +29,7 @@ public class Gomba implements IDestroyable {
     }
 
     public void sporaTermeles() {
-        this.gombaTest.addToSporaKeszlet();
+        this.gombaTest.addToSporaKeszletTermelessel();
     }
 
     public void gombatestSzintlepes() {

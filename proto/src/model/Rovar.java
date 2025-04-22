@@ -1,57 +1,114 @@
 package model;
 
+import java.util.List;
+
 public class Rovar {
     private Tekton helyzet;
     private int tapanyag = 0;
     private int evesHatekonysag = 1;
     private boolean tudVagni = true;
-    private boolean maxFogyasztas;
+    private boolean maxFogyasztas = false;
     private Rovarasz rovarasz;
-    private int rovarID;
+    private int id;
 
-    public Rovar() {}
+    public Rovar() {
+        id = Field.genID();
+    }
 
-    public void addTapanyag(int val) {}
+    public void addTapanyag(int val) {
+        tapanyag += val;
+    }
 
-    public int getEvesHatekonysag() { return evesHatekonysag; }
+    public int getEvesHatekonysag() {
+        return evesHatekonysag;
+    }
 
-    public Tekton getHelyzet() { return helyzet; }
+    public Tekton getHelyzet() {
+        return helyzet;
+    }
 
-    public int getRovarID() { return rovarID; }
+    public int getID() {
+        return id;
+    }
 
-    public int getTapanyag() { return tapanyag; }
+    public int getTapanyag() {
+        return tapanyag;
+    }
 
-    public boolean getTudVagni() { return tudVagni; }
+    public boolean getTudVagni() {
+        return tudVagni;
+    }
 
-    public void kepessegekAlaphelyzetbe() {}
+    public void kepessegekAlaphelyzetbe() {
+        evesHatekonysag = 1;
+        tudVagni = true;
+        maxFogyasztas = false;
+    }
 
+    private Tekton getUresSzomszedosTekton(){
+        List<Tekton> szabadHelyek = helyzet.getSzomszedosTektonok();
+        Tekton szabadTekton = null;
+        for (Tekton t : szabadHelyek) {
+            if(!t.vanRovarATektonon()){
+                szabadTekton = t;
+                break;
+            }
+        }
+        return szabadTekton;
+    }
     public Rovar klonozas() {
-        //TODO
+        //TODO ellenőrizni, hogy a beállításokat itt kell megtenni vagy ahol visszaadjuk a ROvart
+        Tekton szabadTekton = getUresSzomszedosTekton();
+        if(szabadTekton != null){
+            Rovar klonozas = new Rovar();
+            klonozas.helyzet = szabadTekton;
+            klonozas.rovarasz = this.rovarasz;
+            this.rovarasz.addRovar(klonozas, szabadTekton);
+            return klonozas;
+        } else {
+            return null;
+        }
     }
 
     public void lep(Tekton celTekton) {
         //TODO
     }
 
-    public boolean getMaxFogyasztas() { return maxFogyasztas; }
+    public boolean isMaxFogyasztas() {
+        return maxFogyasztas;
+    }
 
-    public Rovarasz getRovarasz() { return rovarasz; }
+    public Rovarasz getRovarasz() {
+        return rovarasz;
+    }
 
-    public void setHelyzet(Tekton t) {}
+    public void setHelyzet(Tekton t) {
+        helyzet = t;
+    }
 
-    public void setEvesHatekonysag(int val) {}
+    public void setEvesHatekonysag(int val) {
+        evesHatekonysag = val;
+    }
 
-    public void setMaxFogyasztas(boolean val) {}
+    public void setMaxFogyasztas(boolean val) {
+        maxFogyasztas = val;
+    }
 
-    public void setRovarID(int val) {}
+    public void setRovarasz(Rovarasz rsz) {
+        rovarasz = rsz;
+    }
 
-    public void setRovarasz(Rovarasz rsz) {}
+    public void setTapanyag(int val) {
+        tapanyag = val;
+    }
 
-    public void setTapanyag(int val) {}
+    public void setTudVagni(boolean val) {
+        tudVagni = val;
+    }
 
-    public void setTudVagni(boolean val) {}
-
-    public void sporaEves() {}
+    public void sporaEves() {
+        //TODO
+    }
 
     public void vag(GombaFonal gf) {
         //TODO

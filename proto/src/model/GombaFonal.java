@@ -18,21 +18,28 @@ public class GombaFonal implements IDestroyable {
         return id;
     }
 
-    public Tekton getStartTekton() { return startTekton; }
+    public Tekton getStartTekton() {
+        return startTekton;
+    }
 
-    public Tekton getCelTekton() { return celTekton; }
+    public Tekton getCelTekton() {
+        return celTekton;
+    }
 
-    public Gomba getAlapGomba() { return alapGomba; }
+    public Gomba getAlapGomba() {
+        return alapGomba;
+    }
 
     public boolean connectedToAlapGomba() {
+        //TODO - ellenőrizni a fonalfolytonossagVizsgalat(gf) függvényt
         return alapGomba.fonalFolytonossagVizsgalat(this);
     }
 
-    public void setIsDestroyable(boolean value) {
+    public void setDestroyable(boolean value) {
         this.isDestroyable = value;
     }
 
-    public boolean getIsDestroyable() {
+    public boolean IsDestroyable() {
         return this.isDestroyable;
     }
     public void setElragott(boolean value) {

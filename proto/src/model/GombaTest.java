@@ -1,22 +1,31 @@
 package model;
 
 public class GombaTest implements IDestroyable {
-    private int sporaKeszlet;
+    private int id;
+    private int sporaKeszlet = 0;
     private int szorasCount = 0;
     private int szint = 1;
     private Gomba alapGomba;
 
-    public GombaTest(Gomba g, int kezdoSporaSzam) {}
+    public GombaTest(Gomba g, int kezdoSporaSzam) {
+        id = Field.genID();
+        alapGomba = g;
+        sporaKeszlet = kezdoSporaSzam;
+    }
 
-    public int getSporakeszlet() { return 0; }
+    public int getSporakeszlet() {
+        return sporaKeszlet;
+    }
 
-    public int getSzorasCount() { return 0; }
+    public int getSzorasCount() {
+        return szorasCount;
+    }
 
     public void addSzorasCount(int val) {
         this.szorasCount += val;
     }
 
-    public void addToSporaKeszlet() {
+    public void addToSporaKeszletTermelessel() {
         switch (szint) {
             case 1:
                 sporaKeszlet += 2;
@@ -39,17 +48,46 @@ public class GombaTest implements IDestroyable {
         sporaKeszlet += val;
     }
 
-    public int sporaSzorzo(int szint) { return 0; }
+    public int sporaSzorzo(int szint) {
+        int szorandoMennyiseg = 0;
+        switch (szint){
+            case 1:
+                decreaseSporakeszlet(2);
+                szorandoMennyiseg = 1;
+                break;
 
-    public int getSzint() { return 0; }
+            case 2:
+                decreaseSporakeszlet(1);
+                szorandoMennyiseg = 2;
+                break;
 
-    public void szintlepes(int szorandoMennyiseg) {}
+            case 3:
+                szorandoMennyiseg = 3;
+                break;
+        }
 
-    public Gomba getAlapGomba() { return null; }
+        return szorandoMennyiseg;
+    }
 
-    public void setAlapGomba(Gomba g) {}
+    public int getSzint() {
+        return szint;
+    }
 
-    public void increaseSporakeszlet() {}
+    public void szintlepes(int szorandoMennyiseg) {
+        //TODO
+    }
+
+    public Gomba getAlapGomba() {
+        return alapGomba;
+    }
+
+    public void setAlapGomba(Gomba g) {
+        alapGomba = g;
+    }
+
+    public void increaseSporakeszlet() {
+        sporaKeszlet++;
+    }
 
     public boolean decreaseSporakeszlet(int val) {
         if(sporaKeszlet >= val) {
@@ -60,8 +98,12 @@ public class GombaTest implements IDestroyable {
         }
     }
 
-    public int getId() { return 0; }
+    public int getId() {
+        return id;
+    }
 
-    public void elpusztul() {}
+    public void elpusztul() {
+        //TODO
+    }
 
 }
