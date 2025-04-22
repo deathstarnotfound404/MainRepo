@@ -6,10 +6,13 @@ public class Gomba implements IDestroyable {
     private int fonalKeszlet = 0;
     private Tekton tekton;
     private GombaTest gombaTest;
-    protected int id;
+    private int id;
+    private Gombasz gombasz;
 
-    public Gomba(Tekton t) {
+    public Gomba(Tekton t, Gombasz gsz) {
         Field.genID();
+        gombasz = gsz;
+        gombasz.addGomba(this);
         tekton = t;
         fonalLista = new ArrayList<>();
     }
@@ -35,7 +38,7 @@ public class Gomba implements IDestroyable {
     public void gombatestSzintlepes() {
         //TODO - Ellenőtizni, hogy ezt használjuk-e valahol
         int mennyiseg = gombaTest.getSzorasCount();
-        gombaTest.szintlepes(mennyiseg);
+        gombaTest.szintlepes();
     }
 
     public List<GombaFonal> fonalFolytonossagVizsgalat() {
@@ -185,8 +188,7 @@ public class Gomba implements IDestroyable {
         } else {
             //Ha még nincs a céltektonon Gomba és GombaTest, akkor a tektonon jönnek létre a Sporak
             for(int i = 0; i<szorandoMennyiseg; ++i){
-                //TODO random spóra generálás kezelése
-                Spora s = new Spora();
+                BaseSpora s = BaseSpora.generateRandomSpora();  //MIndegyik 1/-od valószínűséggel
                 celTekton.addSpora(s);
             }
         }
@@ -323,6 +325,15 @@ public class Gomba implements IDestroyable {
     }
 
     public void elpusztul() {
-        //TODO
+        for(List<GombaFonal> l : fonalLista) {
+            l.clear();
+        }
+        fonalLista.clear();
+
+        gombasz.getGombaLista().remove(this);
+    }
+
+    public Gombasz getGombasz(){
+        return gombasz;
     }
 }

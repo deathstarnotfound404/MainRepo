@@ -51,8 +51,19 @@ public class GombaFonal implements IDestroyable {
     }
 
     public boolean rovarEves(Rovar r) {
-        if()
-        //TODO - Rovar után
+        if(r.getEvesHatekonysag()!=0) {
+            return false;
+        } else {
+            if(!r.getHelyzet().getVanGombaTest()) {
+                Tekton rovarHelyzet = r.getHelyzet();
+                r.elpusztul();
+                Gomba uj = new Gomba(rovarHelyzet, this.getAlapGomba().getGombasz());
+                uj.getGombasz().gombatestNovesztes(rovarHelyzet, true);
+                return true;
+            }else {
+                return false;
+            }
+        }
     }
 
     public void elpusztul() {}

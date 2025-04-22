@@ -21,7 +21,9 @@ public class Gombasz extends Player {
     public void fonalVasarlas(Gomba g) {}
     public List<Gomba> getGombaLista() { return null; }
     public void gombafonalNovesztes(Gomba g, Tekton start, Tekton cel) {}
-    public void gombatestNovesztes(Tekton t) {}
+    public void gombatestNovesztes(Tekton t, boolean ingyen) {
+        //TODO ingyen mód nem kerül 3 spórába a növesztés, hanem minden Tektonon lévő Spórát megkapja a GT
+    }
     public List<GombaFonal> protectedSzures(List<GombaFonal> list) { return null; }
     public void sporaTermelesAll() {}
     public void szoras(Gomba g, Tekton celTekton) {}

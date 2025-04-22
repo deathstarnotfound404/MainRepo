@@ -8,6 +8,7 @@ public class BenitoSpora extends BaseSpora {
 
     @Override
     public void hatas(Rovar r) {
-        //TODO
+        r.setMaxFogyasztas(false);
+        r.setEvesHatekonysag(0);
     }
 }
