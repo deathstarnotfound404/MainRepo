@@ -39,6 +39,7 @@ public class Tekton {
 
     public Rovar tektonTores(){
         //TODO
+
     }
 
     public boolean vanRovarATektonon(){

@@ -7,11 +7,15 @@ public class GombaTest implements IDestroyable {
     private Gomba alapGomba;
 
     public GombaTest(Gomba g, int kezdoSporaSzam) {}
+
     public int getSporakeszlet() { return 0; }
+
     public int getSzorasCount() { return 0; }
+
     public void addSzorasCount(int val) {
         this.szorasCount += val;
     }
+
     public void addToSporaKeszlet() {
         switch (szint) {
             case 1:
@@ -36,11 +40,17 @@ public class GombaTest implements IDestroyable {
     }
 
     public int sporaSzorzo(int szint) { return 0; }
+
     public int getSzint() { return 0; }
+
     public void szintlepes(int szorandoMennyiseg) {}
+
     public Gomba getAlapGomba() { return null; }
+
     public void setAlapGomba(Gomba g) {}
+
     public void increaseSporakeszlet() {}
+
     public boolean decreaseSporakeszlet(int val) {
         if(sporaKeszlet >= val) {
             sporaKeszlet -= val;
@@ -49,6 +59,9 @@ public class GombaTest implements IDestroyable {
             return false;
         }
     }
+
     public int getId() { return 0; }
+
     public void elpusztul() {}
+
 }

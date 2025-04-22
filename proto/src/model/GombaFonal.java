@@ -14,6 +14,10 @@ public class GombaFonal implements IDestroyable {
         this.celTekton = celTekton;
     }
 
+    public int getID(){
+        return id;
+    }
+
     public Tekton getStartTekton() { return startTekton; }
 
     public Tekton getCelTekton() { return celTekton; }
@@ -21,10 +25,7 @@ public class GombaFonal implements IDestroyable {
     public Gomba getAlapGomba() { return alapGomba; }
 
     public boolean connectedToAlapGomba() {
-        //TODO Gomba és Gombász után
-        //Ez a fv kb annak felel meg amit beszéltönk, azaz adott gf paraméter folytonos e a GT ig
-
-        return false;
+        return alapGomba.fonalFolytonossagVizsgalat(this);
     }
 
     public void setIsDestroyable(boolean value) {
@@ -34,16 +35,17 @@ public class GombaFonal implements IDestroyable {
     public boolean getIsDestroyable() {
         return this.isDestroyable;
     }
-    public void setIsElragott(boolean value) {
+    public void setElragott(boolean value) {
         this.isElragott = value;
     }
 
-    public boolean getIsElragott() {
+    public boolean IsElragott() {
         return this.isElragott;
     }
 
     public boolean rovarEves(Rovar r) {
-        //TODO
+        if()
+        //TODO - Rovar után
     }
 
     public void elpusztul() {}

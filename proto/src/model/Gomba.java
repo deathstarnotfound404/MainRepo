@@ -71,6 +71,36 @@ public class Gomba implements IDestroyable {
         return true;
     }
 
+    public boolean fonalFolytonossagVizsgalat(GombaFonal gf){
+        //TODO ELLENŐRIZNI EGYÜTT - BIZTOS HOGY LEHET EGYSZERŰSÍTENI
+        //Megvizsgálja, hogy az átadott fonal folytonos-e a gazda gombatestjével, és alapgombájával
+
+        //Megvizsgálja listánként hogy az egymást követő elemek folytonosak-e
+        //Ha végig folytonos és megtalálja a keresett fonalat, akkor true és folytonos
+        //HA sose talál folytonos
+        boolean folytonos = true;
+        for (List<GombaFonal> l : fonalLista) {
+            folytonos = true;
+            for (int i = 0; i < l.size(); i++) {
+                if(i < l.size() - 2) {
+                    if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
+                        if(folytonos) {
+                            folytonos = true;
+
+                            if(l.get(i).getID() == gf.getID()) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        folytonos = false;
+                        break;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void fonalFelszivodas(Tekton t) {
         List<GombaFonal> felszivandoFonalak = t.getKapcsolodoFonalak();
 
