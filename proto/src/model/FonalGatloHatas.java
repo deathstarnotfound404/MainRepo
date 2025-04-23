@@ -8,9 +8,11 @@ public class FonalGatloHatas extends TektonHatas {
     @Override
     public String hatas() {
         int fokszam = super.tekton.getFokszam();
-        if(fokszam == 0) {
+        if(fokszam < 1) {
+            super.tekton.setMaxEgyFonal(false);
             return "NincsFonalGatlo";
         } else {
+            super.tekton.setMaxEgyFonal(true);
             return "FonalGatlo";
         }
     }

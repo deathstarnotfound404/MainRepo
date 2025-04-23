@@ -51,12 +51,14 @@ public class Tekton {
     }
 
     public void clearKapcsolodoFonalak(){
-        this.kapcsolodoFonalak.clear();
-        this.fonalFokszam = 0;
+        if(!defendFonalak){
+            this.kapcsolodoFonalak.clear();
+            this.fonalFokszam = 0;
+        }
     }
 
     public void fonalakFelszivasa(){
-        if(tektononLevoGomba != null) {
+        if(tektononLevoGomba != null && !defendFonalak) {
             tektononLevoGomba.fonalFelszivodas(this);
         }
     }
@@ -94,6 +96,13 @@ public class Tekton {
     }
 
     public void addKapcsolodoFonalak(GombaFonal gf) {
+        //TODO maxegyfonal ellenőrzése
+        if(maxEgyFonal) {
+            if(kapcsolodoFonalak.size() >= 1) {
+                return;
+            }
+        }
+
         if(!kapcsolodoFonalak.contains(gf)){
             this.kapcsolodoFonalak.add(gf);
             this.fonalFokszam = kapcsolodoFonalak.size();
@@ -113,7 +122,9 @@ public class Tekton {
     }
 
     public void setGomba(Gomba g){
-        this.tektononLevoGomba = g;
+        if(!vanGombaTestTektonon && this.tektononLevoGomba == null) {
+            this.tektononLevoGomba = g;
+        }
     }
 
     public List<Tekton> getSzomszedosTektonok(){
@@ -121,7 +132,7 @@ public class Tekton {
     }
 
     public void removeKapcsolodoFonal(GombaFonal gf) {
-        if(this.kapcsolodoFonalak.contains(gf)){
+        if(this.kapcsolodoFonalak.contains(gf) && !this.defendFonalak){ //TODO ellenőrizni, hogy nem kavar e be a defend a dologba
             this.kapcsolodoFonalak.remove(gf);
             this.fonalFokszam = kapcsolodoFonalak.size();
         } else {

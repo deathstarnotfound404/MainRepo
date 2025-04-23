@@ -7,7 +7,7 @@ public class FonalDefenderHatas extends TektonHatas {
 
     @Override
     public String hatas() {
-        //TODO
-        return null;
+        super.tekton.setDefendFonalak(true);
+        return "DefenderHatas";
     }
 }

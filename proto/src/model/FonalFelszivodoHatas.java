@@ -8,7 +8,8 @@ public class FonalFelszivodoHatas extends TektonHatas {
 
     @Override
     public String hatas() {
-        //TODO
-        return null;
+        //Fonalak felszívása az adott tektonról
+        super.tekton.fonalakFelszivasa();
+        return "Felszivas";
     }
 }
