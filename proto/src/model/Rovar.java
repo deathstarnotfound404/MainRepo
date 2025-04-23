@@ -181,6 +181,7 @@ public class Rovar implements IDestroyable{
 
     @Override
     public void elpusztul() {
+        this.helyzet.setRovar(null);
         this.rovarasz.getRovarLista().remove(this);
     }
 }

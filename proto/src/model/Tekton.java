@@ -1,7 +1,7 @@
 package model;
 import java.util.*;
 
-public class Tekton {
+public class Tekton implements IDestroyable{
     private int id;
     private int rovarLatogatottsag = 0;
     private int fonalFokszam = 0;
@@ -23,7 +23,9 @@ public class Tekton {
         tektonHatas = hatas;
     }
 
-    public List<Tekton> getSzomszedok() { return null; }
+    public List<Tekton> getSzomszedok() {
+        return this.szomszedosTektonok;
+    }
 
     public String hatasKifejtes() {
         return tektonHatas.hatas();
@@ -37,9 +39,31 @@ public class Tekton {
         sporaLista.add(spora);
     }
 
-    public Rovar tektonTores(){
-        //TODO
+    //TODO TÖRÉS ELLENŐRZÉSE
+    public void tektonTores(){
+        this.fonalakFelszivasa();
 
+        if(tektononLevoGomba != null) {
+            tektononLevoGomba.elpusztul();
+        }
+
+        Tekton ujTekton1 = new Tekton(TektonHatas.generateRandomTektonHatas());
+        Tekton ujTekton2= new Tekton(TektonHatas.generateRandomTektonHatas());
+        Field.addTekton(ujTekton1);
+        Field.addTekton(ujTekton2);
+
+        ujTekton1.addSzomszedosTekton(ujTekton1);
+        ujTekton2.addSzomszedosTekton(ujTekton2);
+        ujTekton1.getSzomszedok().addAll(this.szomszedosTektonok);
+        ujTekton2.getSzomszedok().addAll(this.szomszedosTektonok);
+
+        if(this.vanRovarATektonon()) {
+            ujTekton1.setRovar(tektononLevoRovar);
+            tektononLevoRovar.setHelyzet(ujTekton1);
+        }
+
+        //Régi tekton törlése
+        this.elpusztul();
     }
 
     public boolean vanRovarATektonon(){
@@ -186,4 +210,49 @@ public class Tekton {
     public int getId() {
         return id;
     }
+
+    @Override
+    public void elpusztul() {
+        this.tektononLevoGomba.elpusztul();
+        this.sporaLista.clear();
+        this.kapcsolodoFonalak.clear(); //Ahol használjuk előtte a fonalak felszívása már kezeli magukat a fonalakat
+        Field.getTektonList().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\trovarLatogatottsag: ").append(this.rovarLatogatottsag).append("\n");
+        sb.append("\tfonalFokszam: ").append(this.fonalFokszam).append("\n");
+        sb.append("\tsporaListaSize: ").append(this.sporaLista.size()).append("\n");
+        sb.append("\tszomszedosTektonokSize: ").append(this.szomszedosTektonok.size()).append("\n");
+
+        if(defendFonalak) {
+            sb.append("\tdefendFonalak: 1\n");
+        } else {
+            sb.append("\tdefendFonalak: 0\n");
+        }
+
+        if (tektononLevoGomba != null) {
+            sb.append("\tgombatest: 1 - sporaszam: ")
+                    .append(tektononLevoGomba.getGombatest().getSporakeszlet())
+                    .append(" - fonalszam: ")
+                    .append(tektononLevoGomba.getFonalKeszlet())
+                    .append(" - szint: ")
+                    .append(tektononLevoGomba.getGombatest().getSzint())
+                    .append("\n");
+        } else {
+            sb.append("\tgombatest: 0\n");
+        }
+
+        if (tektononLevoRovar == null) {
+            sb.append("\trovar: 0\n");
+        } else {
+            sb.append("\trovar: 1 - ID: ").append(tektononLevoRovar.getID()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
 }

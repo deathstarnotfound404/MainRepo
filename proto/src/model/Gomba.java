@@ -329,7 +329,7 @@ public class Gomba implements IDestroyable {
             l.clear();
         }
         fonalLista.clear();
-
+        tekton.setGomba(null);
         gombasz.getGombaLista().remove(this);
     }
 
