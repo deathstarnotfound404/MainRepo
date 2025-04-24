@@ -4,7 +4,8 @@ import java.util.*;
 public class Gombasz extends Player {
     private List<Gomba> gombaLista;
 
-    public Gombasz() {
+    public Gombasz(String name) {
+        super(name);
         gombaLista = new ArrayList<>();
     }
 
@@ -165,6 +166,7 @@ public class Gombasz extends Player {
             g.sporaTermeles();
         }
     }
+
     public boolean szoras(Gomba g, Tekton celTekton) {
         return g.szor(celTekton, g.getGombatest());
     }

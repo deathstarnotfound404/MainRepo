@@ -4,7 +4,8 @@ import java.util.*;
 public class Rovarasz extends Player {
     private List<Rovar> rovarLista;
 
-    public Rovarasz() {
+    public Rovarasz(String name) {
+        super(name);
         rovarLista = new ArrayList<>();
     }
 

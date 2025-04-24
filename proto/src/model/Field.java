@@ -4,24 +4,24 @@ import java.util.*;
 public class Field {
     private static int idCounter = 0;
     private static List<Tekton> tektonLista = new ArrayList<>();
-    private static Map<Player, String> playerLista = new HashMap<Player, String>();
+    private Map<Player, String> playerLista = new HashMap<>();
 
     public Field() {}
 
-    public static void addGombasz(Gombasz p) {
+    public void addGombasz(Gombasz p) {
         playerLista.put(p, "G");
     }
 
-    public static void addRovarasz(Rovarasz p) {
+    public void addRovarasz(Rovarasz p) {
         playerLista.put(p, "R");
     }
 
-    public static  void addTekton(Tekton t) {
+    public static void addTekton(Tekton t) {
         tektonLista.add(t);
     }
 
     //Fontos, hogy az 1.elem lesz a nyertes rovarasz, 2. a nyertes gombasz
-    public static List<Player> kiertekeles() {
+    public  List<Player> kiertekeles() {
         int maxRovaraszScore = 0;
         int maxGombaszScore = 0;
 
@@ -55,17 +55,18 @@ public class Field {
     }
 
 
-    public static void printGameState() {
+    public void printGameState() {
         int tektonCnt = 0;
         System.out.println("[Tektonok]");
         for (Tekton t : tektonLista) {
             System.out.println("ID: t" + tektonCnt);
             System.out.println(t.toString());
+            tektonCnt++;
         }
         System.out.println("\n---------------------------------------------------------------------------------");
     }
 
-    public static void setAllTektonSzomszed() {
+    public void setAllTektonSzomszed() {
         //TODO ????
     }
 
@@ -76,5 +77,43 @@ public class Field {
 
     public static List<Tekton> getTektonList() {
         return tektonLista;
+    }
+
+    public void initGame(){
+        //Létrehozza a játék mapot
+
+        for (int i = 0; i<12; i++) {
+            tektonLista.add(new Tekton(TektonHatas.generateRandomTektonHatas()));
+        }
+
+        //Szomszédok beállítása
+        //1
+        Tekton.connectSzomszedok(tektonLista.get(0), tektonLista.get(5));
+        //2
+        Tekton.connectSzomszedok(tektonLista.get(5), tektonLista.get(1));
+        //3
+        Tekton.connectSzomszedok(tektonLista.get(1), tektonLista.get(6));
+        //4
+        Tekton.connectSzomszedok(tektonLista.get(1), tektonLista.get(2));
+        //5
+        Tekton.connectSzomszedok(tektonLista.get(6), tektonLista.get(3));
+        //6
+        Tekton.connectSzomszedok(tektonLista.get(3), tektonLista.get(7));
+        //7
+        Tekton.connectSzomszedok(tektonLista.get(7), tektonLista.get(6));
+        //8
+        Tekton.connectSzomszedok(tektonLista.get(4), tektonLista.get(8));
+        //9
+        Tekton.connectSzomszedok(tektonLista.get(8), tektonLista.get(9));
+        //10
+        Tekton.connectSzomszedok(tektonLista.get(9), tektonLista.get(5));
+        //11
+        Tekton.connectSzomszedok(tektonLista.get(9), tektonLista.get(6));
+        //12
+        Tekton.connectSzomszedok(tektonLista.get(6), tektonLista.get(10));
+        //13
+        Tekton.connectSzomszedok(tektonLista.get(10), tektonLista.get(11));
+        //14
+        Tekton.connectSzomszedok(tektonLista.get(7), tektonLista.get(11));
     }
 }

@@ -299,4 +299,9 @@ public class Tekton implements IDestroyable{
         return sb.toString();
     }
 
+    public static void connectSzomszedok(Tekton t1, Tekton t2) {
+        t1.addSzomszedosTekton(t2);
+        t2.addSzomszedosTekton(t1);
+    }
+
 }

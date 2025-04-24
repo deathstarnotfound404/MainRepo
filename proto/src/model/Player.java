@@ -2,14 +2,16 @@ package model;
 
 public abstract class Player {
     protected int score = 0;
+    protected String name;
 
-    protected Player() {}
+    protected Player(String name) {
+        this.name = name;
+    }
 
     protected void addScore(int val) {
         this.score += val;
     }
 
-    //TODO IMPLEMENT IN PLAYERS
     public abstract int getScoreFromPlayer();
 
     protected int getScore() {
@@ -18,5 +20,9 @@ public abstract class Player {
 
     protected void setScore(int val) {
         this.score = val;
+    }
+
+    public String getName() {
+        return name;
     }
 }
