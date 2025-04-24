@@ -136,16 +136,14 @@ public class Gomba implements IDestroyable {
             Tekton t2 = gf.getCelTekton();
 
             if(t1.getId() == t.getId()){
-                t2.removeKapcsolodoFonal(gf);
+                t2.removeKapcsolodoFonal(gf);   //Ez auto nézi hogy defend fonal-e amit töröl
             } else {
                 t1.removeKapcsolodoFonal(gf);
             }
-
-
         }
 
         //2. t-ből töröljük fonalakat
-        t.clearKapcsolodoFonalak();
+        t.clearKapcsolodoFonalak();     //Ez auto nézi hogy defend fonal-e amit töröl
 
         //3. Gombából töröljük az adott fonalakat
         for(GombaFonal gf : felszivandoFonalak){
@@ -157,11 +155,14 @@ public class Gomba implements IDestroyable {
         gombaTest = gt;
     }
 
-    //TODO protected ne legyen törölve
     public void deleteFonal(GombaFonal gf) {
         for (List<GombaFonal> l : fonalLista) {
             if(l.contains(gf)) {
-                l.remove(gf);
+                if(Gombasz.protectedSzures(l).contains(gf)) {
+                    break;
+                } else {
+                    l.remove(gf);   // Protected fonalak nincsenek törölve
+                }
             }
         }
     }
