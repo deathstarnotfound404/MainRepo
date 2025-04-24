@@ -11,6 +11,7 @@ public class Tekton implements IDestroyable{
     private boolean defendFonalak = false;
     private boolean maxEgyFonal = false;
     private boolean vanGombaTestTektonon = false;
+    private boolean gtGatlo = false;
     private TektonHatas tektonHatas;
     private Gomba tektononLevoGomba;
     private Rovar tektononLevoRovar;
@@ -60,6 +61,7 @@ public class Tekton implements IDestroyable{
         if(this.vanRovarATektonon()) {
             ujTekton1.setRovar(tektononLevoRovar);
             tektononLevoRovar.setHelyzet(ujTekton1);
+            this.setRovar(null);
         }
 
         //Régi tekton törlése
@@ -133,21 +135,35 @@ public class Tekton implements IDestroyable{
         }
     }
 
-    public void setRovar(Rovar r) {
-        if(tektononLevoRovar!=null){
-            if(r == null){
+    public boolean setRovar(Rovar r) {
+        if(tektononLevoRovar!=null){    //Ha van már rovar a tektonon
+            if(r == null){  //HA ezt null ra akarjuk állítani
                 rovarLatogatottsag++;
+                tektononLevoRovar = null;
+                return true;
             } else {
-                //TODO jelezni, hogy nem lehetséges a mozgatás
-                return;
+                return false;   //már van egy rovar a tektonon, tekton nem üres
             }
+        } else {
+            this.tektononLevoRovar = r;
+            return true;
         }
-        this.tektononLevoRovar = r;
+    }
+
+    public Rovar getRovar(){
+        return this.tektononLevoRovar;
     }
 
     public void setGomba(Gomba g){
-        if(!vanGombaTestTektonon && this.tektononLevoGomba == null) {
-            this.tektononLevoGomba = g;
+        if(g != null) {
+            if(!vanGombaTestTektonon && this.tektononLevoGomba == null && !gtGatlo) {
+                this.tektononLevoGomba = g;
+                vanGombaTestTektonon = true;
+            }
+        } else {
+            this.tektononLevoGomba = null;
+            //TODO, ez bezavarhat a hatásba, mert ha GOmbaTestGátló akkor nem kene ezt itt visszaállítani
+            vanGombaTestTektonon = false;
         }
     }
 
@@ -217,6 +233,34 @@ public class Tekton implements IDestroyable{
         this.sporaLista.clear();
         this.kapcsolodoFonalak.clear(); //Ahol használjuk előtte a fonalak felszívása már kezeli magukat a fonalakat
         Field.getTektonList().remove(this);
+    }
+
+    public static boolean ketTektonFonallalOsszekotott(Tekton t1, Tekton t2){
+        //Fonallal összekötött-e a két tekton
+        List<GombaFonal> celFonalak = t1.getKapcsolodoFonalak();
+        List<GombaFonal> thisFonalak = t2.getKapcsolodoFonalak();
+
+        boolean vanKozosFonal = false;
+
+        for (GombaFonal f1 : celFonalak) {
+            for (GombaFonal f2 : thisFonalak) {
+                if (f1.getID() == f2.getID()) {
+                    vanKozosFonal = true;
+                    break;
+                }
+            }
+            if (vanKozosFonal) break;
+        }
+
+        return vanKozosFonal;
+    }
+
+    public boolean isGtGatlo(){
+        return gtGatlo;
+    }
+
+    public void setGtGatlo(boolean val){
+        this.gtGatlo = val;
     }
 
     @Override

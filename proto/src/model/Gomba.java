@@ -9,12 +9,13 @@ public class Gomba implements IDestroyable {
     private int id;
     private Gombasz gombasz;
 
-    public Gomba(Tekton t, Gombasz gsz) {
+    public Gomba(Tekton t, Gombasz gsz, int kezdoSporaszam) {
         Field.genID();
         gombasz = gsz;
-        gombasz.addGomba(this);
         tekton = t;
+        t.setGomba(this);   //Itt létrejön biztosan, mert akkor híjuk csak meg ha leellenőriztük h üres a tekton
         fonalLista = new ArrayList<>();
+        gombaTest = new GombaTest(this, kezdoSporaszam);
     }
 
     public List<List<GombaFonal>> getFonalLista() { return fonalLista; }
@@ -81,22 +82,17 @@ public class Gomba implements IDestroyable {
         //Megvizsgálja listánként hogy az egymást követő elemek folytonosak-e
         //Ha végig folytonos és megtalálja a keresett fonalat, akkor true és folytonos
         //HA sose talál folytonos
-        boolean folytonos = true;
         for (List<GombaFonal> l : fonalLista) {
-            folytonos = true;
             for (int i = 0; i < l.size(); i++) {
                 if(i < l.size() - 2) {
                     if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
-                        if(folytonos) {
-                            folytonos = true;
 
-                            if(l.get(i).getID() == gf.getID()) {
-                                return true;
-                            }
+                        if(l.get(i).getID() == gf.getID()) {
+                            return true;
                         }
+
                     } else {
-                        folytonos = false;
-                        break;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
+                        return false; //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
                     }
                 }
             }
@@ -104,6 +100,33 @@ public class Gomba implements IDestroyable {
         return false;
     }
 
+    public boolean fonalFolytonossagVizsgalat(Tekton t){
+        //Megvizsgálja, hogy az átadott tekton folytonosan van-e kötve a gombatesttel
+        if(t.getId() == this.tekton.getId()){
+            return true;
+        }
+
+        for (List<GombaFonal> l : fonalLista) {
+            //Végig az összes fonallistán
+            for (int i = 0; i < l.size(); i++) {
+                if(i < l.size() - 2) {
+                    //Ha folytonos -> azaz i. fonal céltektonja az l listában megegyezik az i+1. fonal startTektonjával
+                    if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
+                        //Ha az i. fonal céltektonja megewgyezik a keresett tektonnal, akkor a T tekton folytonosan van kötve a gazda gombatesthez
+                        //Ha ez az esemény egyszer sem következik be akkor, a T nincs kötve ezzel a Gombával
+                        if(l.get(i).getCelTekton().getId() == t.getId()) {
+                            return true;
+                        }
+                    } else {
+                        return false;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    //TODO protected ne legyen törölve
     public void fonalFelszivodas(Tekton t) {
         List<GombaFonal> felszivandoFonalak = t.getKapcsolodoFonalak();
 
@@ -134,6 +157,7 @@ public class Gomba implements IDestroyable {
         gombaTest = gt;
     }
 
+    //TODO protected ne legyen törölve
     public void deleteFonal(GombaFonal gf) {
         for (List<GombaFonal> l : fonalLista) {
             if(l.contains(gf)) {
@@ -160,7 +184,7 @@ public class Gomba implements IDestroyable {
     public boolean szor(Tekton celTekton, GombaTest gt) {
         List<Tekton> szomszedLista = celTekton.getSzomszedosTektonok();
 
-        //Célpont ellenőrzése
+        //Célpont ellenőrzése - Nem szomszédos tektonok ell.
         if(!this.tekton.getSzomszedosTektonok().contains(celTekton)){
             if(this.gombaTest.getSzint() == 3){ //Ha 3. szintű akkor szomszéd szomszédjára is szórhat
                 //Szomszéd szomszédjainak ellenőrzése
@@ -176,7 +200,7 @@ public class Gomba implements IDestroyable {
         int szint = gt.getSzint();
         int szorandoMennyiseg = gt.sporaSzorzo(szint);
 
-        //Ha nincs elég spóra a szóráshoz
+        //Ha nincs elég spóra a szóráshoz - Nincs elég spórakészlet
         if(szorandoMennyiseg > this.gombaTest.getSporakeszlet()){
             return false;
         }
@@ -188,11 +212,12 @@ public class Gomba implements IDestroyable {
         } else {
             //Ha még nincs a céltektonon Gomba és GombaTest, akkor a tektonon jönnek létre a Sporak
             for(int i = 0; i<szorandoMennyiseg; ++i){
-                BaseSpora s = BaseSpora.generateRandomSpora();  //MIndegyik 1/-od valószínűséggel
+                BaseSpora s = BaseSpora.generateRandomSpora();  //Mindegyik 1/6-od valószínűséggel
                 celTekton.addSpora(s);
             }
         }
         this.gombaTest.addSzorasCount(1);
+        //TODO Szórás után ellenőrizni, hogy elpusztul-e
         this.gombaTest.decreaseSporakeszlet(szorandoMennyiseg);
         return true;
     }
@@ -313,6 +338,7 @@ public class Gomba implements IDestroyable {
         tekton = t;
     }
 
+    //TODO protectedet nem törölhet
     public void nemFolytonosFonalTorles() {
         List<GombaFonal> nemFolytonos = fonalFolytonossagVizsgalat();
         for (GombaFonal gf : nemFolytonos) {
@@ -324,6 +350,7 @@ public class Gomba implements IDestroyable {
         }
     }
 
+    //TODO protected ne legyen törölve
     public void elpusztul() {
         for(List<GombaFonal> l : fonalLista) {
             l.clear();

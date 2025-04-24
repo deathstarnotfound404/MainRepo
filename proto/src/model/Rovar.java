@@ -72,15 +72,26 @@ public class Rovar implements IDestroyable{
 
     public boolean lep(Tekton celTekton) {
         List<Tekton> szomszedLista = this.helyzet.getSzomszedosTektonok();
-        if(!szomszedLista.contains(celTekton)){
-           return false;
-        }
-
-        if(celTekton.vanRovarATektonon()) {
+        //Nem léphet ugyan oda
+        if(celTekton.getId() == this.id) {
             return false;
         }
 
-        this.helyzet.setRovar(null);
+        //Ha a két tekton nem szomszédosak
+        if(!szomszedLista.contains(celTekton) && !celTekton.getSzomszedok().contains(this.helyzet)){
+           return false;
+        }
+
+        //Fonallal összekötött-e a két tekton
+        if(!Tekton.ketTektonFonallalOsszekotott(this.helyzet, celTekton)) {
+            return false;
+        }
+
+        if(celTekton.vanRovarATektonon() || celTekton.getRovar() != null) {
+            return false;
+        }
+
+        this.helyzet.setRovar(null);    //Add latogatottsag itt megtörtéik
         this.setHelyzet(celTekton);
         celTekton.setRovar(this);
 
@@ -161,11 +172,13 @@ public class Rovar implements IDestroyable{
 
             this.helyzet.getSporaLista().subList(0, elfogyaszthatoVal).clear(); //Sporak törlése
 
+            this.addTapanyag(elfogyaszthatoVal);
+
             //TODO - Időzítés beállítása Rovarra alaphelyzetre (30 sec)
         }
     }
 
-    public void vag(GombaFonal gf) {
+    public boolean vag(GombaFonal gf) {
         //TODO -  10sec-ig ne tűnjön el - Majd a Rovarásznál kezelve (az ő hívását időzítjük és ezt hívjuk ha letelt)
         if(this.tudVagni) {
             Tekton t1 = gf.getStartTekton();
@@ -176,6 +189,9 @@ public class Rovar implements IDestroyable{
             t2.removeKapcsolodoFonal(gf);
 
             alapGomba.deleteFonal(gf);
+            return true;
+        } else {
+            return false;
         }
     }
 

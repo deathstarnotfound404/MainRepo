@@ -10,7 +10,7 @@ public abstract class Player {
     }
 
     //TODO IMPLEMENT IN PLAYERS
-    protected abstract int getScoreFromPlayer();
+    public abstract int getScoreFromPlayer();
 
     protected int getScore() {
         return getScoreFromPlayer();    //Ez updateli a score-t apayer leszármazottól

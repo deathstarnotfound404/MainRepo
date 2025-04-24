@@ -5,14 +5,16 @@ public class Rovarasz extends Player {
     private List<Rovar> rovarLista;
 
     public Rovarasz() {
-        rovarLista = new ArrayList<Rovar>();
+        rovarLista = new ArrayList<>();
     }
 
-    public void addRovar(Rovar r, Tekton t) {
-        if(t.vanRovarATektonon()) {
-            throw new Exception("Van rovar a tektonon.");
+    public boolean addRovar(Rovar r, Tekton t) {
+        if(t.setRovar(r)) {
+            this.rovarLista.add(r);
+            return true;
+        } else {
+            return false;
         }
-         t.setRovar(r);
     }
 
     public int calcAllTapanyagScore() {
@@ -25,8 +27,7 @@ public class Rovarasz extends Player {
 
     public boolean fonalVagas(Rovar r, GombaFonal gf) {
         if (r.getTudVagni()) {
-            r.vag(gf);
-            return true;
+            return r.vag(gf);
         } else {
             return false;
         }
@@ -36,9 +37,17 @@ public class Rovarasz extends Player {
         return rovarLista;
     }
     public void removeRovar(Rovar r) {
+        if(r.getHelyzet().getRovar() != null) {
+            r.getHelyzet().setRovar(null);
+        }
         rovarLista.remove(r);
     }
     public boolean rovarIranyitas(Rovar r, Tekton celTekton) {
         return r.lep(celTekton);
+    }
+
+    @Override
+    public int getScoreFromPlayer(){
+        return calcAllTapanyagScore();
     }
 }

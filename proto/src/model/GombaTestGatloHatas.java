@@ -8,6 +8,7 @@ public class GombaTestGatloHatas extends TektonHatas {
     @Override
     public String hatas() {
         super.tekton.setVanGombaTest(true); //TODO ELL. HOGY EZT NEM SÉRTJÜK-E VALAHOL AHOL LÉTREHOZUNK GOMBÁT
+        super.tekton.setGtGatlo(true);
         return "GombaTestGatlo";
     }
 }
