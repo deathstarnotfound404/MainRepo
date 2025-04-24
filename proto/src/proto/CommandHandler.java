@@ -8,12 +8,12 @@ public class CommandHandler {
     private enum Mode { GAME, TEST }
 
     private final Map<String, Consumer<List<String>>> parancsok = new HashMap<>();
-    private static Field field = new Field(); // újrapéldányosítható mező
+    private static Field field = new Field();
     private Mode currentMode = Mode.GAME;
     private volatile boolean gameRunning = false;
     private Timer gameTimer;
 
-    private final Map<Integer, Player> players = new HashMap<>();
+    private final Map<Integer, Player> players = new LinkedHashMap<>();
     private Player selectedPlayer = null;
 
     private static final Set<String> globalParancsok = Set.of("help", "exit", "playerNum", "select", "jatekKiertekeles", "printField");
@@ -36,7 +36,6 @@ public class CommandHandler {
                     field = new Field();
                     currentMode = Mode.GAME;
                     pregameBehaviour();
-                    field.initGame();
                     initParancsok();
                     startCommandLoop();
                     return;
@@ -58,7 +57,6 @@ public class CommandHandler {
 
     private void startCommandLoop() {
         Scanner scanner = new Scanner(System.in);
-
         while (gameRunning) {
             if (selectedPlayer == null) {
                 System.out.print("[select] > ");
@@ -130,53 +128,17 @@ public class CommandHandler {
         System.out.println("Módban vagy: " + currentMode);
     }
 
-    private void spreadSpora(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Spóra szórás -> " + args);
-    }
-
-    private void growFonal(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Fonal növesztés -> " + args);
-    }
-
-    private void moveRovar(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Rovar mozgatás -> " + args);
-    }
-
-    private void growGombaTest(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Gombatest növesztés -> " + args);
-    }
-
-    private void cutFonal(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Fonal elvágása -> " + args);
-    }
-
-    private void eatRovar(List<String> args) {
-        System.out.println(selectedPlayer.getName() + ": Rovar elfogyasztása -> " + args);
-    }
-
-    private void printField(List<String> args) {
-        field.printGameState();
-    }
-
-    private void setKezdoHelyzet(List<String> args) {
-        System.out.println("Kezdőhelyzet beállítva.");
-    }
-
-    private void jatekKiertekeles(List<String> args) {
-        System.out.println("Játék kiértékelése.");
-    }
-
-    private void loadMap(List<String> args) {
-        System.out.println("Pálya betöltve.");
-    }
-
-    private void runTest(List<String> args) {
-        if (currentMode == Mode.TEST) {
-            System.out.println("Teszt futtatása: " + args);
-        } else {
-            System.out.println("Teszt csak TESZT módban futtatható!");
-        }
-    }
+    private void spreadSpora(List<String> args) { System.out.println(selectedPlayer.getName() + ": Spóra szórás -> " + args); }
+    private void growFonal(List<String> args) { System.out.println(selectedPlayer.getName() + ": Fonal növesztés -> " + args); }
+    private void moveRovar(List<String> args) { System.out.println(selectedPlayer.getName() + ": Rovar mozgatás -> " + args); }
+    private void growGombaTest(List<String> args) { System.out.println(selectedPlayer.getName() + ": Gombatest növesztés -> " + args); }
+    private void cutFonal(List<String> args) { System.out.println(selectedPlayer.getName() + ": Fonal elvágása -> " + args); }
+    private void eatRovar(List<String> args) { System.out.println(selectedPlayer.getName() + ": Rovar elfogyasztása -> " + args); }
+    private void printField(List<String> args) { field.printGameState(); }
+    private void setKezdoHelyzet(List<String> args) { System.out.println("Kezdőhelyzet beállítva."); }
+    private void jatekKiertekeles(List<String> args) { System.out.println("Játék kiértékelése."); }
+    private void loadMap(List<String> args) { System.out.println("Pálya betöltve."); }
+    private void runTest(List<String> args) { System.out.println("Teszt futtatása: " + args); }
 
     private void exit(List<String> args) {
         if (currentMode == Mode.GAME) {
@@ -226,7 +188,6 @@ public class CommandHandler {
         System.out.print("Add meg, hány Gombász játszik: ");
         int gombaszokSzama = scanner.nextInt();
         scanner.nextLine();
-
         for (int i = 0; i < gombaszokSzama; i++) {
             System.out.print("Gombász " + (i + 1) + " neve: ");
             String name = scanner.nextLine();
@@ -238,7 +199,6 @@ public class CommandHandler {
         System.out.print("Add meg, hány Rovarász játszik: ");
         int rovaraszokSzama = scanner.nextInt();
         scanner.nextLine();
-
         for (int i = 0; i < rovaraszokSzama; i++) {
             System.out.print("Rovarász " + (i + 1) + " neve: ");
             String name = scanner.nextLine();
@@ -251,8 +211,33 @@ public class CommandHandler {
         int idotartamMasodperc = scanner.nextInt();
         scanner.nextLine();
 
+        field.initGame();
+
+        List<Tekton> tektonList = field.getTektonList();
+        for (Player p : players.values()) {
+            System.out.println("[" + p.getName() + ":" + p.getClass().getSimpleName() + "]");
+            if (p instanceof Gombasz g) {
+                System.out.print("    kezdo Gomba helye > ");
+                int tIndex = scanner.nextInt();
+                //TODO kiindexeles kezelese
+                //TODO instance of ok kezelése
+                scanner.nextLine();
+                Gomba gomba = new Gomba(tektonList.get(tIndex), g, 0);
+                System.out.println("Gomba létrehozva a(z) " + tIndex + ". Tektorra.");
+            } else if (p instanceof Rovarasz r) {
+                System.out.print("    kezdo Rovar helye > ");
+                int tIndex = scanner.nextInt();
+                scanner.nextLine();
+                Rovar rovar = new Rovar();
+                rovar.setHelyzet(tektonList.get(tIndex));
+                tektonList.get(tIndex).setRovar(rovar);
+                rovar.setRovarasz(r);
+                System.out.println("Rovar létrehozva a(z) " + tIndex + ". Tektorra.");
+            }
+        }
+
         gameRunning = true;
-        System.out.println("Játék elindítva " + idotartamMasodperc + " másodpercre!");
+        System.out.println("Játék elindítva!");
 
         gameTimer = new Timer();
         gameTimer.schedule(new TimerTask() {
@@ -261,6 +246,7 @@ public class CommandHandler {
                 synchronized (field) {
                     gameRunning = false;
                     System.out.println("\nLejárt az idő! A játék véget ért.");
+                    //TODO KIÉRTÉKELÉS - Mi van ha nullák a score-ok és mi van ha döntetlen?
                     List<Player> gyoztesek = field.kiertekeles();
                     System.out.println("Győztes(ek):");
                     for (Player p : gyoztesek) {
@@ -272,3 +258,8 @@ public class CommandHandler {
         }, idotartamMasodperc * 1000L);
     }
 }
+
+// TODO, most kb működik a menü, minden parancsot rá kell kötni a Field parancsaira, ezek képesek lesznek mozgatni a cuccokat
+// Le kell tesztelni mindent, + keresni kell a hibákat
+// lehetne egy játékmód ahol nincs idő
+// Tesztek implementálása
