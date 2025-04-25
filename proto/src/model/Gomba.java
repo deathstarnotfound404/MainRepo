@@ -190,10 +190,12 @@ public class Gomba implements IDestroyable {
             if(this.gombaTest.getSzint() == 3){ //Ha 3. szintű akkor szomszéd szomszédjára is szórhat
                 //Szomszéd szomszédjainak ellenőrzése
                 if(!szomszedSzomszedjaEllenorzes(celTekton)){
+                    System.out.println("\tHiba: 3. SZintű GombaTest maximum csak a szomszéd szomszédjaira szórhat!");
                     return false;
                 }
             } else {
                 //Ha kevesebb mint 3. szintű, akkor csak szomszédos Tektonra szórhat
+                System.out.println("\tHiba: 1. és 2. szintű GombaTest csak szomszédos Tektonra szórhat!.");
                 return false;
             }
         }
@@ -202,7 +204,9 @@ public class Gomba implements IDestroyable {
         int szorandoMennyiseg = gt.sporaSzorzo(szint);
 
         //Ha nincs elég spóra a szóráshoz - Nincs elég spórakészlet
-        if(szorandoMennyiseg > this.gombaTest.getSporakeszlet()){
+        //SZórás 5 be kerül - szorando mennyiségnyi spóra (kerül a tektonra vagy a Gombatesthez) és 5 -szorando mennyiség a szorás ára
+        if(5 >= this.gombaTest.getSporakeszlet()){
+            System.out.println("\tHiba: Nincs elég Spóra a szóráshoz.");
             return false;
         }
 
@@ -210,16 +214,18 @@ public class Gomba implements IDestroyable {
         if(celTekton.getGomba() != null){
             //Ekkor nem jön létre Spora objektum csak Gombatesthez adjuk a spórákat
             celTekton.getGomba().addToSporaKeszlet(szorandoMennyiseg);
+            System.out.println("\tSzórás: Spórák GombaTesthez adódtak.");
         } else {
             //Ha még nincs a céltektonon Gomba és GombaTest, akkor a tektonon jönnek létre a Sporak
-            for(int i = 0; i<szorandoMennyiseg; ++i){
+            for(int i = 0; i< (szorandoMennyiseg); ++i){
                 BaseSpora s = BaseSpora.generateRandomSpora();  //Mindegyik 1/6-od valószínűséggel
                 celTekton.addSpora(s);
+                System.out.println("\tSzórás: Spórák Tektonon létrejöttek.");
             }
         }
         this.gombaTest.addSzorasCount(1);
         //TODO Szórás után ellenőrizni, hogy elpusztul-e
-        this.gombaTest.decreaseSporakeszlet(szorandoMennyiseg);
+        this.gombaTest.decreaseSporakeszlet(5);
         return true;
     }
 
@@ -359,9 +365,14 @@ public class Gomba implements IDestroyable {
         fonalLista.clear();
         tekton.setGomba(null);
         gombasz.getGombaLista().remove(this);
+        System.out.println("Gomba Id" + this.getId() + "Elpusztult!");
     }
 
     public Gombasz getGombasz(){
         return gombasz;
+    }
+
+    public int getId(){
+        return id;
     }
 }

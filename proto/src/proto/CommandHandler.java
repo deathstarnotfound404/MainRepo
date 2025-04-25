@@ -2,16 +2,17 @@ package proto;
 
 import model.*;
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class CommandHandler {
     private enum Mode { GAME, TEST }
 
-    private final Map<String, Consumer<List<String>>> parancsok = new HashMap<>();
+    private final Map<String, BiConsumer<Player, List<String>>> parancsok = new HashMap<>();
     private static Field field = new Field();
     private Mode currentMode = Mode.GAME;
     private volatile boolean gameRunning = false;
     private Timer gameTimer;
+    private Timer sporaTimer;
 
     private final Map<Integer, Player> players = new LinkedHashMap<>();
     private Player selectedPlayer = null;
@@ -74,21 +75,21 @@ public class CommandHandler {
     }
 
     private void initParancsok() {
-        parancsok.put("help", this::help);
-        parancsok.put("spreadSpora", this::spreadSpora);
-        parancsok.put("growFonal", this::growFonal);
-        parancsok.put("moveRovar", this::moveRovar);
-        parancsok.put("growGombaTest", this::growGombaTest);
-        parancsok.put("cutFonal", this::cutFonal);
-        parancsok.put("setKezdoHelyzet", this::setKezdoHelyzet);
-        parancsok.put("jatekKiertekeles", this::jatekKiertekeles);
-        parancsok.put("loadMap", this::loadMap);
-        parancsok.put("runTest", this::runTest);
-        parancsok.put("exit", this::exit);
-        parancsok.put("playerNum", this::playerNum);
-        parancsok.put("select", this::selectPlayer);
-        parancsok.put("printField", this::printField);
-        parancsok.put("eatRovar", this::eatRovar);
+        parancsok.put("help", (p, args) -> help(args));
+        parancsok.put("spreadSpora", (p, args) -> spreadSpora((Gombasz) p, args));
+        parancsok.put("growFonal", (p, args) -> growFonal((Gombasz) p, args));
+        parancsok.put("moveRovar", (p, args) -> moveRovar((Rovarasz) p, args));
+        parancsok.put("growGombaTest", (p, args) -> growGombaTest((Gombasz) p, args));
+        parancsok.put("cutFonal", (p, args) -> cutFonal((Rovarasz) p, args));
+        parancsok.put("setKezdoHelyzet", (p, args) -> setKezdoHelyzet(args));
+        parancsok.put("jatekKiertekeles", (p, args) -> jatekKiertekeles(args));
+        parancsok.put("loadMap", (p, args) -> loadMap(args));
+        parancsok.put("runTest", (p, args) -> runTest(args));
+        parancsok.put("exit", (p, args) -> exit(args));
+        parancsok.put("playerNum", (p, args) -> playerNum(args));
+        parancsok.put("select", (p, args) -> selectPlayer(args));
+        parancsok.put("printField", (p, args) -> printField(args));
+        parancsok.put("eatRovar", (p, args) -> eatRovar((Gombasz) p, args));
     }
 
     public void parseAndExecute(String commandLine) {
@@ -98,20 +99,20 @@ public class CommandHandler {
         String parancs = tokens[0];
         List<String> args = Arrays.asList(Arrays.copyOfRange(tokens, 1, tokens.length));
 
-        Consumer<List<String>> action = parancsok.get(parancs);
+        BiConsumer<Player, List<String>> action = parancsok.get(parancs);
         if (action != null) {
             if (currentMode == Mode.TEST && !globalParancsok.contains(parancs)) {
                 System.out.println("TESZT módban csak a globális parancsok engedélyezettek.");
             } else if (currentMode == Mode.GAME) {
                 if (globalParancsok.contains(parancs)) {
-                    action.accept(args);
+                    action.accept(null, args);
                 } else if (selectedPlayer == null) {
                     System.out.println("Először válassz játékost a 'select <szám>' paranccsal.");
                 } else if (gombaszParancsok.contains(parancs) && selectedPlayer instanceof Gombasz) {
-                    action.accept(args);
+                    action.accept(selectedPlayer, args);
                     selectedPlayer = null;
                 } else if (rovaraszParancsok.contains(parancs) && selectedPlayer instanceof Rovarasz) {
-                    action.accept(args);
+                    action.accept(selectedPlayer, args);
                     selectedPlayer = null;
                 } else {
                     System.out.println("Ez a parancs nem engedélyezett a kiválasztott játékosnak.");
@@ -128,16 +129,75 @@ public class CommandHandler {
         System.out.println("Módban vagy: " + currentMode);
     }
 
-    private void spreadSpora(List<String> args) { System.out.println(selectedPlayer.getName() + ": Spóra szórás -> " + args); }
-    private void growFonal(List<String> args) { System.out.println(selectedPlayer.getName() + ": Fonal növesztés -> " + args); }
-    private void moveRovar(List<String> args) { System.out.println(selectedPlayer.getName() + ": Rovar mozgatás -> " + args); }
-    private void growGombaTest(List<String> args) { System.out.println(selectedPlayer.getName() + ": Gombatest növesztés -> " + args); }
-    private void cutFonal(List<String> args) { System.out.println(selectedPlayer.getName() + ": Fonal elvágása -> " + args); }
-    private void eatRovar(List<String> args) { System.out.println(selectedPlayer.getName() + ": Rovar elfogyasztása -> " + args); }
+    private void spreadSpora(Gombasz gsz, List<String> args) {
+        Scanner scanner = new Scanner(System.in);
+        Gomba gomba = null;
+        Tekton celTekton = null;
+
+        // Gomba bekérés és validálása
+        while (true) {
+            System.out.println("[Szórás]");
+            System.out.print("\tGombász gombáinak id-jei: ");
+            for (Gomba g : gsz.getGombaLista() ) {
+                System.out.print(g.getId());
+            }
+            System.out.print("\n");
+            System.out.println("\tGomba:");
+            System.out.print("\t\t> ");
+            try {
+                int gombaId = Integer.parseInt(scanner.nextLine().trim());
+                gomba = gsz.getGombaById(gombaId);
+                if (gomba != null) break;
+                System.out.println("\tNincs ilyen azonosítójú gomba. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tNincs ilyen azonosítójú gomba. Próbáld újra");
+            }
+        }
+
+        // Céltekton bekérés és validálása
+        int tektonId;
+        while (true) {
+            System.out.println("\tCéltekton:");
+            System.out.print("\t\t> ");
+            try {
+                tektonId = Integer.parseInt(scanner.nextLine().trim());
+                List<Tekton> tektonList = field.getTektonList();
+                if (tektonId >= 0 && tektonId < tektonList.size()) {
+                    celTekton = tektonList.get(tektonId);
+                    break;
+                }
+                System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Szórás végrehajtása
+        if (gsz.szoras(gomba, celTekton)) {
+            System.out.println(gsz.getName() + ": Sikeres szórás a(z) " + tektonId + ". tektonra.");
+        } else {
+            System.out.println(gsz.getName() + ": Sikertelen szórás.");
+        }
+    }
+
+    private void growFonal(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Fonal növesztés -> " + args); }
+
+    private void moveRovar(Rovarasz r, List<String> args) { System.out.println(r.getName() + ": Rovar mozgatás -> " + args); }
+
+    private void growGombaTest(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Gombatest növesztés -> " + args); }
+
+    private void cutFonal(Rovarasz r, List<String> args) { System.out.println(r.getName() + ": Fonal elvágása -> " + args); }
+
+    private void eatRovar(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Rovar elfogyasztása -> " + args); }
+
     private void printField(List<String> args) { field.printGameState(); }
+
     private void setKezdoHelyzet(List<String> args) { System.out.println("Kezdőhelyzet beállítva."); }
+
     private void jatekKiertekeles(List<String> args) { System.out.println("Játék kiértékelése."); }
+
     private void loadMap(List<String> args) { System.out.println("Pálya betöltve."); }
+
     private void runTest(List<String> args) { System.out.println("Teszt futtatása: " + args); }
 
     private void exit(List<String> args) {
@@ -219,10 +279,9 @@ public class CommandHandler {
             if (p instanceof Gombasz g) {
                 System.out.print("    kezdo Gomba helye > ");
                 int tIndex = scanner.nextInt();
-                //TODO kiindexeles kezelese
-                //TODO instance of ok kezelése
                 scanner.nextLine();
                 Gomba gomba = new Gomba(tektonList.get(tIndex), g, 0);
+                g.addGomba(gomba);
                 System.out.println("Gomba létrehozva a(z) " + tIndex + ". Tektorra.");
             } else if (p instanceof Rovarasz r) {
                 System.out.print("    kezdo Rovar helye > ");
@@ -232,6 +291,7 @@ public class CommandHandler {
                 rovar.setHelyzet(tektonList.get(tIndex));
                 tektonList.get(tIndex).setRovar(rovar);
                 rovar.setRovarasz(r);
+                r.addRovar(rovar, tektonList.get(tIndex));
                 System.out.println("Rovar létrehozva a(z) " + tIndex + ". Tektorra.");
             }
         }
@@ -246,7 +306,6 @@ public class CommandHandler {
                 synchronized (field) {
                     gameRunning = false;
                     System.out.println("\nLejárt az idő! A játék véget ért.");
-                    //TODO KIÉRTÉKELÉS - Mi van ha nullák a score-ok és mi van ha döntetlen?
                     List<Player> gyoztesek = field.kiertekeles();
                     System.out.println("Győztes(ek):");
                     for (Player p : gyoztesek) {
@@ -256,6 +315,22 @@ public class CommandHandler {
                 start();
             }
         }, idotartamMasodperc * 1000L);
+
+        // ÚJ: 20 másodpercenként spóra termelés meghívása minden Gombászra
+        sporaTimer = new Timer();
+        sporaTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (field) {
+                    for (Player p : players.values()) {
+                        if (p instanceof Gombasz g) {
+                            g.sporaTermelesAll();
+                            System.out.println("\n[Spóra termelés] " + g.getName() + " végrehajtotta a spóra termelést.");
+                        }
+                    }
+                }
+            }
+        }, 5000, 5000); // 20 (20000)másodpercenként
     }
 }
 

@@ -84,6 +84,7 @@ public class Field {
 
         for (int i = 0; i<12; i++) {
             tektonLista.add(new Tekton(TektonHatas.generateRandomTektonHatas()));
+            tektonLista.get(i).getTektonHatas().setTekton(tektonLista.get(i));
         }
 
         //Szomszédok beállítása

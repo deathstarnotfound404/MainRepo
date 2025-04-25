@@ -168,11 +168,22 @@ public class Gombasz extends Player {
     }
 
     public boolean szoras(Gomba g, Tekton celTekton) {
-        return g.szor(celTekton, g.getGombatest());
+        boolean ret = g.szor(celTekton, g.getGombatest());
+        g.gombatestSzintlepes();
+        return ret;
     }
 
     @Override
     public int getScoreFromPlayer(){
         return calcAllGombatestScore();
+    }
+
+    public Gomba getGombaById(int id) {
+        for(Gomba g : gombaLista) {
+            if(g.getId() == id) {
+                return g;
+            }
+        }
+        return null;
     }
 }

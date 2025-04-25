@@ -285,6 +285,8 @@ public class Tekton implements IDestroyable{
                     .append(tektononLevoGomba.getFonalKeszlet())
                     .append(" - szint: ")
                     .append(tektononLevoGomba.getGombatest().getSzint())
+                    .append(" - szorasCount:")
+                    .append(tektononLevoGomba.getGombatest().getSzorasCount())
                     .append("\n");
         } else {
             sb.append("\tgombatest: 0\n");

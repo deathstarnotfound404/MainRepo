@@ -74,12 +74,12 @@ public class GombaTest implements IDestroyable {
     }
 
     public void szintlepes() {
-        if(this.szorasCount % 3 == 0 && this.szorasCount != 9) {
-            szint ++;
-        }
-
         if(szorasCount == 9) {
             alapGomba.elpusztul();
+        } else {
+            if(this.szorasCount % 3 == 0) {
+                szint ++;
+            }
         }
     }
 
