@@ -18,7 +18,7 @@ public class CommandHandler {
     private Player selectedPlayer = null;
 
     private static final Set<String> globalParancsok = Set.of("help", "exit", "playerNum", "select", "jatekKiertekeles", "printField");
-    private static final Set<String> gombaszParancsok = Set.of("spreadSpora", "growFonal", "growGombaTest", "eatRovar");
+    private static final Set<String> gombaszParancsok = Set.of("spreadSpora", "growFonal", "growGombaTest", "eatRovar", "buyFonal");
     private static final Set<String> rovaraszParancsok = Set.of("cutFonal", "moveRovar");
 
     public void start() {
@@ -90,6 +90,7 @@ public class CommandHandler {
         parancsok.put("select", (p, args) -> selectPlayer(args));
         parancsok.put("printField", (p, args) -> printField(args));
         parancsok.put("eatRovar", (p, args) -> eatRovar((Gombasz) p, args));
+        parancsok.put("buyFonal", (p, args) -> buyFonal((Gombasz) p));
     }
 
     public void parseAndExecute(String commandLine) {
@@ -180,7 +181,102 @@ public class CommandHandler {
         }
     }
 
-    private void growFonal(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Fonal növesztés -> " + args); }
+    private void growFonal(Gombasz gsz, List<String> args) {
+        Scanner scanner = new Scanner(System.in);
+        Gomba gomba = null;
+        Tekton startTekton = null;
+        Tekton celTekton = null;
+
+        // Gomba bekérés és validálása
+        while (true) {
+            System.out.println("[Fonal növesztés]");
+            System.out.print("\tGombász gombáinak id-jei: ");
+            for (Gomba g : gsz.getGombaLista()) {
+                System.out.print(g.getId() + " ");
+            }
+            System.out.print("\n\tGomba:\n\t\t> ");
+            try {
+                int gombaId = Integer.parseInt(scanner.nextLine().trim());
+                gomba = gsz.getGombaById(gombaId);
+                if (gomba != null) break;
+                System.out.println("\tNincs ilyen azonosítójú gomba. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tHibás számformátum. Próbáld újra.");
+            }
+        }
+
+        List<Tekton> tektonList = field.getTektonList();
+
+        // Start tekton bekérés
+        while (true) {
+            System.out.println("\tStartTekton:");
+            System.out.print("\t\t> ");
+            try {
+                int startId = Integer.parseInt(scanner.nextLine().trim());
+                if (startId >= 0 && startId < tektonList.size()) {
+                    startTekton = tektonList.get(startId);
+                    break;
+                }
+                System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Cél tekton bekérés
+        while (true) {
+            System.out.println("\tCélTekton:");
+            System.out.print("\t\t> ");
+            try {
+                int celId = Integer.parseInt(scanner.nextLine().trim());
+                if (celId >= 0 && celId < tektonList.size()) {
+                    celTekton = tektonList.get(celId);
+                    break;
+                }
+                System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Fonal növesztés meghívása
+        if (gsz.gombafonalIranyitas(gomba, startTekton, celTekton, false)) {
+            System.out.println(gsz.getName() + ": Sikeres fonal növesztés a(z) " + startTekton.getId() + " -> " + celTekton.getId() + " útvonalon.");
+        } else {
+            System.out.println(gsz.getName() + ": Sikertelen fonal növesztés.");
+        }
+    }
+
+    private void buyFonal(Gombasz gsz) {
+        Scanner scanner = new Scanner(System.in);
+        Gomba gomba = null;
+
+        // Gomba bekérés és validálása
+        while (true) {
+            System.out.println("[Fonal növesztés]");
+            System.out.print("\tGombász gombáinak id-jei: ");
+            for (Gomba g : gsz.getGombaLista()) {
+                System.out.print(g.getId() + " ");
+            }
+            System.out.print("\n\tGomba:\n\t\t> ");
+            try {
+                int gombaId = Integer.parseInt(scanner.nextLine().trim());
+                gomba = gsz.getGombaById(gombaId);
+                if (gomba != null) break;
+                System.out.println("\tNincs ilyen azonosítójú gomba. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tHibás számformátum. Próbáld újra.");
+            }
+        }
+
+        //TODO jól növeli a fonalszamot a Tekton print nél, miért nem nő a fonalfokszam
+        //Fonal vásárlás
+        if (gsz.fonalVasarlas(gomba)) {
+            System.out.println(gsz.getName() + ": Sikeres fonal vásárlás a kijelölt Gombán: ID: " + gomba.getId());
+        } else {
+            System.out.println(gsz.getName() + ": Sikertelen fonal vásárlás.");
+        }
+    }
 
     private void moveRovar(Rovarasz r, List<String> args) { System.out.println(r.getName() + ": Rovar mozgatás -> " + args); }
 
@@ -325,7 +421,7 @@ public class CommandHandler {
                     for (Player p : players.values()) {
                         if (p instanceof Gombasz g) {
                             g.sporaTermelesAll();
-                            System.out.println("\n[Spóra termelés] " + g.getName() + " végrehajtotta a spóra termelést.");
+                            //System.out.println("\n[Spóra termelés] " + g.getName() + " végrehajtotta a spóra termelést.");
                         }
                     }
                 }

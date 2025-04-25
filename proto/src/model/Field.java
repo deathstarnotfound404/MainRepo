@@ -83,7 +83,12 @@ public class Field {
         //Létrehozza a játék mapot
 
         for (int i = 0; i<12; i++) {
-            tektonLista.add(new Tekton(TektonHatas.generateRandomTektonHatas()));
+            Tekton t = new Tekton(TektonHatas.generateRandomTektonHatas());
+            t.getTektonHatas().setTekton(t);
+            if(!t.getTektonHatas().isHatasEsemenyfuggo()) {
+                t.hatasKifejtes();  //Ha a hatás nem események bekövetkezésétől, hanem kezdettől fogva érvényes
+            }
+            tektonLista.add(t);
             tektonLista.get(i).getTektonHatas().setTekton(tektonLista.get(i));
         }
 

@@ -22,6 +22,7 @@ public class Tekton implements IDestroyable{
         kapcsolodoFonalak = new ArrayList<>();
         szomszedosTektonok = new ArrayList<>();
         tektonHatas = hatas;
+        //TODO azok a hatások érvényesítése melyek alapértelmezetten kellenek
     }
 
     public List<Tekton> getSzomszedok() {
@@ -121,11 +122,11 @@ public class Tekton implements IDestroyable{
         return kapcsolodoFonalak;
     }
 
-    public void addKapcsolodoFonalak(GombaFonal gf) {
+    public boolean addKapcsolodoFonalak(GombaFonal gf) {
         //TODO maxegyfonal ellenőrzése
         if(maxEgyFonal) {
             if(kapcsolodoFonalak.size() >= 1) {
-                return;
+                return false;
             }
         }
 
@@ -133,6 +134,8 @@ public class Tekton implements IDestroyable{
             this.kapcsolodoFonalak.add(gf);
             this.fonalFokszam = kapcsolodoFonalak.size();
         }
+
+        return true;
     }
 
     public boolean setRovar(Rovar r) {

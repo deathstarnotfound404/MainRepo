@@ -4,8 +4,11 @@ import java.util.*;
 public class TektonHatas {
     protected Tekton tekton;
     private static final Random rnd = new Random();
+    protected boolean hatasEsemenyfuggo = false;
 
-    public TektonHatas() {}
+    public TektonHatas() {
+        hatasEsemenyfuggo = false;
+    }
 
     public String hatas() {
         return "Base";
@@ -41,5 +44,9 @@ public class TektonHatas {
             default:
                 return new TektonHatas();
         }
+    }
+
+    public boolean isHatasEsemenyfuggo(){
+        return hatasEsemenyfuggo;
     }
 }

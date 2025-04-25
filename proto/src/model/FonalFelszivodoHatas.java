@@ -4,6 +4,7 @@ public class FonalFelszivodoHatas extends TektonHatas {
 
     public FonalFelszivodoHatas() {
         super();
+        hatasEsemenyfuggo = true;
     }
 
     @Override

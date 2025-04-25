@@ -30,15 +30,18 @@ public class Gombasz extends Player {
     public boolean fonalLerakasEllenorzes(Tekton t1, Tekton t2) {
         //Mar van a ket tekton kozott fonal?
         if(Tekton.ketTektonFonallalOsszekotott(t1, t2)){
+            System.out.println("Hiba: A két tekton már össze vav kötve!");
             return false;
         }
 
         //maxEgyFonal szabaly serules
         if(t1.isMaxEgyFonal() && t1.getKapcsolodoFonalak().size() >= 1) {
+            System.out.println("Hiba: Az egyik tektonon mayimum egy fonal lehet!");
             return false;
         }
 
         if(t2.isMaxEgyFonal() && t2.getKapcsolodoFonalak().size() >= 1) {
+            System.out.println("Hiba: Az egyik tektonon mayimum egy fonal lehet!");
             return false;
         }
 
@@ -46,7 +49,7 @@ public class Gombasz extends Player {
     }
 
     public boolean fonalVasarlas(Gomba g) {
-        if(g.decreaseFonalkeszlet()) {
+        if(g.getGombatest().decreaseSporakeszlet(1)) {
             g.increaseFonalkeszlet(3);
             return true;
         } else {
@@ -63,13 +66,16 @@ public class Gombasz extends Player {
                 //Ha nem ingyenes a lerakás csökkentjük a fonalkészletet
                 if(!ingyen) {
                     if(!g.decreaseFonalkeszlet()) {
+                        System.out.println("Hiba: Nincs elég fonal készlet a fonalnövesztéshez!");
                         return false;
                     }
                 }
 
-                GombaFonal ujFonal = new GombaFonal(stratTekton, celTekton);
-                //TODO ellenőrizni, de elméletileg berakja a list[list] be a megfelelő helyre
-                g.addFonal(ujFonal);
+                GombaFonal ujFonal = new GombaFonal(g, stratTekton, celTekton);
+                if(!g.addFonal(ujFonal) || !celTekton.addKapcsolodoFonalak(ujFonal) || !stratTekton.addKapcsolodoFonalak(ujFonal)) {
+                    System.out.println("Hiba: A fonal nem adható a Gombához vagy a Tektonokhoz!");
+                    return false;
+                }
 
                 if(celTekton.getSporaLista().size() > 0) {
                     //Ha van a céltektonon elszórt spóra -> ingyen lerakható fonal
@@ -91,7 +97,7 @@ public class Gombasz extends Player {
                         Tekton randomUJCel = celSzomszedok.get(rand.nextInt(celSzomszedok.size()));
                         if(gombafonalIranyitas(g, celTekton, randomUJCel, true)) {
                             valasztott = true;
-                            System.out.println("\nIngyenes fonal lerakva!");
+                            System.out.println("\nIngyenes bónusz fonal lerakva!");
                         } else {
                             celSzomszedok.remove(randomUJCel);
                         }
@@ -99,6 +105,7 @@ public class Gombasz extends Player {
                     //Ha sikeres a választott és a bónusz lerakás is
                     return true;
                 } else {
+                    System.out.println("\t[Nincs bónusz fonal lerakás]");
                     //Ha nincs bónusz lerakás, de sikeres az első lerakás
                     return true;
                 }

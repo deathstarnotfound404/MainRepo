@@ -103,23 +103,31 @@ public class Gomba implements IDestroyable {
     public boolean fonalFolytonossagVizsgalat(Tekton t){
         //Megvizsgálja, hogy az átadott tekton folytonosan van-e kötve a gombatesttel
         if(t.getId() == this.tekton.getId()){
+            //Ha a vizsgált t tekton a gomba Tektonja akkor igaz
             return true;
         }
 
         for (List<GombaFonal> l : fonalLista) {
             //Végig az összes fonallistán
-            for (int i = 0; i < l.size(); i++) {
-                if(i < l.size() - 2) {
-                    //Ha folytonos -> azaz i. fonal céltektonja az l listában megegyezik az i+1. fonal startTektonjával
-                    if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
-                        //Ha az i. fonal céltektonja megewgyezik a keresett tektonnal, akkor a T tekton folytonosan van kötve a gazda gombatesthez
-                        //Ha ez az esemény egyszer sem következik be akkor, a T nincs kötve ezzel a Gombával
-                        if(l.get(i).getCelTekton().getId() == t.getId()) {
-                            return true;
-                        }
-                    } else {
-                        return false;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
+            if(l.size() == 0){
+                return true;
+            }
+
+            if(l.size() == 1) {
+                if(l.get(0).getCelTekton().getId() == t.getId()) {
+                    return true;
+                }
+            }
+            for (int i = 0; i < l.size() - 1; i++) {
+                //Ha folytonos -> azaz i. fonal céltektonja az l listában megegyezik az i+1. fonal startTektonjával
+                if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
+                    //Ha az i. fonal céltektonja megewgyezik a keresett tektonnal, akkor a T tekton folytonosan van kötve a gazda gombatesthez
+                    //Ha ez az esemény egyszer sem következik be akkor, a T nincs kötve ezzel a Gombával
+                    if(l.get(i).getCelTekton().getId() == t.getId()) {
+                        return true;
                     }
+                } else {
+                    return false;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
                 }
             }
         }
@@ -233,14 +241,14 @@ public class Gomba implements IDestroyable {
         this.gombaTest.addToSporaKeszlet(val);
     }
 
-    public void addFonal(GombaFonal gf) {
+    public boolean addFonal(GombaFonal gf) {
         //Tektonok kimentése
         Tekton actualStartTekton = gf.getStartTekton();
         Tekton actualEndTekton = gf.getCelTekton();
 
         //Nem szomszédos tektonok kötése
         if(!actualEndTekton.getSzomszedok().contains(actualStartTekton) || !actualStartTekton.getSzomszedok().contains(actualEndTekton)) {
-            return;    //Nem szomszédosak a kijelölt tektonok
+            return false;    //Nem szomszédosak a kijelölt tektonok
         }
 
         //Start Point case
@@ -248,7 +256,8 @@ public class Gomba implements IDestroyable {
             ArrayList<GombaFonal> lista = new ArrayList<>();
             lista.add(gf);
             fonalLista.add(lista);
-            return;
+            //Todo fokszam növeles a tektonon
+            return true;
         }
 
         //If not Start point in list
@@ -273,7 +282,7 @@ public class Gomba implements IDestroyable {
 
         //Hurokél ellenőrzés
         if(actualStartTekton.getId() == actualEndTekton.getId()) {
-            return;
+            return false;
         }
 
         //Kör ellenőrzés
@@ -285,7 +294,7 @@ public class Gomba implements IDestroyable {
 
             for(Tekton tekton : lista) {
                 if(actualEndTekton.getId() == tekton.getId()) {
-                    return; //Kör lenne
+                    return false; //Kör lenne
                 }
             }
         }
@@ -295,18 +304,18 @@ public class Gomba implements IDestroyable {
             if(!isSetted) {
                 List<GombaFonal> l = new ArrayList<>();
                 if(!fonalFolytonossagVizsgalat(l)){
-                    return;
+                    return false;
                 }
                 l.add(gf);
                 fonalLista.add(l);
             }
-            return;
+            return true;
         }
 
         //End point case
         if ((actualLista.size() - 1) == elozoIdx) {
             if(!fonalFolytonossagVizsgalat(actualLista)){
-                return;
+                return false;
             }
             actualLista.add(gf);
         } else  //Mid-Point case
@@ -316,12 +325,12 @@ public class Gomba implements IDestroyable {
                 ujLista.add(actualLista.get(i));
             }
             if(!fonalFolytonossagVizsgalat(ujLista)){
-                return;
+                return false;
             }
             ujLista.add(gf);
             fonalLista.add(ujLista);
         }
-
+        return true;
     }
 
     public boolean decreaseFonalkeszlet() {

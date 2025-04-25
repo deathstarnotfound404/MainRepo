@@ -8,8 +8,9 @@ public class GombaFonal implements IDestroyable {
     private boolean isElragott = false;
     private Gomba alapGomba;
 
-    public GombaFonal(Tekton startTekton, Tekton celTekton) {
+    public GombaFonal(Gomba alapgomba, Tekton startTekton, Tekton celTekton) {
         Field.genID();
+        this.alapGomba = alapgomba;
         this.startTekton = startTekton;
         this.celTekton = celTekton;
     }
