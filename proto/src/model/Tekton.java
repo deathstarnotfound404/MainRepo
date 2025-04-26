@@ -99,8 +99,11 @@ public class Tekton implements IDestroyable{
     }
 
     public void fonalakFelszivasa(){
-        if(tektononLevoGomba != null && !defendFonalak) {
-            tektononLevoGomba.fonalFelszivodas(this);
+        if(!defendFonalak) {
+            for(GombaFonal gf : kapcsolodoFonalak) {
+                gf.getAlapGomba().deleteFonal(gf);
+            }
+            clearKapcsolodoFonalak();
         }
     }
 

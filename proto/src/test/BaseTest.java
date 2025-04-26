@@ -25,6 +25,7 @@ public abstract class BaseTest {
 
         try (FileWriter writer = new FileWriter(outputFile)) {
             writer.write(log.toString());
+            writer.flush();
             System.out.println("Teszt eredmény sikeresen mentve: " + outputFile.getPath());
         } catch (IOException e) {
             System.out.println("Hiba a tesztfájl írásakor: " + e.getMessage());
