@@ -101,7 +101,7 @@ public class Teszt_24 extends BaseTest{
         t4.addKapcsolodoFonalak(gf4);
         t5.addKapcsolodoFonalak(gf4);
 
-        elvartParancsok.add("cutFonal -r0 -gf0");
+        elvartParancsok.add("cutFonal -r0 -t1");
         elvartParancsok.add("exit");
     }
 
@@ -113,11 +113,31 @@ public class Teszt_24 extends BaseTest{
         switch (command) {
             case "cutFonal":
                 int rovarNum = Integer.parseInt(parts[1].substring(2)); // "-r0" -> 0
-                int gombafonalNum = Integer.parseInt(parts[2].substring(3)); // "-gf0" -> 0
+                int tektonNum = Integer.parseInt(parts[3].substring(4));
 
                 Rovar rovar = rovarList.get(rovarNum);
+                Tekton kijeloltTekton = tektonList.get(tektonNum);
 
-            case "exit":
+                //Gombafonal kivétele a modellből
+                GombaFonal kivalaztottFonal = null;
+                for(GombaFonal gf : rovar.getHelyzet().getKapcsolodoFonalak()) {
+                    for(GombaFonal gf_2 : kijeloltTekton.getKapcsolodoFonalak()) {
+                        if (gf.getID() == gf_2.getID()) {
+                            //Van köztes fonal
+                            kivalaztottFonal = gf;
+                        }
+                    }
+                }
+
+                if (rovar != null && kijeloltTekton != null && kivalaztottFonal != null) {
+                    if(rovaraszList.get(0).fonalVagas(rovar, kivalaztottFonal)) {
+
+                    } else {
+
+                    }
+                }
+
+                    case "exit":
                 break;
 
             default:
