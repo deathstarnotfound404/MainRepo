@@ -5,7 +5,7 @@ import java.util.List;
 public class Rovar implements IDestroyable{
     private Tekton helyzet;
     private int tapanyag = 0;
-    private double evesHatekonysag = 1;
+    private double evesHatekonysag = 0.5;
     private boolean tudVagni = true;
     private boolean maxFogyasztas = false;
     private Rovarasz rovarasz;
@@ -164,7 +164,7 @@ public class Rovar implements IDestroyable{
         return 0;
     }
 
-    public void sporaEves() {
+    public boolean sporaEves() {
         List<BaseSpora> sporaLista = this.helyzet.getSporaLista();
 
         int elfogyaszthatoVal = elfogyaszthatoMennyisieg();
@@ -177,6 +177,9 @@ public class Rovar implements IDestroyable{
             this.helyzet.getSporaLista().subList(0, elfogyaszthatoVal).clear(); //Sporak törlése
 
             this.addTapanyag(elfogyaszthatoVal);
+            return true;
+        } else {
+            return false;
         }
     }
 

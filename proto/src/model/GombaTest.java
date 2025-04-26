@@ -52,12 +52,10 @@ public class GombaTest implements IDestroyable {
         int szorandoMennyiseg = 0;
         switch (szint){
             case 1:
-                decreaseSporakeszlet(2);
                 szorandoMennyiseg = 1;
                 break;
 
             case 2:
-                decreaseSporakeszlet(1);
                 szorandoMennyiseg = 2;
                 break;
 
@@ -71,6 +69,12 @@ public class GombaTest implements IDestroyable {
 
     public int getSzint() {
         return szint;
+    }
+
+    public void setSzint(int val) {
+        if(val <= 3 && val >= 1) {
+            szint = val;
+        }
     }
 
     public void szintlepes() {

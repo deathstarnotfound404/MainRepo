@@ -212,8 +212,8 @@ public class Gomba implements IDestroyable {
         int szorandoMennyiseg = gt.sporaSzorzo(szint);
 
         //Ha nincs elég spóra a szóráshoz - Nincs elég spórakészlet
-        //SZórás 5 be kerül - szorando mennyiségnyi spóra (kerül a tektonra vagy a Gombatesthez) és 5 -szorando mennyiség a szorás ára
-        if(5 >= this.gombaTest.getSporakeszlet()){
+        //Szórás 3-ba kerül - szorando mennyiségnyi spóra
+        if(3 > this.gombaTest.getSporakeszlet()){
             System.out.println("\tHiba: Nincs elég Spóra a szóráshoz.");
             return false;
         }
@@ -232,8 +232,7 @@ public class Gomba implements IDestroyable {
             }
         }
         this.gombaTest.addSzorasCount(1);
-        //TODO Szórás után ellenőrizni, hogy elpusztul-e
-        this.gombaTest.decreaseSporakeszlet(5);
+        this.gombaTest.decreaseSporakeszlet(3);
         return true;
     }
 
