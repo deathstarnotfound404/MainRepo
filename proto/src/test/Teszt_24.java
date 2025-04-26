@@ -88,8 +88,8 @@ public class Teszt_24 extends BaseTest{
 
         gomba.addFonal(gf1);
         gomba.addFonal(gf2);
-        gomba.addFonal(gf3);
-        gomba.addFonal(gf4);
+        //gomba.addFonal(gf3);
+        //gomba.addFonal(gf4);
 
         //Tekton init
         t1.addKapcsolodoFonalak(gf1);
@@ -113,7 +113,7 @@ public class Teszt_24 extends BaseTest{
         switch (command) {
             case "cutFonal":
                 int rovarNum = Integer.parseInt(parts[1].substring(2)); // "-r0" -> 0
-                int tektonNum = Integer.parseInt(parts[3].substring(4));
+                int tektonNum = Integer.parseInt(parts[2].substring(2));
 
                 Rovar rovar = rovarList.get(rovarNum);
                 Tekton kijeloltTekton = tektonList.get(tektonNum);
@@ -131,9 +131,9 @@ public class Teszt_24 extends BaseTest{
 
                 if (rovar != null && kijeloltTekton != null && kivalaztottFonal != null) {
                     if(rovaraszList.get(0).fonalVagas(rovar, kivalaztottFonal)) {
-
+                        log.append(rovaraszList.get(0).getName() + ": Sikeres fonalvágás a " + kijeloltTekton.getId() + ". tektonon.\n");
                     } else {
-
+                        log.append(rovaraszList.get(0).getName() + ": Sikertelen fonalvágás.\n");
                     }
                 }
 
