@@ -1,4 +1,4 @@
-[Test_22] - Tekton Hatás - Fonal Gátló Hatás
+[Test_16] - Spora Elfogyasztása - Gyorsito Spora
 -------------------------------------------------------------------------------
 
 Kezdő állapot:
@@ -7,16 +7,16 @@ ID: t0
 	rovarLatogatottsag: 0
 	fonalFokszam: 1
 	sporaListaSize: 0
-	szomszedosTektonokSize: 2
+	szomszedosTektonokSize: 1
 	defendFonalak: 0
 	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
-	rovar: 0
+	rovar: 1 - ID: 6
 
 ID: t1
 	rovarLatogatottsag: 0
-	fonalFokszam: 0
-	sporaListaSize: 0
-	szomszedosTektonokSize: 1
+	fonalFokszam: 2
+	sporaListaSize: 1
+	szomszedosTektonokSize: 2
 	defendFonalak: 0
 	gombatest: 0
 	rovar: 0
@@ -24,7 +24,7 @@ ID: t1
 ID: t2
 	rovarLatogatottsag: 0
 	fonalFokszam: 1
-	sporaListaSize: 0
+	sporaListaSize: 3
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
 	gombatest: 0
@@ -35,27 +35,36 @@ ID: t2
 
 Kimenet:
 
-Incomplete: Fonal growth incomplete.
-Success: Tekton hatás
-FonalFelszivoHatas: Gátló
+Success: Rovar movement completed.
+Rovar: 0 → Target: 1
+Managed by: rsz0
+
+Success: Rovar successfully consumed Spora.
+
+Success: Rovar movement completed.
+Rovar: 0 → Target: 2
+Managed by: rsz0
+
+Success: Rovar successfully consumed Spora.
+
 ------------------------------------------------------------------------------
 
 Cél állapot
 [Tektonok]
 ID: t0
-	rovarLatogatottsag: 0
+	rovarLatogatottsag: 1
 	fonalFokszam: 1
 	sporaListaSize: 0
-	szomszedosTektonokSize: 2
+	szomszedosTektonokSize: 1
 	defendFonalak: 0
 	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
 	rovar: 0
 
 ID: t1
-	rovarLatogatottsag: 0
-	fonalFokszam: 0
+	rovarLatogatottsag: 1
+	fonalFokszam: 2
 	sporaListaSize: 0
-	szomszedosTektonokSize: 1
+	szomszedosTektonokSize: 2
 	defendFonalak: 0
 	gombatest: 0
 	rovar: 0
@@ -67,8 +76,8 @@ ID: t2
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
 	gombatest: 0
-	rovar: 0
+	rovar: 1 - ID: 6
 
 
 ---------------------------------------------------------------------------------
-[Test_22] - Teszt vége
+[Test_16] - Teszt vége
