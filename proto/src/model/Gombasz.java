@@ -197,4 +197,45 @@ public class Gombasz extends Player {
         }
         return null;
     }
+
+    public boolean rovarEves(Rovar r){
+        if(r.getEvesHatekonysag() != 0) {
+            //Ha a Rovar nem bénült
+            System.out.println("Hiba: Csak bénült Rovarok ehetőek meg!");
+
+            return false;
+        }
+        //A gombász akármelyik fonalának a végén megtalálható a kijelölt rovar akkor elfogyasztható
+        boolean rFound = false;
+        Tekton helyzet = r.getHelyzet();
+        for(Gomba g : this.getGombaLista()) {
+            for(List<GombaFonal> l : g.getFonalLista()){
+                for(GombaFonal gf : l){
+                    if(gf.getStartTekton().getRovar() != null){
+                        if(gf.getStartTekton().getRovar().getId() == r.getId()){
+                            r.getRovarasz().removeRovar(r);
+                            System.out.println("[eatRovar]: Sikeres!");
+                            rFound = true;
+                        }
+                    }
+
+                    if(gf.getCelTekton().getRovar() != null){
+                        if(gf.getCelTekton().getRovar().getId() == r.getId()){
+                            r.getRovarasz().removeRovar(r);
+                            rFound = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(rFound){
+            //Gombatest növesztés
+            this.gombatestNovesztes(helyzet, true);
+            return true;
+        }
+
+        System.out.println("Hiba: A kijelölt ovar nem érhető el fonallal!");
+        return false;
+    }
 }

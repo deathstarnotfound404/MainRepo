@@ -55,16 +55,21 @@ public class Field {
     }
 
 
-    public void printGameState() {
+    public String printGameState() {
+        StringBuilder sb = new StringBuilder();
         int tektonCnt = 0;
-        System.out.println("[Tektonok]");
+
+        sb.append("[Tektonok]\n");
         for (Tekton t : tektonLista) {
-            System.out.println("ID: t" + tektonCnt);
-            System.out.println(t.toString());
+            sb.append("ID: t").append(tektonCnt).append("\n");
+            sb.append(t.toString()).append("\n");
             tektonCnt++;
         }
-        System.out.println("\n---------------------------------------------------------------------------------");
+        sb.append("\n---------------------------------------------------------------------------------\n");
+
+        return sb.toString();
     }
+
 
     public void setAllTektonSzomszed() {
         //TODO ????

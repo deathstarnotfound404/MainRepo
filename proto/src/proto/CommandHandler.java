@@ -3,6 +3,7 @@ package proto;
 import model.*;
 import java.util.*;
 import java.util.function.BiConsumer;
+import test.*;
 
 public class CommandHandler {
     private enum Mode { GAME, TEST }
@@ -457,7 +458,58 @@ public class CommandHandler {
     }
 
 
-    private void eatRovar(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Rovar elfogyasztása -> " + args); }
+    private void eatRovar(Gombasz gsz, List<String> args) {
+        Scanner scanner = new Scanner(System.in);
+        Rovar rovar = null;
+
+        System.out.println("[Rovar elfogyasztása]");
+
+        // Rovar kiválasztása és validálása
+        while (true) {
+            System.out.println("\tElérhető rovarok (id-k):");
+            List<Tekton> tektonList = field.getTektonList();
+            boolean vanRovar = false;
+            for (Tekton t : tektonList) {
+                if (t.getRovar() != null) {
+                    System.out.print(t.getRovar().getId() + " ");
+                    vanRovar = true;
+                }
+            }
+            if (!vanRovar) {
+                System.out.println("\tNincsenek rovarok a pályán.");
+                return;
+            }
+            System.out.println();
+
+            System.out.println("\tRovar:");
+            System.out.print("\t\t> ");
+            try {
+                int rovarId = Integer.parseInt(scanner.nextLine().trim());
+                // Rovar keresése a pályán
+                for (Tekton t : tektonList) {
+                    if (t.getRovar() != null && t.getRovar().getId() == rovarId) {
+                        rovar = t.getRovar();
+                        break;
+                    }
+                }
+                if (rovar != null) {
+                    break;
+                } else {
+                    System.out.println("\tNincs ilyen azonosítójú rovar. Próbáld újra.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Rovar eltávolítása
+        if (gsz.rovarEves(rovar)) {
+            System.out.println(gsz.getName() + ": Sikeresen elfogyasztotta a " + rovar.getId() + ". azonosítójú rovart.");
+        } else {
+            System.out.println(gsz.getName() + ": Sikertelen rovar evés.");
+        }
+    }
+
 
     private void printField(List<String> args) { field.printGameState(); }
 
@@ -467,7 +519,106 @@ public class CommandHandler {
 
     private void loadMap(List<String> args) { System.out.println("Pálya betöltve."); }
 
-    private void runTest(List<String> args) { System.out.println("Teszt futtatása: " + args); }
+    private void runTest(List<String> args) {
+        if (args.size() != 1) {
+            System.out.println("Használat: runTest <teszt_szám>");
+            return;
+        }
+
+        String szam = args.get(0);
+        BaseTest teszt = null;
+
+        switch (szam) {
+            case "1":
+                teszt = new Teszt_01();
+                break;
+            case "2":
+                teszt = new Teszt_02();
+                break;
+            case "3":
+                teszt = new Teszt_03();
+                break;
+            case "4":
+                teszt = new Teszt_04();
+                break;
+            case "5":
+                teszt = new Teszt_05();
+                break;
+            case "6":
+                teszt = new Teszt_06();
+                break;
+            case "7":
+                teszt = new Teszt_07();
+                break;
+            case "8":
+                teszt = new Teszt_08();
+                break;
+            case "9":
+                teszt = new Teszt_09();
+                break;
+            case "10":
+                teszt = new Teszt_10();
+                break;
+            case "11":
+                teszt = new Teszt_11();
+                break;
+            case "12":
+                teszt = new Teszt_12();
+                break;
+            case "13":
+                teszt = new Teszt_13();
+                break;
+            case "14":
+                teszt = new Teszt_14();
+                break;
+            case "15":
+                teszt = new Teszt_15();
+                break;
+            case "16":
+                teszt = new Teszt_16();
+                break;
+            case "17":
+                teszt = new Teszt_17();
+                break;
+            case "18":
+                teszt = new Teszt_18();
+                break;
+            case "19":
+                teszt = new Teszt_19();
+                break;
+            case "20":
+                teszt = new Teszt_20();
+                break;
+            case "21":
+                teszt = new Teszt_21();
+                break;
+            case "22":
+                teszt = new Teszt_22();
+                break;
+            case "23":
+                teszt = new Teszt_23();
+                break;
+            case "24":
+                teszt = new Teszt_24();
+                break;
+            case "25":
+                teszt = new Teszt_25();
+                break;
+            case "26":
+                teszt = new Teszt_26();
+                break;
+            default:
+                System.out.println("Nincs ilyen teszt: " + szam);
+                return;
+        }
+
+        if (teszt != null) {
+            System.out.println("Teszt futtatása...");
+            teszt.runTest();
+            System.out.println("Teszt befejeződött.");
+            System.out.println("Teszt eredménye fájlba mentve.");
+        }
+    }
 
     private void exit(List<String> args) {
         if (currentMode == Mode.GAME) {
@@ -477,6 +628,7 @@ public class CommandHandler {
                 if (gameTimer != null) {
                     gameTimer.cancel();
                 }
+                Field.getTektonList().clear();
             }
             start();
         } else if (currentMode == Mode.TEST) {
