@@ -87,7 +87,7 @@ public class Teszt_04 extends BaseTest{
 
     @Override
     public void runTest() {
-        log.append("[Test_04] - Spóra szórása - Szórás nem szomszédos Tektonra\n" +
+        log.append("[Test_04] - Sikertelen szórás, nincs elég spóra készlet\n" +
                 "-------------------------------------------------------------------------------\n\n");
 
         inicializalas();

@@ -1,4 +1,4 @@
-[Test_04] - Sikertelen szórás, nincs elég spóra készlet
+[Test_05] - Spóra szórása - Céltektonon Gombatest van
 -------------------------------------------------------------------------------
 
 Kezdő állapot:
@@ -9,7 +9,7 @@ ID: t0
 	sporaListaSize: 0
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
-	gombatest: 1 - sporaszam: 2 - fonalszam: 0 - szint: 1 - szorasCount:0
+	gombatest: 1 - sporaszam: 3 - fonalszam: 0 - szint: 1 - szorasCount:0
 	rovar: 0
 
 ID: t1
@@ -18,7 +18,7 @@ ID: t1
 	sporaListaSize: 0
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
-	gombatest: 0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
 	rovar: 0
 
 
@@ -26,7 +26,7 @@ ID: t1
 
 Kimenet:
 
-Incomplete: Spore spreading incomplete.
+Success: Spore spreading completed.
 Target: t1
 Spore Source: gsz0
 
@@ -40,7 +40,7 @@ ID: t0
 	sporaListaSize: 0
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
-	gombatest: 1 - sporaszam: 2 - fonalszam: 0 - szint: 1 - szorasCount:0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:1
 	rovar: 0
 
 ID: t1
@@ -49,9 +49,9 @@ ID: t1
 	sporaListaSize: 0
 	szomszedosTektonokSize: 1
 	defendFonalak: 0
-	gombatest: 0
+	gombatest: 1 - sporaszam: 1 - fonalszam: 0 - szint: 1 - szorasCount:0
 	rovar: 0
 
 
 ---------------------------------------------------------------------------------
-[Test_04] - Teszt vége
+[Test_05] - Teszt vége
