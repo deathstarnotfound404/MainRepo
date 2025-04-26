@@ -42,31 +42,38 @@ public class Tekton implements IDestroyable{
     }
 
     //TODO TÖRÉS ELLENŐRZÉSE
-    public void tektonTores(){
-        this.fonalakFelszivasa();
+    public boolean tektonTores(){
+        if(rovarLatogatottsag >= 10) {
+            this.fonalakFelszivasa();
 
-        if(tektononLevoGomba != null) {
-            tektononLevoGomba.elpusztul();
+            if(tektononLevoGomba != null) {
+                tektononLevoGomba.elpusztul();
+            }
+
+            Tekton ujTekton1 = new Tekton(TektonHatas.generateRandomTektonHatas());
+            Tekton ujTekton2= new Tekton(TektonHatas.generateRandomTektonHatas());
+            Field.addTekton(ujTekton1);
+            Field.addTekton(ujTekton2);
+
+            ujTekton1.addSzomszedosTekton(ujTekton1);
+            ujTekton2.addSzomszedosTekton(ujTekton2);
+            ujTekton1.getSzomszedok().addAll(this.szomszedosTektonok);
+            ujTekton2.getSzomszedok().addAll(this.szomszedosTektonok);
+
+            if(this.vanRovarATektonon()) {
+                ujTekton1.setRovar(tektononLevoRovar);
+                tektononLevoRovar.setHelyzet(ujTekton1);
+                this.setRovar(null);
+            }
+
+            //Régi tekton törlése
+            this.elpusztul();
+            System.out.println("[TektonTores] Tekton kettétört.");
+            return true;
+        } else {
+            return false;
         }
 
-        Tekton ujTekton1 = new Tekton(TektonHatas.generateRandomTektonHatas());
-        Tekton ujTekton2= new Tekton(TektonHatas.generateRandomTektonHatas());
-        Field.addTekton(ujTekton1);
-        Field.addTekton(ujTekton2);
-
-        ujTekton1.addSzomszedosTekton(ujTekton1);
-        ujTekton2.addSzomszedosTekton(ujTekton2);
-        ujTekton1.getSzomszedok().addAll(this.szomszedosTektonok);
-        ujTekton2.getSzomszedok().addAll(this.szomszedosTektonok);
-
-        if(this.vanRovarATektonon()) {
-            ujTekton1.setRovar(tektononLevoRovar);
-            tektononLevoRovar.setHelyzet(ujTekton1);
-            this.setRovar(null);
-        }
-
-        //Régi tekton törlése
-        this.elpusztul();
     }
 
     public boolean vanRovarATektonon(){
@@ -232,7 +239,9 @@ public class Tekton implements IDestroyable{
 
     @Override
     public void elpusztul() {
-        this.tektononLevoGomba.elpusztul();
+        if(tektononLevoGomba != null) {
+            this.tektononLevoGomba.elpusztul();
+        }
         this.sporaLista.clear();
         this.kapcsolodoFonalak.clear(); //Ahol használjuk előtte a fonalak felszívása már kezeli magukat a fonalakat
         Field.getTektonList().remove(this);
@@ -307,6 +316,10 @@ public class Tekton implements IDestroyable{
     public static void connectSzomszedok(Tekton t1, Tekton t2) {
         t1.addSzomszedosTekton(t2);
         t2.addSzomszedosTekton(t1);
+    }
+
+    public void setRovarLatogatottsag(int i) {
+        this.rovarLatogatottsag = i;
     }
 
 }

@@ -278,11 +278,108 @@ public class CommandHandler {
         }
     }
 
-    private void moveRovar(Rovarasz r, List<String> args) { System.out.println(r.getName() + ": Rovar mozgatás -> " + args); }
+    //TODO elfogyasztott ennyiség check - printelésben legyen infó a hatásokról
+    private void moveRovar(Rovarasz rsz, List<String> args) {
+        Scanner scanner = new Scanner(System.in);
+        Rovar rovar = null;
+        Tekton celTekton = null;
 
-    private void growGombaTest(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Gombatest növesztés -> " + args); }
+        // Rovar bekérés és validálása
+        while (true) {
+            System.out.println("[Rovar mozgatás]");
+            System.out.print("\tRovarász rovarainak id-jei: ");
+            for (Rovar r : rsz.getRovarLista()) {
+                System.out.print(r.getId() + " ");
+            }
+            System.out.print("\n");
+            System.out.println("\tRovar:");
+            System.out.print("\t\t> ");
+            try {
+                int rovarId = Integer.parseInt(scanner.nextLine().trim());
+                rovar = rsz.getRovarById(rovarId);
+                if (rovar != null) break;
+                System.out.println("\tNincs ilyen azonosítójú rovar. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
 
-    private void cutFonal(Rovarasz r, List<String> args) { System.out.println(r.getName() + ": Fonal elvágása -> " + args); }
+        // Céltekton bekérés és validálása
+        while (true) {
+            System.out.println("\tCéltekton:");
+            System.out.print("\t\t> ");
+            try {
+                int tektonId = Integer.parseInt(scanner.nextLine().trim());
+                List<Tekton> tektonList = field.getTektonList();
+                if (tektonId >= 0 && tektonId < tektonList.size()) {
+                    celTekton = tektonList.get(tektonId);
+                    break;
+                }
+                System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Mozgatás végrehajtása
+        if (rsz.rovarIranyitas(rovar, celTekton)) {
+            System.out.println(rsz.getName() + ": Sikeresen mozgatta a rovart a(z) " + celTekton.getId() + ". tektonra.");
+            //TODO - Időzítés beállítása Rovarra alaphelyzetre (30 sec)
+            rovar.sporaEves();
+            celTekton.hatasKifejtes();
+
+            List<Tekton> modositando = new ArrayList<>(Field.getTektonList());
+            for (Tekton t : modositando) {
+                t.tektonTores();
+            }
+
+        } else {
+            System.out.println(rsz.getName() + ": Sikertelen rovarmozgatás.");
+        }
+        // tetkon törés
+        // felszivo hatas
+        // eves
+    }
+
+    private void growGombaTest(Gombasz gsz, List<String> args) {
+        Scanner scanner = new Scanner(System.in);
+        Tekton celTekton = null;
+
+        System.out.println("[Gombatest növesztés]");
+
+        // Céltekton bekérése és validálása
+        while (true) {
+            System.out.println("\tElérhető tektonok (id-k):");
+            List<Tekton> tektonList = field.getTektonList();
+            for (Tekton t : tektonList) {
+                System.out.print(t.getId() + " ");
+            }
+            System.out.println();
+
+            System.out.println("\tCéltekton:");
+            System.out.print("\t\t> ");
+            try {
+                int tektonId = Integer.parseInt(scanner.nextLine().trim());
+                if (tektonId >= 0 && tektonId < tektonList.size()) {
+                    celTekton = tektonList.get(tektonId);
+                    break;
+                } else {
+                    System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Gombatest növesztés meghívása
+        gsz.gombatestNovesztes(celTekton, false);
+    }
+
+
+    private void cutFonal(Rovarasz r, List<String> args) {
+        //TODO időzítés
+        System.out.println(r.getName() + ": Fonal elvágása -> " + args);
+    }
 
     private void eatRovar(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Rovar elfogyasztása -> " + args); }
 
@@ -384,10 +481,10 @@ public class CommandHandler {
                 int tIndex = scanner.nextInt();
                 scanner.nextLine();
                 Rovar rovar = new Rovar();
-                rovar.setHelyzet(tektonList.get(tIndex));
-                tektonList.get(tIndex).setRovar(rovar);
                 rovar.setRovarasz(r);
                 r.addRovar(rovar, tektonList.get(tIndex));
+                rovar.setHelyzet(tektonList.get(tIndex));
+                tektonList.get(tIndex).setRovar(rovar);
                 System.out.println("Rovar létrehozva a(z) " + tIndex + ". Tektorra.");
             }
         }

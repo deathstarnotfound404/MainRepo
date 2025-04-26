@@ -77,7 +77,7 @@ public class GombaTest implements IDestroyable {
         if(szorasCount == 9) {
             alapGomba.elpusztul();
         } else {
-            if(this.szorasCount % 3 == 0) {
+            if(this.szorasCount == 3 || this.szorasCount == 6) {
                 szint ++;
             }
         }

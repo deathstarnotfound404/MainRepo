@@ -10,7 +10,11 @@ public class FonalFelszivodoHatas extends TektonHatas {
     @Override
     public String hatas() {
         //Fonalak felszívása az adott tektonról
-        super.tekton.fonalakFelszivasa();
-        return "Felszivas";
+        if(super.tekton.getLatogatottsag()%5 == 0) {
+            super.tekton.fonalakFelszivasa();
+            return "Felszivas";
+        } else {
+            return "NincsFonalFelszivas";
+        }
     }
 }

@@ -51,4 +51,13 @@ public class Rovarasz extends Player {
     public int getScoreFromPlayer(){
         return calcAllTapanyagScore();
     }
+
+    public Rovar getRovarById(int id) {
+        for(Rovar r : rovarLista) {
+            if(r.getId() == id) {
+                return r;
+            }
+        }
+        return null;
+    }
 }

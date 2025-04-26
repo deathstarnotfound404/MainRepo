@@ -74,27 +74,31 @@ public class Rovar implements IDestroyable{
         List<Tekton> szomszedLista = this.helyzet.getSzomszedosTektonok();
         //Nem léphet ugyan oda
         if(celTekton.getId() == this.id) {
+            System.out.println("Hiba: Nem léphet ugyan oda, ahol van!");
             return false;
         }
 
         //Ha a két tekton nem szomszédosak
         if(!szomszedLista.contains(celTekton) && !celTekton.getSzomszedok().contains(this.helyzet)){
-           return false;
+            System.out.println("Hiba: A kiválasztott két tekton nem szomszédos!");
+            return false;
         }
 
         //Fonallal összekötött-e a két tekton
         if(!Tekton.ketTektonFonallalOsszekotott(this.helyzet, celTekton)) {
+            System.out.println("Hiba: A kiválasztott két tekton nincs fonalakkal összekötve!");
             return false;
         }
 
         if(celTekton.vanRovarATektonon() || celTekton.getRovar() != null) {
+            System.out.println("Hiba: Már van Rovar a tekton!");
             return false;
         }
 
         this.helyzet.setRovar(null);    //Add latogatottsag itt megtörtéik
         this.setHelyzet(celTekton);
         celTekton.setRovar(this);
-
+        System.out.println("[moveRovar] Lépés sikeres!");
         return true;
     }
 
@@ -173,8 +177,6 @@ public class Rovar implements IDestroyable{
             this.helyzet.getSporaLista().subList(0, elfogyaszthatoVal).clear(); //Sporak törlése
 
             this.addTapanyag(elfogyaszthatoVal);
-
-            //TODO - Időzítés beállítása Rovarra alaphelyzetre (30 sec)
         }
     }
 
@@ -199,5 +201,9 @@ public class Rovar implements IDestroyable{
     public void elpusztul() {
         this.helyzet.setRovar(null);
         this.rovarasz.getRovarLista().remove(this);
+    }
+
+    public int getId(){
+        return id;
     }
 }

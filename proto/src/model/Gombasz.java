@@ -127,6 +127,7 @@ public class Gombasz extends Player {
         //Igazából a Gomba hozzáadása a Gombalistához, ami implicit létrehoz GombaTestet
         //Ellenőrizzük hogy üres-e
         if(t.getGomba() != null || t.isGtGatlo() || t.getVanGombaTest()) {
+            System.out.println("Hiba: GombaTest nem lerakható a Tektonon!");
             return false;
         }
 
@@ -134,13 +135,15 @@ public class Gombasz extends Player {
 
         if(!ingyen) {
             //Ha nincs elég spóra objektum a Tektonon
-            if(sporaszam < 3) {
+            if(sporaszam < 5) {
+                System.out.println("Hiba: Nincs elég spóra a céltektonon!");
                 return false;
             } else {
                 t.removeSporak(sporaszam);
                 Gomba ujGomba = new Gomba(t, this, sporaszam - 3);
                 addGomba(ujGomba);
                 addScore(1);
+                System.out.println("[growGombaTest]: Sikeres gombatest növesztés'");
                 return true;
             }
         } else {
@@ -148,6 +151,7 @@ public class Gombasz extends Player {
             Gomba ujGomba = new Gomba(t, this, sporaszam);
             addGomba(ujGomba);
             addScore(1);
+            System.out.println("[growGombaTest]: Sikeres ingyenes gombatest növesztés'");
             return true;
         }
     }
