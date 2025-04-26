@@ -1,6 +1,5 @@
 package test;
 import model.*;
-import proto.CommandHandler;
 
 import java.util.*;
 
@@ -8,6 +7,11 @@ public class Teszt_01 extends BaseTest {
     private final StringBuilder log = new StringBuilder();
     private final Field field = new Field();  // Teszt saját Field-je
     private final Queue<String> elvartParancsok = new LinkedList<>();
+
+    private List<Tekton> tektonList = new ArrayList<>();
+    private List<Rovarasz> rovaraszList = new ArrayList<>();
+    private List<Rovar> rovarList = new ArrayList<>();
+
 
     @Override
     public void runTest() {
@@ -20,6 +24,8 @@ public class Teszt_01 extends BaseTest {
 
         log.append("Kezdő állapot:\n");
         log.append(field.printGameState());
+
+        log.append("\nKimenet:\n\n");
 
         while (!elvartParancsok.isEmpty()) {
             String kovetkezoElvart = elvartParancsok.peek();
@@ -37,7 +43,7 @@ public class Teszt_01 extends BaseTest {
             }
         }
 
-        log.append("\nCél állapot\n");
+        log.append("------------------------------------------------------------------------------\n\nCél állapot\n");
         log.append(field.printGameState());
 
         tesztWriteOut();
@@ -46,11 +52,16 @@ public class Teszt_01 extends BaseTest {
     protected void inicializalas() {
         Gombasz g = new Gombasz("TesztGombasz");
         Rovarasz r = new Rovarasz("TesztRovarasz");
+        rovaraszList.add(r);
+
         field.addGombasz(g);
         field.addRovarasz(r);
 
         Tekton t1 = new Tekton(new TektonHatas());
         Tekton t2 = new Tekton(new TektonHatas());
+        tektonList.add(t1);
+        tektonList.add(t2);
+
         t1.getTektonHatas().setTekton(t1);
         t2.getTektonHatas().setTekton(t2);
 
@@ -70,6 +81,7 @@ public class Teszt_01 extends BaseTest {
         g.addGomba(gomba);
 
         Rovar rovar = new Rovar();
+        rovarList.add(rovar);
         rovar.setRovarasz(r);
         r.addRovar(rovar, t1);
         rovar.setHelyzet(t1);
@@ -84,22 +96,54 @@ public class Teszt_01 extends BaseTest {
         t1.addKapcsolodoFonalak(gf);
         t2.addKapcsolodoFonalak(gf);
 
-        elvartParancsok.add("moveRovar -r1 -t1 -rsz1");
+        elvartParancsok.add("moveRovar -r0 -t1 -rsz0");
         elvartParancsok.add("exit");
     }
 
     protected void parancsFeldolgozas(String parancs) {
-        switch (parancs) {
-            case "moveRovar -r1 -t1 -rsz1":
-                //log.append("Teszt: Rovarász kiválasztva.\n");
+        String[] parts = parancs.split("\\s+");
+        String command = parts[0];
+
+        switch (command) {
+            case "moveRovar":
+                int rovarNum = Integer.parseInt(parts[1].substring(2)); // "-r1" -> 1
+                int tektonNum = Integer.parseInt(parts[2].substring(2)); // "-t1" -> 1
+                int rovaraszNum = Integer.parseInt(parts[3].substring(4)); // "-rsz1" -> 1
+
+                // Kikeressük az objektumokat
+                Rovar rovar = rovarList.get(rovarNum);
+                Tekton celTekton = tektonList.get(tektonNum);
+                Rovarasz rovarasz = rovaraszList.get(rovaraszNum);
+
+                if (rovar != null && celTekton != null && rovarasz != null) {
+                    if (rovarasz.rovarIranyitas(rovar, celTekton)) {
+                        rovar.sporaEves();
+                        celTekton.hatasKifejtes();
+
+                        List<Tekton> modositando = new ArrayList<>(Field.getTektonList());
+                        log.append("Success: Rovar movement completed.\n" + "Rovar: ").append(rovarNum).append(" → Target: ").append(tektonNum).append("\n").append("Managed by: rsz").append(rovaraszNum).append("\n\n");
+                        for (Tekton t : modositando) {
+                            if (t.tektonTores()){
+                                log.append("Success: Tekton kettétörés\nTekton: ").append(tektonNum).append("\n");
+                            }
+                        }
+                    } else {
+                        log.append("Error: Rovar movement incomplete.\n");
+                    }
+                } else {
+                    log.append("[HIBA] Nem található rovar/tekton/rovarász azonosító!\n");
+                }
                 break;
+
             case "exit":
-                log.append("Teszt: Kilépés a tesztből.\n");
                 break;
+
             default:
                 log.append("Teszt: Ismeretlen parancs: ").append(parancs).append("\n");
+                break;
         }
     }
+
 
     private void tesztWriteOut() {
         log.append("[Test_01] - Teszt vége\n");

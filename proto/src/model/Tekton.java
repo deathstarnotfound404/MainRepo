@@ -50,6 +50,8 @@ public class Tekton implements IDestroyable{
                 tektononLevoGomba.elpusztul();
             }
 
+            List<Tekton> meglevoSzomszedok = szomszedosTektonok;
+
             Tekton ujTekton1 = new Tekton(TektonHatas.generateRandomTektonHatas());
             Tekton ujTekton2= new Tekton(TektonHatas.generateRandomTektonHatas());
             Field.addTekton(ujTekton1);
@@ -59,6 +61,11 @@ public class Tekton implements IDestroyable{
             ujTekton2.addSzomszedosTekton(ujTekton2);
             ujTekton1.getSzomszedok().addAll(this.szomszedosTektonok);
             ujTekton2.getSzomszedok().addAll(this.szomszedosTektonok);
+
+            for (Tekton t : meglevoSzomszedok) {
+                t.addSzomszedosTekton(ujTekton1);
+                t.addSzomszedosTekton(ujTekton2);
+            }
 
             if(this.vanRovarATektonon()) {
                 ujTekton1.setRovar(tektononLevoRovar);
@@ -245,6 +252,9 @@ public class Tekton implements IDestroyable{
         this.sporaLista.clear();
         this.kapcsolodoFonalak.clear(); //Ahol használjuk előtte a fonalak felszívása már kezeli magukat a fonalakat
         Field.getTektonList().remove(this);
+        for (Tekton t : Field.getTektonList()){
+            t.getSzomszedosTektonok().remove(this);
+        }
     }
 
     public static boolean ketTektonFonallalOsszekotott(Tekton t1, Tekton t2){
