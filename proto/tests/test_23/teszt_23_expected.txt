@@ -1,0 +1,56 @@
+[Test_23] - Tekton Hatás - Fonal Gátló Hatás
+-------------------------------------------------------------------------------
+
+Kezdő állapot:
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 6 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 6
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+
+Kimenet:
+
+Success: Tekton hatás
+GombaTestGatloHatas: Gátló
+GombaTest growth failed
+------------------------------------------------------------------------------
+
+Cél állapot
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 6 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 6
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+[Test_23] - Teszt vége
