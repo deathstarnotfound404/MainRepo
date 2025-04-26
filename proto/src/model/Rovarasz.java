@@ -37,12 +37,14 @@ public class Rovarasz extends Player {
     public List<Rovar> getRovarLista() {
         return rovarLista;
     }
+
     public void removeRovar(Rovar r) {
         if(r.getHelyzet().getRovar() != null) {
             r.getHelyzet().setRovar(null);
         }
         rovarLista.remove(r);
     }
+
     public boolean rovarIranyitas(Rovar r, Tekton celTekton) {
         return r.lep(celTekton);
     }

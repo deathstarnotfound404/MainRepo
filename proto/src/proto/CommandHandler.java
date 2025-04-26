@@ -376,10 +376,86 @@ public class CommandHandler {
     }
 
 
-    private void cutFonal(Rovarasz r, List<String> args) {
-        //TODO időzítés
-        System.out.println(r.getName() + ": Fonal elvágása -> " + args);
+    private void cutFonal(Rovarasz rsz, List<String> args) {
+        //TODO - bonyolultabb fonalstruktúrák vágása
+        Scanner scanner = new Scanner(System.in);
+        Rovar rovar = null;
+        Tekton tekton = null;
+
+        System.out.println("[Fonal elvágása]");
+
+        // Rovar kiválasztása és validálása
+        while (true) {
+            System.out.println("\tRovarász rovárjai (id-k):");
+            for (Rovar rv : rsz.getRovarLista()) {
+                System.out.print(rv.getId() + " ");
+            }
+            System.out.println();
+
+            System.out.println("\tRovar:");
+            System.out.print("\t\t> ");
+            try {
+                int rovarId = Integer.parseInt(scanner.nextLine().trim());
+                rovar = rsz.getRovarById(rovarId);
+                if (rovar != null) break;
+                System.out.println("\tNincs ilyen azonosítójú rovar. Próbáld újra.");
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        // Tekton kiválasztása és validálása (amelyen a fonalat vágjuk)
+        while (true) {
+            System.out.println("\tElérhető tektonok (id-k):");
+            List<Tekton> tektonList = field.getTektonList();
+            for (Tekton t : tektonList) {
+                System.out.print(t.getId() + " ");
+            }
+            System.out.println();
+
+            System.out.println("\tTekton ami között vágás történik:");
+            System.out.print("\t\t> ");
+            try {
+                int tektonId = Integer.parseInt(scanner.nextLine().trim());
+                if (tektonId >= 0 && tektonId < tektonList.size()) {
+                    tekton = tektonList.get(tektonId);
+                    break;
+                } else {
+                    System.out.println("\tNincs ilyen azonosítójú tekton. Próbáld újra.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
+            }
+        }
+
+        //Gombafonal kivétele a modellből
+        GombaFonal kivalaztottFonal = null;
+        for(GombaFonal gf : rovar.getHelyzet().getKapcsolodoFonalak()) {
+            for(GombaFonal gf_2 : tekton.getKapcsolodoFonalak()) {
+                if (gf.getID() == gf_2.getID()) {
+                    //Van köztes fonal
+                    kivalaztottFonal = gf;
+                }
+            }
+        }
+        if(kivalaztottFonal == null) {
+            System.out.println("Nincs a Rovar tektonja és a kiválasztott Tekton között fonal!");
+            return;
+        }
+
+        if(kivalaztottFonal.getCelTekton().isDefendFonalak() || kivalaztottFonal.getStartTekton().isDefendFonalak()) {
+            System.out.println("[defendFonalak]: A kijelölt fonal nem elvágható");
+            return;
+        }
+
+        // Fonal vágás meghívása
+        if (rsz.fonalVagas(rovar, kivalaztottFonal)) {
+            System.out.println(rsz.getName() + ": Sikeres fonalvágás a " + tekton.getId() + ". tektonon.");
+        } else {
+            System.out.println(rsz.getName() + ": Sikertelen fonalvágás.");
+        }
     }
+
 
     private void eatRovar(Gombasz g, List<String> args) { System.out.println(g.getName() + ": Rovar elfogyasztása -> " + args); }
 
