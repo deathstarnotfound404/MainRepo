@@ -78,7 +78,6 @@ public class Teszt_16 extends BaseTest{
         elvartParancsok.add("moveRovar -r0 -t1 -rsz0");
         elvartParancsok.add("moveRovar -r0 -t2 -rsz0");
         elvartParancsok.add("exit");
-
     }
 
     @Override
