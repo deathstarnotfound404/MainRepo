@@ -1,0 +1,89 @@
+[Test_07] - GombaTest szintlépése
+-------------------------------------------------------------------------------
+
+Kezdő állapot:
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 45 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+
+Kimenet:
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+Success: Spore spreading completed.
+Target: t1
+Spore Source: gsz0
+
+------------------------------------------------------------------------------
+
+Cél állapot
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 18
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+[Test_07] - Teszt vége
