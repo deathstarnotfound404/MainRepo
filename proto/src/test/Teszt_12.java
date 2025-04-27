@@ -10,7 +10,7 @@ public class Teszt_12 extends BaseTest{
     private final Field field = new Field();  // Teszt saját Field-je
     private final Queue<String> elvartParancsok = new LinkedList<>();
 
-    //moveRovar -r1 -t2 -rsz1
+    //moveRovar -r1 -t2 -rsz 1
 
     private List<Tekton> tektonList = new ArrayList<>();
     private List<Rovarasz> rovaraszList = new ArrayList<>();
