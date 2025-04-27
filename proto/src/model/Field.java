@@ -1,27 +1,61 @@
 package model;
 import java.util.*;
 
+/**
+ * Represents the game field that contains all the game elements.
+ * This class manages the game environment including Tekton cells, players,
+ * and handles game initialization, evaluation, and state tracking.
+ */
 public class Field {
+    /** Counter to generate unique IDs */
     private static int idCounter = 0;
+
+    /** List of all Tekton cells in the field */
     private static List<Tekton> tektonLista = new ArrayList<>();
+
+    /** Map of players and their types (G for Gombasz/Mycologist, R for Rovarasz/Entomologist) */
     private Map<Player, String> playerLista = new HashMap<>();
 
+    /**
+     * Constructs a new empty Field.
+     */
     public Field() {}
 
+    /**
+     * Adds a Gombasz (Mycologist) player to the game.
+     *
+     * @param p the Gombasz player to add
+     */
     public void addGombasz(Gombasz p) {
         playerLista.put(p, "G");
     }
 
+    /**
+     * Adds a Rovarasz (Entomologist) player to the game.
+     *
+     * @param p the Rovarasz player to add
+     */
     public void addRovarasz(Rovarasz p) {
         playerLista.put(p, "R");
     }
 
+    /**
+     * Adds a Tekton cell to the field.
+     *
+     * @param t the Tekton to add
+     */
     public static void addTekton(Tekton t) {
         tektonLista.add(t);
     }
 
-    //Fontos, hogy az 1.elem lesz a nyertes rovarasz, 2. a nyertes gombasz
-    public  List<Player> kiertekeles() {
+    /**
+     * Evaluates the game state and determines the winners.
+     * The first element in the returned list is the winning Rovarasz (Entomologist),
+     * and the second is the winning Gombasz (Mycologist).
+     *
+     * @return a list containing the winning players in order: Rovarasz, then Gombasz
+     */
+    public List<Player> kiertekeles() {
         int maxRovaraszScore = 0;
         int maxGombaszScore = 0;
 
@@ -71,7 +105,12 @@ public class Field {
         return eredmeny;
     }
 
-
+    /**
+     * Generates a string representation of the current game state.
+     * Includes details about all Tektons on the field.
+     *
+     * @return a formatted string describing the current game state
+     */
     public String printGameState() {
         StringBuilder sb = new StringBuilder();
         int tektonCnt = 0;
@@ -87,20 +126,29 @@ public class Field {
         return sb.toString();
     }
 
-
-    public void setAllTektonSzomszed() {
-        //TODO ????
-    }
-
+    /**
+     * Generates a new unique ID.
+     *
+     * @return a unique integer ID
+     */
     public static int genID() {
         ++idCounter;
         return idCounter;
     }
 
+    /**
+     * Returns the list of all Tektons in the field.
+     *
+     * @return the list of Tektons
+     */
     public static List<Tekton> getTektonList() {
         return tektonLista;
     }
 
+    /**
+     * Initializes the game by creating Tekton cells and setting up their neighbor relationships.
+     * Creates 12 Tektons with random effects and connects them in a specific topology.
+     */
     public void initGame(){
         //Létrehozza a játék mapot
 
