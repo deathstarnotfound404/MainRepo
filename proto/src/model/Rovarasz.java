@@ -69,6 +69,7 @@ public class Rovarasz extends Player {
             return false;
         }
         if (r.getTudVagni()) {
+            System.out.println("Fonal vágás");
             return r.vag(gf);
         } else {
             return false;

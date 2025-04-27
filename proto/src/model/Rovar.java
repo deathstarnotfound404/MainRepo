@@ -101,6 +101,8 @@ public class Rovar implements IDestroyable {
         evesHatekonysag = 1;
         tudVagni = true;
         maxFogyasztas = false;
+
+        System.out.println("\nRovar: r" + id + " -> Kepessegek Alaphelyzetbe állítása");
     }
 
     /**

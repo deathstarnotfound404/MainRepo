@@ -111,7 +111,7 @@ public class Gombasz extends Player {
      * @param ingyen true if the thread should be placed for free, false otherwise
      * @return true if the thread was successfully placed, false otherwise
      */
-    public boolean gombafonalIranyitas(Gomba g, Tekton stratTekton, Tekton celTekton, boolean ingyen){
+    public boolean gombafonalIranyitas(Gomba g, Tekton stratTekton, Tekton celTekton, boolean ingyen) {
         //Check if placement is valid
         if(fonalLerakasEllenorzes(stratTekton, celTekton)) {
             if(g.fonalFolytonossagVizsgalat(stratTekton)) {

@@ -14,6 +14,7 @@ public class CommandHandler {
     private volatile boolean gameRunning = false;
     private Timer gameTimer;
     private Timer sporaTimer;
+    private TimeHandler timeHandler = new TimeHandler();
 
     private final Map<Integer, Player> players = new LinkedHashMap<>();
     private Player selectedPlayer = null;
@@ -280,7 +281,7 @@ public class CommandHandler {
 
     private void moveRovar(Rovarasz rsz, List<String> args) {
         Scanner scanner = new Scanner(System.in);
-        Rovar rovar = null;
+        Rovar rovar_ = null;
         Tekton celTekton = null;
 
         // Rovar bekérés és validálása
@@ -295,13 +296,15 @@ public class CommandHandler {
             System.out.print("\t\t> ");
             try {
                 int rovarId = Integer.parseInt(scanner.nextLine().trim());
-                rovar = rsz.getRovarById(rovarId);
-                if (rovar != null) break;
+                rovar_ = rsz.getRovarById(rovarId);
+                if (rovar_ != null) break;
                 System.out.println("\tNincs ilyen azonosítójú rovar. Próbáld újra.");
             } catch (NumberFormatException e) {
                 System.out.println("\tÉrvénytelen számformátum. Próbáld újra.");
             }
         }
+
+        final Rovar rovar = rovar_;
 
         // Céltekton bekérés és validálása
         while (true) {
@@ -323,9 +326,11 @@ public class CommandHandler {
         // Mozgatás végrehajtása
         if (rsz.rovarIranyitas(rovar, celTekton)) {
             System.out.println(rsz.getName() + ": Sikeresen mozgatta a rovart a(z) " + celTekton.getId() + ". tektonra.");
-            //TODO - Időzítés beállítása Rovarra alaphelyzetre (30 sec)
             rovar.sporaEves();
             celTekton.hatasKifejtes();
+
+            //Időzítés - reset rovar
+            timeHandler.schedule(() -> rovar.kepessegekAlaphelyzetbe(), 30000, field);
 
             List<Tekton> modositando = new ArrayList<>(Field.getTektonList());
             for (Tekton t : modositando) {
@@ -373,7 +378,6 @@ public class CommandHandler {
 
 
     private void cutFonal(Rovarasz rsz, List<String> args) {
-        //TODO - bonyolultabb fonalstruktúrák vágása
         Scanner scanner = new Scanner(System.in);
         Rovar rovar = null;
         Tekton tekton = null;
@@ -444,12 +448,18 @@ public class CommandHandler {
             return;
         }
 
+        final Rovar r = rovar;
+        final GombaFonal gf = kivalaztottFonal;
+
+        timeHandler.schedule(() -> rsz.fonalVagas(r, gf), 10000, field);
         // Fonal vágás meghívása
+        /*
         if (rsz.fonalVagas(rovar, kivalaztottFonal)) {
             System.out.println(rsz.getName() + ": Sikeres fonalvágás a " + tekton.getId() + ". tektonon.");
         } else {
             System.out.println(rsz.getName() + ": Sikertelen fonalvágás.");
         }
+        */
     }
 
 
