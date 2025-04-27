@@ -755,6 +755,6 @@ public class CommandHandler {
                     }
                 }
             }
-        }, 2000, 2000); // 20 (20000)másodpercenként
+        }, 5000, 5000); // 20 (20000)másodpercenként
     }
 }

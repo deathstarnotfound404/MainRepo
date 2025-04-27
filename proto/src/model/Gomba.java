@@ -395,6 +395,23 @@ public class Gomba implements IDestroyable {
             return true;
         }
 
+        // Kezdő gombából történő kiindulás
+        if(ujGF.getStartTekton().getId() == this.tekton.getId()) {
+            for (List<GombaFonal> l : fonalLista) {
+                if (!l.isEmpty()) {
+                    GombaFonal gf = l.get(0);
+                    if(gf.getStartTekton().getId() == ujGF.getStartTekton().getId() && gf.getCelTekton().getId() == ujGF.getCelTekton().getId()) {
+                        return false;
+                    }
+                }
+            }
+
+            List<GombaFonal> ujLista = new ArrayList<>();
+            ujLista.add(ujGF);
+            fonalLista.add(ujLista);
+            return true;
+        }
+
         // Add to ends of existing paths
         for(List<GombaFonal> l : fonalLista) {
             if(!l.isEmpty() && fonalFolytonossagVizsgalat(l)) {

@@ -132,8 +132,9 @@ public class Field {
      * @return a unique integer ID
      */
     public static int genID() {
+        int current = idCounter;
         ++idCounter;
-        return idCounter;
+        return current;
     }
 
     /**
