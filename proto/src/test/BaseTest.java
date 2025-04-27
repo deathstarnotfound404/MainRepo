@@ -11,7 +11,7 @@ public abstract class BaseTest {
     abstract String getResult();
 
     protected void saveTestResult(StringBuilder log, String tesztSzam) {
-        String directoryPath = "proto/tests" + File.separator + "test_" + tesztSzam;
+        String directoryPath = "tests" + File.separator + "test_" + tesztSzam;
         File directory = new File(directoryPath);
 
         if (!directory.exists()) {
