@@ -169,14 +169,13 @@ public class Rovar implements IDestroyable{
 
         int elfogyaszthatoVal = elfogyaszthatoMennyisieg();
 
-        if(sporaLista != null && sporaLista.size() > 0){
+        if(sporaLista != null && sporaLista.size() > 0 && elfogyaszthatoVal > 0){
             this.addTapanyag(elfogyaszthatoVal);    //Tápanyag hozzáadása
             BaseSpora last = sporaLista.get(elfogyaszthatoVal-1);   //Az utolsó megevett Spóra hatása érvényesül
             last.hatas(this);   //Spora hatas kifejtése a Rovaron
 
             this.helyzet.getSporaLista().subList(0, elfogyaszthatoVal).clear(); //Sporak törlése
 
-            this.addTapanyag(elfogyaszthatoVal);
             return true;
         } else {
             return false;
