@@ -612,6 +612,9 @@ public class CommandHandler {
             case "26":
                 teszt = new Teszt_26();
                 break;
+            case "27":
+                teszt = new Teszt_27();
+                break;
             default:
                 System.out.println("Nincs ilyen teszt: " + szam);
                 return;

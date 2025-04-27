@@ -320,8 +320,11 @@ public class Rovar implements IDestroyable {
      * @return true if the thread was cut, false otherwise
      */
     public boolean vag(GombaFonal gf) {
-        //TODO -  10sec-ig ne tűnjön el - Majd a Rovarásznál kezelve (az ő hívását időzítjük és ezt hívjuk ha letelt)
         if(this.tudVagni && gf!=null) {
+            if(gf.getStartTekton().isDefendFonalak() || gf.getCelTekton().isDefendFonalak()) {
+                System.out.println("[DefendTektonHatas]: Vágás sikertelen!");
+                return false;
+            }
             Tekton t1 = gf.getStartTekton();
             Tekton t2 = gf.getCelTekton();
             Gomba alapGomba = gf.getAlapGomba();

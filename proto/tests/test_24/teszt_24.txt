@@ -19,7 +19,7 @@ ID: t1
 	szomszedosTektonokSize: 2
 	defendFonalak: 0
 	gombatest: 0
-	rovar: 1 - ID: 8
+	rovar: 1 - ID: 7
 
 ID: t2
 	rovarLatogatottsag: 0
@@ -53,7 +53,7 @@ ID: t4
 
 Kimenet:
 
-TesztRovarasz: Sikeres fonalvágás a 2. tektonon.
+TesztRovarasz: Sikertelen fonalvágás.
 ------------------------------------------------------------------------------
 
 Cél állapot
@@ -69,12 +69,12 @@ ID: t0
 
 ID: t1
 	rovarLatogatottsag: 0
-	fonalFokszam: 1
+	fonalFokszam: 2
 	sporaListaSize: 0
 	szomszedosTektonokSize: 2
 	defendFonalak: 0
 	gombatest: 0
-	rovar: 1 - ID: 8
+	rovar: 1 - ID: 7
 
 ID: t2
 	rovarLatogatottsag: 0

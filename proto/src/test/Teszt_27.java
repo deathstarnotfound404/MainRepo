@@ -1,7 +1,6 @@
 package test;
-
 import model.*;
-
+import proto.*;
 import java.util.*;
 
 public class Teszt_27 extends BaseTest{
@@ -12,6 +11,7 @@ public class Teszt_27 extends BaseTest{
     private List<Tekton> tektonList = new ArrayList<>();
     private List<Rovarasz> rovaraszList = new ArrayList<>();
     private List<Rovar>  rovarList = new ArrayList<>();
+    private TimeHandler timeHandler = new TimeHandler();
 
     protected void inicializalas() {
         Gombasz g = new Gombasz("TesztGombasz");
@@ -71,9 +71,9 @@ public class Teszt_27 extends BaseTest{
         Rovar rovar = new Rovar();
         rovarList.add(rovar);
         rovar.setRovarasz(r);
-        r.addRovar(rovar, t2);
-        rovar.setHelyzet(t2);
-        t2.setRovar(rovar);
+        r.addRovar(rovar, t4);
+        rovar.setHelyzet(t4);
+        t4.setRovar(rovar);
 
         GombaFonal gf1 = new GombaFonal(gomba, t1, t2);
         GombaFonal gf2 = new GombaFonal(gomba, t2, t3);
@@ -97,7 +97,8 @@ public class Teszt_27 extends BaseTest{
         t4.addKapcsolodoFonalak(gf4);
         t5.addKapcsolodoFonalak(gf4);
 
-        elvartParancsok.add("cutFonal -r0 -t1");
+        elvartParancsok.add("cutFonal -r0 -t2");
+        elvartParancsok.add("cutFonal -r0 -t4");
         elvartParancsok.add("exit");
     }
 
@@ -125,11 +126,16 @@ public class Teszt_27 extends BaseTest{
                 }
 
                 if (rovar != null && kijeloltTekton != null && kivalaztottFonal != null) {
+                    /*
                     if(rovaraszList.get(0).fonalVagas(rovar, kivalaztottFonal)) {
                         log.append(rovaraszList.get(0).getName() + ": Sikeres fonalvágás a " + kijeloltTekton.getId() + ". tektonon.\n");
                     } else {
                         log.append(rovaraszList.get(0).getName() + ": Sikertelen fonalvágás.\n");
                     }
+                    */
+
+                    final GombaFonal gf = kivalaztottFonal;
+                    timeHandler.schedule(() -> rovaraszList.get(0).fonalVagas(rovar, gf), 10000, field);
                 }
 
             case "exit":
