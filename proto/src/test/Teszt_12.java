@@ -19,11 +19,11 @@ public class Teszt_12 extends BaseTest{
     @Override
     protected void inicializalas() {
         Gombasz g = new Gombasz("TesztGombasz");
-        Rovarasz r = new Rovarasz("TesztRovarasz");
-        rovaraszList.add(r);
+        Rovarasz rsz1 = new Rovarasz("TesztRovarasz");
+        rovaraszList.add(rsz1);
 
         field.addGombasz(g);
-        field.addRovarasz(r);
+        field.addRovarasz(rsz1);
 
         Tekton t1 = new Tekton(new TektonHatas());
         Tekton t2 = new Tekton(new TektonHatas());
@@ -48,19 +48,18 @@ public class Teszt_12 extends BaseTest{
         Gomba gomba = new Gomba(t1, g, 0);
         g.addGomba(gomba);
 
-        Rovar rovar = new Rovar();
-        rovarList.add(rovar);
-        rovar.setRovarasz(r);
-        r.addRovar(rovar, t1);
-        rovar.setHelyzet(t1);
-        t1.setRovar(rovar);
+        Rovar r1 = new Rovar();
+        rovarList.add(r1);
+        r1.setRovarasz(rsz1);
+        rsz1.addRovar(r1, t1);
+        r1.setHelyzet(t1);
+        t1.setRovar(r1);
 
         GombaFonal gf = new GombaFonal(gomba, t1, t2);
 
         gomba.addFonal(gf);
 
         //Tekton init
-        t1.setRovarLatogatottsag(9);
         t1.addKapcsolodoFonalak(gf);
         t2.addKapcsolodoFonalak(gf);
 
@@ -76,7 +75,7 @@ public class Teszt_12 extends BaseTest{
         switch (command) {
             case "moveRovar":
                 int rovarNum = Integer.parseInt(parts[1].substring(2)); // "-r1" -> 1
-                int tektonNum = Integer.parseInt(parts[2].substring(2)); // "-t1" -> 1
+                int tektonNum = Integer.parseInt(parts[2].substring(2)); // "-t2" -> 1
                 int rovaraszNum = Integer.parseInt(parts[3].substring(4)); // "-rsz1" -> 1
 
                 // Kikeressük az objektumokat
@@ -150,7 +149,7 @@ public class Teszt_12 extends BaseTest{
     }
 
     private void tesztWriteOut() {
-        log.append("[Test_01] - Teszt vége\n");
+        log.append("[Test_12] - Teszt vége\n");
         saveTestResult(log, "12");
     }
 
