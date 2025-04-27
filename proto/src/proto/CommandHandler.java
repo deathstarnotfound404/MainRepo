@@ -43,7 +43,7 @@ public class CommandHandler {
                     return;
                 case "2":
                     currentMode = Mode.TEST;
-                    System.out.print("Add meg a tesztszámot (1–26): ");
+                    System.out.print("Add meg a tesztszámot (1–27): ");
                     String testSzam = scanner.nextLine().trim();
                     runTest(List.of(testSzam));
                     break;
