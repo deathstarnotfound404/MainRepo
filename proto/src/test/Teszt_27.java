@@ -1,6 +1,5 @@
 package test;
 import model.*;
-import proto.*;
 import java.util.*;
 
 public class Teszt_27 extends BaseTest{

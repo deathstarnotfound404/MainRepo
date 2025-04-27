@@ -1,18 +1,18 @@
-/**
- * TimeHandler.java
- * ----------------
- * Ez az osztály időzített műveletek végrehajtására szolgál egy játékmodell esetében.
- * Garantálja, hogy a műveletek csak akkor futnak le, ha a modell (pl. Field) éppen nem használatban van,
- * azaz szinkronizált szakaszon kívül vagyunk.
- *
- * JDK 18-kompatibilis megoldás.
- */
-
-package proto;
+package model;
 import java.util.concurrent.*;
 
 public class TimeHandler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    /**
+     * TimeHandler.java
+     * ----------------
+     * Ez az osztály időzített műveletek végrehajtására szolgál egy játékmodell esetében.
+     * Garantálja, hogy a műveletek csak akkor futnak le, ha a modell (pl. Field) éppen nem használatban van,
+     * azaz szinkronizált szakaszon kívül vagyunk.
+     *
+     * JDK 18-kompatibilis megoldás.
+     */
 
     /**
      * Egy műveletet késleltetve hajt végre, szinkronizálva a megadott objektumra.
