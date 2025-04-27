@@ -30,7 +30,7 @@ public class Gombasz extends Player {
     public boolean fonalLerakasEllenorzes(Tekton t1, Tekton t2) {
         //Mar van a ket tekton kozott fonal?
         if(Tekton.ketTektonFonallalOsszekotott(t1, t2)){
-            System.out.println("Hiba: A két tekton már össze vav kötve!");
+            System.out.println("Hiba: A két tekton már össze van kötve!");
             return false;
         }
 
