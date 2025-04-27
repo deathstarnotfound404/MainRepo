@@ -64,6 +64,10 @@ public class Rovarasz extends Player {
      * @return true if the thread was successfully cut, false otherwise
      */
     public boolean fonalVagas(Rovar r, GombaFonal gf) {
+        if(gf==null) {
+            System.out.println("A fonal nem elvágható az adott Rovar helyzetből!");
+            return false;
+        }
         if (r.getTudVagni()) {
             return r.vag(gf);
         } else {

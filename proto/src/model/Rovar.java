@@ -319,7 +319,7 @@ public class Rovar implements IDestroyable {
      */
     public boolean vag(GombaFonal gf) {
         //TODO -  10sec-ig ne tűnjön el - Majd a Rovarásznál kezelve (az ő hívását időzítjük és ezt hívjuk ha letelt)
-        if(this.tudVagni) {
+        if(this.tudVagni && gf!=null) {
             Tekton t1 = gf.getStartTekton();
             Tekton t2 = gf.getCelTekton();
             Gomba alapGomba = gf.getAlapGomba();
