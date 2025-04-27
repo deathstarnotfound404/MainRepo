@@ -25,9 +25,6 @@ public class Field {
         int maxRovaraszScore = 0;
         int maxGombaszScore = 0;
 
-        Player topRovarasz = null;
-        Player topGombasz = null;
-
         for (Map.Entry<Player, String> entry : playerLista.entrySet()) {
             Player player = entry.getKey();
             String str = entry.getValue();
@@ -36,20 +33,40 @@ public class Field {
                 int score = player.getScore();
                 if (score > maxRovaraszScore) {
                     maxRovaraszScore = score;
-                    topRovarasz = player;
                 }
             } else if (str.equals("G")) {
                 int score = player.getScore();
                 if (score > maxGombaszScore) {
                     maxGombaszScore = score;
-                    topGombasz = player;
                 }
             }
         }
 
         List<Player> eredmeny = new ArrayList<>();
-        if (topRovarasz != null) eredmeny.add(topRovarasz);
-        if (topGombasz != null) eredmeny.add(topGombasz);
+
+        for (Map.Entry<Player, String> entry : playerLista.entrySet()) {
+            Player player = entry.getKey();
+            String str = entry.getValue();
+
+            if (str.equals("R")) {
+                int score = player.getScore();
+                if (score == maxRovaraszScore && player!=null) {
+                    eredmeny.add(player);
+                }
+            }
+        }
+
+        for (Map.Entry<Player, String> entry : playerLista.entrySet()) {
+            Player player = entry.getKey();
+            String str = entry.getValue();
+
+            if (str.equals("G")) {
+                int score = player.getScore();
+                if (score == maxGombaszScore && player!=null) {
+                    eredmeny.add(player);
+                }
+            }
+        }
 
         return eredmeny;
     }

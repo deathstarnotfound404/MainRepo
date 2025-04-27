@@ -10,7 +10,7 @@ public class Gomba implements IDestroyable {
     private Gombasz gombasz;
 
     public Gomba(Tekton t, Gombasz gsz, int kezdoSporaszam) {
-        Field.genID();
+        id = Field.genID();
         gombasz = gsz;
         tekton = t;
         t.setGomba(this);   //Itt létrejön biztosan, mert akkor híjuk csak meg ha leellenőriztük h üres a tekton
@@ -118,19 +118,22 @@ public class Gomba implements IDestroyable {
                     return true;
                 }
             }
+
             for (int i = 0; i < l.size() - 1; i++) {
                 //Ha folytonos -> azaz i. fonal céltektonja az l listában megegyezik az i+1. fonal startTektonjával
                 if(l.get(i).getCelTekton().getId() == l.get(i+1).getStartTekton().getId()) {
                     //Ha az i. fonal céltektonja megewgyezik a keresett tektonnal, akkor a T tekton folytonosan van kötve a gazda gombatesthez
                     //Ha ez az esemény egyszer sem következik be akkor, a T nincs kötve ezzel a Gombával
-                    if(l.get(i).getCelTekton().getId() == t.getId()) {
+                    if(l.get(i).getCelTekton().getId() == t.getId() || l.get(i+1).getCelTekton().getId() == t.getId() ) {
                         return true;
                     }
                 } else {
+                    System.out.println("Nem folytonos a hosszabítandó szakasz a GombaTesttel!");
                     return false;  //HA NEM FOLYTONOS EGY LISTA NEM IS VIZSGÁLJUK TOVÁBB
                 }
             }
         }
+        System.out.println("A keresett tekton nics a listában");
         return false;
     }
 
@@ -240,47 +243,16 @@ public class Gomba implements IDestroyable {
         this.gombaTest.addToSporaKeszlet(val);
     }
 
-    public boolean addFonal(GombaFonal gf) {
-        //Tektonok kimentése
-        Tekton actualStartTekton = gf.getStartTekton();
-        Tekton actualEndTekton = gf.getCelTekton();
-
+    public boolean addFonal(GombaFonal ujGF) {
         //Nem szomszédos tektonok kötése
-        if(!actualEndTekton.getSzomszedok().contains(actualStartTekton) || !actualStartTekton.getSzomszedok().contains(actualEndTekton)) {
+        if(!ujGF.getCelTekton().getSzomszedok().contains(ujGF.getStartTekton()) || !ujGF.getStartTekton().getSzomszedok().contains(ujGF.getCelTekton())) {
+            System.out.println("Nem szomszédos Tektonok nem összeköthetőek!");
             return false;    //Nem szomszédosak a kijelölt tektonok
         }
 
-        //Start Point case
-        if(fonalLista.isEmpty()) {
-            ArrayList<GombaFonal> lista = new ArrayList<>();
-            lista.add(gf);
-            fonalLista.add(lista);
-            //Todo fokszam növeles a tektonon
-            return true;
-        }
-
-        //If not Start point in list
-
-        //Megkeressük és kimentjük a beszúrandó gombafonal helyét
-        List<GombaFonal> actualLista = null;
-        GombaFonal gfActual = null;
-        int elozoIdx = 0;   //fonallistán belüli idx
-        boolean isSetted = false;
-        //A konkrét értékek helyes beállítását az isSetted változó ellenőrzi
-
-        for(List<GombaFonal> l : fonalLista) {
-            for (GombaFonal gf_i : l) {
-                if(gf_i.getCelTekton().getId() == actualStartTekton.getId()) {
-                    actualLista = l;
-                    elozoIdx = l.indexOf(gf_i);
-                    gfActual = gf_i;
-                    isSetted = true;
-                }
-            }
-        }
-
         //Hurokél ellenőrzés
-        if(actualStartTekton.getId() == actualEndTekton.getId()) {
+        if(ujGF.getStartTekton().getId() == ujGF.getCelTekton().getId()) {
+            System.out.println("Hurokél nem lerakható!");
             return false;
         }
 
@@ -292,44 +264,56 @@ public class Gomba implements IDestroyable {
             }
 
             for(Tekton tekton : lista) {
-                if(actualEndTekton.getId() == tekton.getId()) {
+                if(ujGF.getCelTekton().getId() == tekton.getId()) {
+                    System.out.println("Egymás utáni fonalak nem alkothatnak kört!");
                     return false; //Kör lenne
                 }
             }
         }
 
-        //Ellenőrzések - Ha már létezik ilyen fonal, vagy nem találtunk hosszabbítandó szakaszt
-        if(gfActual.getCelTekton().getId() == gf.getCelTekton().getId() || gfActual.getCelTekton().getId() == gf.getStartTekton().getId()){
-            if(!isSetted) {
-                List<GombaFonal> l = new ArrayList<>();
-                if(!fonalFolytonossagVizsgalat(l)){
-                    return false;
-                }
-                l.add(gf);
-                fonalLista.add(l);
-            }
+        //Ellenőrzések vége --------------
+        //Start Point case
+        if(fonalLista.isEmpty()) {
+            ArrayList<GombaFonal> lista = new ArrayList<>();
+            lista.add(ujGF);
+            fonalLista.add(lista);
             return true;
         }
 
-        //End point case
-        if ((actualLista.size() - 1) == elozoIdx) {
-            if(!fonalFolytonossagVizsgalat(actualLista)){
-                return false;
+        //Végekre beszúrás
+        for(List<GombaFonal> l : fonalLista) {
+            if(!l.isEmpty() && fonalFolytonossagVizsgalat(l)) {
+                if(l.get(l.size()-1).getCelTekton().getId() == ujGF.getID()){
+                    l.add(ujGF);
+                    return true;
+                }
             }
-            actualLista.add(gf);
-        } else  //Mid-Point case
-        {
-            List<GombaFonal> ujLista = new ArrayList<>();
-            for(int i =0; i <= elozoIdx; i++){
-                ujLista.add(actualLista.get(i));
-            }
-            if(!fonalFolytonossagVizsgalat(ujLista)){
-                return false;
-            }
-            ujLista.add(gf);
-            fonalLista.add(ujLista);
         }
-        return true;
+
+        //-----
+        //A konkrét értékek helyes beállítását az isSetted változó ellenőrzi
+
+        for(List<GombaFonal> l : fonalLista) {
+            for (GombaFonal gf_i : l) {
+                if(gf_i.getCelTekton().getId() == ujGF.getStartTekton().getId()) {
+                    int elozoIdx = l.indexOf(gf_i);
+                    List<GombaFonal> ujLista = new ArrayList<>();
+                    for(int i =0; i <= elozoIdx; i++){
+                        ujLista.add(l.get(i));
+                    }
+
+                    ujLista.add(ujGF);
+
+                    if(!fonalFolytonossagVizsgalat(ujLista)){
+                        return false;
+                    } else {
+                        fonalLista.add(ujLista);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public boolean decreaseFonalkeszlet() {

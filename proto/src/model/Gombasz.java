@@ -36,12 +36,12 @@ public class Gombasz extends Player {
 
         //maxEgyFonal szabaly serules
         if(t1.isMaxEgyFonal() && t1.getKapcsolodoFonalak().size() >= 1) {
-            System.out.println("Hiba: Az egyik tektonon mayimum egy fonal lehet!");
+            System.out.println("Hiba: Az egyik tektonon maximum egy fonal lehet!");
             return false;
         }
 
         if(t2.isMaxEgyFonal() && t2.getKapcsolodoFonalak().size() >= 1) {
-            System.out.println("Hiba: Az egyik tektonon mayimum egy fonal lehet!");
+            System.out.println("Hiba: Az egyik tektonon maximum egy fonal lehet!");
             return false;
         }
 
@@ -77,11 +77,10 @@ public class Gombasz extends Player {
                     return false;
                 }
 
-                if(celTekton.getSporaLista().size() > 0) {
+                if(celTekton.getSporaLista().size() > 0 && !ingyen) {  //Ettől lesz egy ingyenes lerakás
                     //Ha van a céltektonon elszórt spóra -> ingyen lerakható fonal
                     System.out.println("\t[Növesztés gyorsítása] Még egy fonal ingyen lerakható ha van szabad Tekton");
-                    List<Tekton> celSzomszedok = new ArrayList<>();
-                    celSzomszedok.addAll(celTekton.getSzomszedok());
+                    List<Tekton> celSzomszedok = new ArrayList<>(celTekton.getSzomszedok());
                     celSzomszedok.remove(stratTekton);
 
                     boolean valasztott = false;
@@ -97,7 +96,7 @@ public class Gombasz extends Player {
                         Tekton randomUJCel = celSzomszedok.get(rand.nextInt(celSzomszedok.size()));
                         if(gombafonalIranyitas(g, celTekton, randomUJCel, true)) {
                             valasztott = true;
-                            System.out.println("\nIngyenes bónusz fonal lerakva!");
+                            System.out.println("Ingyenes bónusz fonal lerakva!");
                         } else {
                             celSzomszedok.remove(randomUJCel);
                         }
@@ -105,7 +104,9 @@ public class Gombasz extends Player {
                     //Ha sikeres a választott és a bónusz lerakás is
                     return true;
                 } else {
-                    System.out.println("\t[Nincs bónusz fonal lerakás]");
+                    if(!ingyen) {
+                        System.out.println("\t[Nincs bónusz fonal lerakás]");
+                    }
                     //Ha nincs bónusz lerakás, de sikeres az első lerakás
                     return true;
                 }

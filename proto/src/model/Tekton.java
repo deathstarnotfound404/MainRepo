@@ -262,13 +262,14 @@ public class Tekton implements IDestroyable{
 
     public static boolean ketTektonFonallalOsszekotott(Tekton t1, Tekton t2){
         //Fonallal összekötött-e a két tekton
-        List<GombaFonal> celFonalak = t1.getKapcsolodoFonalak();
-        List<GombaFonal> thisFonalak = t2.getKapcsolodoFonalak();
+        List<GombaFonal> startFonalak = t1.getKapcsolodoFonalak();
+        List<GombaFonal> celFonalak = t2.getKapcsolodoFonalak();
 
         boolean vanKozosFonal = false;
 
-        for (GombaFonal f1 : celFonalak) {
-            for (GombaFonal f2 : thisFonalak) {
+
+        for (GombaFonal f1 : startFonalak) {
+            for (GombaFonal f2 : celFonalak) {
                 if (f1.getID() == f2.getID()) {
                     vanKozosFonal = true;
                     break;

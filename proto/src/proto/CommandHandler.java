@@ -270,7 +270,6 @@ public class CommandHandler {
             }
         }
 
-        //TODO jól növeli a fonalszamot a Tekton print nél, miért nem nő a fonalfokszam
         //Fonal vásárlás
         if (gsz.fonalVasarlas(gomba)) {
             System.out.println(gsz.getName() + ": Sikeres fonal vásárlás a kijelölt Gombán: ID: " + gomba.getId());
@@ -279,7 +278,6 @@ public class CommandHandler {
         }
     }
 
-    //TODO elfogyasztott ennyiség check - printelésben legyen infó a hatásokról
     private void moveRovar(Rovarasz rsz, List<String> args) {
         Scanner scanner = new Scanner(System.in);
         Rovar rovar = null;
@@ -337,9 +335,6 @@ public class CommandHandler {
         } else {
             System.out.println(rsz.getName() + ": Sikertelen rovarmozgatás.");
         }
-        // tetkon törés
-        // felszivo hatas
-        // eves
     }
 
     private void growGombaTest(Gombasz gsz, List<String> args) {
@@ -511,7 +506,7 @@ public class CommandHandler {
     }
 
 
-    private void printField(List<String> args) { field.printGameState(); }
+    private void printField(List<String> args) { System.out.println(field.printGameState());}
 
     private void setKezdoHelyzet(List<String> args) { System.out.println("Kezdőhelyzet beállítva."); }
 
@@ -746,16 +741,10 @@ public class CommandHandler {
                     for (Player p : players.values()) {
                         if (p instanceof Gombasz g) {
                             g.sporaTermelesAll();
-                            //System.out.println("\n[Spóra termelés] " + g.getName() + " végrehajtotta a spóra termelést.");
                         }
                     }
                 }
             }
-        }, 5000, 5000); // 20 (20000)másodpercenként
+        }, 2000, 2000); // 20 (20000)másodpercenként
     }
 }
-
-// TODO, most kb működik a menü, minden parancsot rá kell kötni a Field parancsaira, ezek képesek lesznek mozgatni a cuccokat
-// Le kell tesztelni mindent, + keresni kell a hibákat
-// lehetne egy játékmód ahol nincs idő
-// Tesztek implementálása
