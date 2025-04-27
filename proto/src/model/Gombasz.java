@@ -1,40 +1,77 @@
 package model;
 import java.util.*;
 
+/**
+ * Represents a Mycologist player in the game.
+ * The Gombasz (Mycologist) controls fungi and manages their actions,
+ * such as growing fungal threads, spreading spores, and consuming insects.
+ * This player's score is determined by the number of fungal bodies they control.
+ * Extends the Player base class.
+ */
 public class Gombasz extends Player {
+    /** List of fungi controlled by this player */
     private List<Gomba> gombaLista;
 
+    /**
+     * Constructs a new Gombasz player with a given name.
+     * Initializes an empty list to store controlled fungi.
+     *
+     * @param name the player's name
+     */
     public Gombasz(String name) {
         super(name);
         gombaLista = new ArrayList<>();
     }
 
+    /**
+     * Adds a fungus to this player's control and increases the score.
+     *
+     * @param g the fungus to add
+     */
     public void addGomba(Gomba g) {
         this.gombaLista.add(g);
         score++;    //Gomba - GombaTest 1:1
     }
 
+    /**
+     * Calculates the total score based on the number of fungal bodies.
+     *
+     * @return the score (equivalent to the number of fungal bodies)
+     */
     public int calcAllGombatestScore() {
         return score;
     }
 
-    public void deleteFonalak(List<GombaFonal> disconnectedFonalak) {   //Itt a disconnected fonalak kerülnek átadásra
-        //TODO ellenőrizni, hogy használatkor csak disconnectedet törlünk vele(elméletileg a notConnectedTo alapgomba ezt megoldja)
+    /**
+     * Deletes disconnected fungal threads that are no longer connected to their parent fungus.
+     * Only destroyable threads that are not connected to their parent fungus will be removed.
+     *
+     * @param disconnectedFonalak list of potentially disconnected fungal threads
+     */
+    public void deleteFonalak(List<GombaFonal> disconnectedFonalak) {
         for(GombaFonal gf : disconnectedFonalak) {
             if(gf.IsDestroyable() && !gf.connectedToAlapGomba()) {
-                gf.getAlapGomba().deleteFonal(gf); //Ez az összes előfordulásánál kitörli a gombában
+                gf.getAlapGomba().deleteFonal(gf); //Removes the thread from all instances in the fungus
             }
         }
     }
 
+    /**
+     * Checks if a fungal thread can be placed between two Tekton cells.
+     * Validates conditions such as existing connections and maximum thread limits.
+     *
+     * @param t1 the first Tekton cell
+     * @param t2 the second Tekton cell
+     * @return true if a thread can be placed, false otherwise
+     */
     public boolean fonalLerakasEllenorzes(Tekton t1, Tekton t2) {
-        //Mar van a ket tekton kozott fonal?
+        //Check if the two Tektons are already connected
         if(Tekton.ketTektonFonallalOsszekotott(t1, t2)){
             System.out.println("Hiba: A két tekton már össze van kötve!");
             return false;
         }
 
-        //maxEgyFonal szabaly serules
+        //Check maxEgyFonal rule violations
         if(t1.isMaxEgyFonal() && t1.getKapcsolodoFonalak().size() >= 1) {
             System.out.println("Hiba: Az egyik tektonon maximum egy fonal lehet!");
             return false;
@@ -48,22 +85,38 @@ public class Gombasz extends Player {
         return true;
     }
 
+    /**
+     * Purchases fungal threads for a fungus by spending spores.
+     * Decreases the spore count and increases the thread count.
+     *
+     * @param g the fungus to purchase threads for
+     * @return true if the purchase was successful, false if not enough spores
+     */
     public boolean fonalVasarlas(Gomba g) {
         if(g.getGombatest().decreaseSporakeszlet(1)) {
             g.increaseFonalkeszlet(3);
             return true;
         } else {
-           return false;
+            return false;
         }
     }
 
-    //TODO ellenőrizni, benne van a fonal árú és az ingyenes bónusz növezstés is
+    /**
+     * Controls the growth of fungal threads between two Tekton cells.
+     * Can create bonus threads if conditions are met.
+     *
+     * @param g the fungus growing the thread
+     * @param stratTekton the origin Tekton cell
+     * @param celTekton the destination Tekton cell
+     * @param ingyen true if the thread should be placed for free, false otherwise
+     * @return true if the thread was successfully placed, false otherwise
+     */
     public boolean gombafonalIranyitas(Gomba g, Tekton stratTekton, Tekton celTekton, boolean ingyen){
-        //A G-nek legyen elég fonala
-        if(fonalLerakasEllenorzes(stratTekton, celTekton)) {    //Ha még nincs összekötve
-            if(g.fonalFolytonossagVizsgalat(stratTekton)) { //Akkor is false, ha a starttekton nincs összekötve a g Gombával, éls akkor is ha szakadása van közben
+        //Check if placement is valid
+        if(fonalLerakasEllenorzes(stratTekton, celTekton)) {
+            if(g.fonalFolytonossagVizsgalat(stratTekton)) {
 
-                //Ha nem ingyenes a lerakás csökkentjük a fonalkészletet
+                //Decrease thread stock if not free
                 if(!ingyen) {
                     if(!g.decreaseFonalkeszlet()) {
                         System.out.println("Hiba: Nincs elég fonal készlet a fonalnövesztéshez!");
@@ -71,23 +124,22 @@ public class Gombasz extends Player {
                     }
                 }
 
+                //Create and add the new thread
                 GombaFonal ujFonal = new GombaFonal(g, stratTekton, celTekton);
                 if(!g.addFonal(ujFonal) || !celTekton.addKapcsolodoFonalak(ujFonal) || !stratTekton.addKapcsolodoFonalak(ujFonal)) {
                     System.out.println("Hiba: A fonal nem adható a Gombához vagy a Tektonokhoz!");
                     return false;
                 }
 
-                if(celTekton.getSporaLista().size() > 0 && !ingyen) {  //Ettől lesz egy ingyenes lerakás
-                    //Ha van a céltektonon elszórt spóra -> ingyen lerakható fonal
+                //Check for bonus thread placement
+                if(celTekton.getSporaLista().size() > 0 && !ingyen) {
                     System.out.println("\t[Növesztés gyorsítása] Még egy fonal ingyen lerakható ha van szabad Tekton");
                     List<Tekton> celSzomszedok = new ArrayList<>(celTekton.getSzomszedok());
                     celSzomszedok.remove(stratTekton);
 
                     boolean valasztott = false;
                     while(!valasztott) {
-
                         if(celSzomszedok.size() == 0) {
-                            //Ha nincs megfelelő Tekton, ami lehetne új cél
                             System.out.println("\nNincs megfelelő Tekton az ingyenes lerakáshoz!");
                             return false;
                         }
@@ -101,32 +153,40 @@ public class Gombasz extends Player {
                             celSzomszedok.remove(randomUJCel);
                         }
                     }
-                    //Ha sikeres a választott és a bónusz lerakás is
                     return true;
                 } else {
                     if(!ingyen) {
                         System.out.println("\t[Nincs bónusz fonal lerakás]");
                     }
-                    //Ha nincs bónusz lerakás, de sikeres az első lerakás
                     return true;
                 }
             } else {
-                return false;   //Ekkor sem lerakható (vagy ne folytonos lenne, vagy nincs elég fonal)
+                return false;
             }
         } else {
-            //Ha a fonal nem lerakható
             return false;
         }
     }
 
+    /**
+     * Returns the list of fungi controlled by this player.
+     *
+     * @return the list of controlled fungi
+     */
     public List<Gomba> getGombaLista() {
         return gombaLista;
     }
 
+    /**
+     * Grows a new fungal body on a Tekton cell.
+     * Requires a minimum number of spores on the cell unless grown for free.
+     *
+     * @param t the Tekton cell where the fungal body should grow
+     * @param ingyen true if growth should be free, false if it requires spores
+     * @return true if the growth was successful, false otherwise
+     */
     public boolean gombatestNovesztes(Tekton t, boolean ingyen) {
-        //TODO ingyen mód nem kerül 3 spórába a növesztés, hanem minden Tektonon lévő Spórát megkapja a GT
-        //Igazából a Gomba hozzáadása a Gombalistához, ami implicit létrehoz GombaTestet
-        //Ellenőrizzük hogy üres-e
+        //Check if the Tekton is available
         if(t.getGomba() != null || t.isGtGatlo() || t.getVanGombaTest()) {
             System.out.println("Hiba: GombaTest nem lerakható a Tektonon!");
             return false;
@@ -135,7 +195,7 @@ public class Gombasz extends Player {
         int sporaszam = t.getSporaLista().size();
 
         if(!ingyen) {
-            //Ha nincs elég spóra objektum a Tektonon
+            //Check if there are enough spores
             if(sporaszam < 5) {
                 System.out.println("Hiba: Nincs elég spóra a céltektonon!");
                 return false;
@@ -157,7 +217,13 @@ public class Gombasz extends Player {
         }
     }
 
-    //TODO hol használjuk, minden fonal törlés esetén, de hogy ezt magukban a fonal törlésekben, vagy a hívásoknál "controllerből"?
+    /**
+     * Filters a list of fungal threads to retain only those that are protected.
+     * A thread is protected if either of its connected Tektons has thread protection enabled.
+     *
+     * @param listOfDisconnectedFonalak list of fungal threads to filter
+     * @return list containing only the protected threads
+     */
     public static List<GombaFonal> protectedSzures(List<GombaFonal> listOfDisconnectedFonalak) {
         List<GombaFonal> filtered = new ArrayList<>();
 
@@ -173,23 +239,46 @@ public class Gombasz extends Player {
         return filtered;
     }
 
+    /**
+     * Triggers spore production for all fungi controlled by this player.
+     */
     public void sporaTermelesAll() {
         for (Gomba g : gombaLista) {
             g.sporaTermeles();
         }
     }
 
+    /**
+     * Commands a fungus to spread spores to a target Tekton cell.
+     * Also triggers level progression for the fungal body.
+     *
+     * @param g the fungus to spread spores
+     * @param celTekton the target Tekton cell
+     * @return true if spreading was successful, false otherwise
+     */
     public boolean szoras(Gomba g, Tekton celTekton) {
         boolean ret = g.szor(celTekton, g.getGombatest());
         g.gombatestSzintlepes();
         return ret;
     }
 
+    /**
+     * Calculates and returns the player's score.
+     * Implements the abstract method from the Player class.
+     *
+     * @return the player's current score
+     */
     @Override
     public int getScoreFromPlayer(){
         return calcAllGombatestScore();
     }
 
+    /**
+     * Finds and returns a fungus with the specified ID.
+     *
+     * @param id the ID of the fungus to find
+     * @return the matching fungus, or null if no fungus with that ID was found
+     */
     public Gomba getGombaById(int id) {
         for(Gomba g : gombaLista) {
             if(g.getId() == id) {
@@ -199,16 +288,23 @@ public class Gombasz extends Player {
         return null;
     }
 
+    /**
+     * Attempts to consume a paralyzed insect with a fungus.
+     * The insect must be paralyzed (eating efficiency 0) and accessible via fungal threads.
+     * If successful, a new fungal body grows in the insect's location.
+     *
+     * @param r the insect to consume
+     * @return true if the insect was consumed, false otherwise
+     */
     public boolean rovarEves(Rovar r){
         if(r.getEvesHatekonysag() != 0) {
-            //Ha a Rovar nem bénült
             System.out.println("Hiba: Csak bénült Rovarok ehetőek meg!");
-
             return false;
         }
-        //A gombász akármelyik fonalának a végén megtalálható a kijelölt rovar akkor elfogyasztható
+
         boolean rFound = false;
         Tekton helyzet = r.getHelyzet();
+
         for(Gomba g : this.getGombaLista()) {
             for(List<GombaFonal> l : g.getFonalLista()){
                 for(GombaFonal gf : l){
@@ -231,7 +327,7 @@ public class Gombasz extends Player {
         }
 
         if(rFound){
-            //Gombatest növesztés
+            //Grow a new fungal body
             this.gombatestNovesztes(helyzet, true);
             return true;
         }
