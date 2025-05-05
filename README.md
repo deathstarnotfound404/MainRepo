@@ -10,6 +10,8 @@ Ez most csak egy teszt, megnézni működik-e az integráció.
 - Kozma Szabolcs
 - Pünkösti Györk
 
+---
+
 ### Skeleton tesztprogram
 - A program célja a publikus hívási lánc ellenőrzése a projekt üzleti modelljében.
 
@@ -39,3 +41,22 @@ javac -cp bin src/TestCases/*.java -d bin
 javac -cp bin src/Skeleton.java -d bin
 java -cp bin Skeleton
 ```
+
+---
+
+### Prototípus program
+- A program célja az elkészített üzleti modell implementálásának tesztelése, és a játék parancssoros megvalósítása.
+- A prototípus letöltéséhez a MainRepo proto branch-ét kell klónozni, vagy letölteni zippelve.
+A program fordítása és futtatásához a root gyökérmappából kell kiadni az alábbi parancsokat kell kiadni:
+
+```Windows cmd```
+```shell
+mkdir bin
+javac proto\src\model*.java -d bin
+javac -cp bin proto\src\model*.java -d bin
+javac -cp bin proto\src\test*.java -d bin
+javac -cp bin proto\src\proto*.java -d bin
+java -cp bin proto.Main
+```
+
+---

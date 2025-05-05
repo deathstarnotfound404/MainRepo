@@ -1,0 +1,58 @@
+[Test_14] - Gombatest Növesztés
+-------------------------------------------------------------------------------
+
+Kezdő állapot:
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 5
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+
+Kimenet:
+
+Success: Gomba growth completed.
+Target: t1
+Gomba: g0
+Gombasz: gsz0
+
+------------------------------------------------------------------------------
+
+Cél állapot
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 2 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+[Test_14] - Teszt vége

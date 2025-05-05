@@ -1,0 +1,75 @@
+[Test_09] - Gombafonal Növesztés - Irányítás, céltektonon nincs spóra
+-------------------------------------------------------------------------------
+
+Kezdő állapot:
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 5 - fonalszam: 3 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 2
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+ID: t2
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+
+Kimenet:
+
+GombaFonal growth completed.
+Source: t0 -> Target: t1
+Gomba Network: g0 (Managed by: gsz)0
+
+------------------------------------------------------------------------------
+
+Cél állapot
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 5 - fonalszam: 2 - szint: 1 - szorasCount:0
+	rovar: 0
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 2
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+ID: t2
+	rovarLatogatottsag: 0
+	fonalFokszam: 0
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+[Test_09] - Teszt vége

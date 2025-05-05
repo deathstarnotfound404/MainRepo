@@ -1,0 +1,82 @@
+[Test_20] - Spora Elfogyasztása - Klonozo Spora
+-------------------------------------------------------------------------------
+
+Kezdő állapot:
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 1 - ID: 6
+
+ID: t1
+	rovarLatogatottsag: 0
+	fonalFokszam: 2
+	sporaListaSize: 1
+	szomszedosTektonokSize: 2
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+ID: t2
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+
+---------------------------------------------------------------------------------
+
+Kimenet:
+
+Success: Rovar movement completed.
+Rovar: 0 → Target: 1
+Managed by: rsz0
+
+Success: Rovar successfully consumed Spora.
+
+Success: Rovar movement completed.
+Rovar: 0 → Target: 2
+Managed by: rsz0
+
+Incomplete: Rovar not consumed Spora.
+------------------------------------------------------------------------------
+
+Cél állapot
+[Tektonok]
+ID: t0
+	rovarLatogatottsag: 1
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 1 - sporaszam: 0 - fonalszam: 0 - szint: 1 - szorasCount:0
+	rovar: 1 - ID: 10
+
+ID: t1
+	rovarLatogatottsag: 1
+	fonalFokszam: 2
+	sporaListaSize: 0
+	szomszedosTektonokSize: 2
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 0
+
+ID: t2
+	rovarLatogatottsag: 0
+	fonalFokszam: 1
+	sporaListaSize: 0
+	szomszedosTektonokSize: 1
+	defendFonalak: 0
+	gombatest: 0
+	rovar: 1 - ID: 6
+
+
+---------------------------------------------------------------------------------
+[Test_20] - Teszt vége
