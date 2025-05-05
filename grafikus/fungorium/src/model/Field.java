@@ -52,6 +52,10 @@ public class Field {
         tektonLista.add(t);
     }
 
+    public int getPlayerNumber() {
+        return playerLista.size();
+    }
+
     /**
      * Evaluates the game state and determines the winners.
      * The first element in the returned list is the winning Rovarasz (Entomologist),
@@ -155,35 +159,24 @@ public class Field {
      * Creates 12 Tektons with random effects and connects them in a specific topology.
      */
     public void initGame( String g1Name, String g2Name, String r1Name, String r2Name) {
-        int gombaszokSzama = 0;
-
         if(g1Name != null) {
+            Gombasz g1 = new Gombasz(g1Name);
+            this.addGombasz(g1);
+
             if(g2Name != null) {
-                gombaszokSzama = 2;
-            } else {
-                gombaszokSzama = 1;
+                Gombasz g2 = new Gombasz(g2Name);
+                this.addGombasz(g2);
             }
         }
 
-        int rovaraszokSzama = 0;
         if(r1Name != null) {
+            Rovarasz r1 = new Rovarasz(r1Name);
+            this.addRovarasz(r1);
+
             if(r2Name != null) {
-                rovaraszokSzama = 2;
-            } else {
-                rovaraszokSzama = 1;
+                Rovarasz r2 = new Rovarasz(r2Name);
+                this.addRovarasz(r2);
             }
-        }
-
-        for (int i = 0; i < gombaszokSzama; i++) {
-            Gombasz g = new Gombasz(g1Name);
-            this.addGombasz(g);
-            //players.put(players.size() + 1, g);
-        }
-
-        for (int i = 0; i < rovaraszokSzama; i++) {
-            Rovarasz r = new Rovarasz(r1Name);
-            this.addRovarasz(r);
-            //players.put(players.size() + 1, r);
         }
 
         //Létrehozza a játék mapot
@@ -374,5 +367,26 @@ public class Field {
             }
         }
         return null;
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(playerLista.keySet());
+    }
+
+    public Rovar firstRovar(Rovarasz currentPlayer, Tekton target) {
+        Rovar rovar = new Rovar();
+        rovar.setRovarasz(currentPlayer);
+        currentPlayer.addRovar(rovar, target);
+        rovar.setHelyzet(target);
+        target.setRovar(rovar);
+        System.out.println("Rovar létrehozva a(z) " + target.getId() + ". Tektorra.");
+        return rovar;
+    }
+
+    public Gomba firstGomba(Gombasz currentPlayer, Tekton target) {
+        Gomba gomba = new Gomba(target, currentPlayer, 0);
+        currentPlayer.addGomba(gomba);
+        System.out.println("Gomba létrehozva a(z) " + target.getId() + ". Tektorra.");
+        return gomba;
     }
 }

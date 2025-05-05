@@ -2,6 +2,7 @@ package controller;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import java.io.IOException;
 import java.util.*;
 
 import model.*;
@@ -42,32 +43,79 @@ public class Controller {
 
     public void switchToGamePanel() {
         //TODO ellenőrizni h van-e min 1-1 játékos
-        model.initGame(view.getMenuPanel().getGombasz1Name(), view.getMenuPanel().getGombasz2Name(), view.getMenuPanel().getRovarasz1Name(), view.getMenuPanel().getRovarasz2Name());
 
-        onStart(); // Timer beállítás
+        model.initGame(view.getMenuPanel().getGombasz1Name(),
+                view.getMenuPanel().getGombasz2Name(),
+                view.getMenuPanel().getRovarasz1Name(),
+                view.getMenuPanel().getRovarasz2Name());
 
-        /*
-        if (selectedStr.startsWith("Rovar")) {
-            selectedRovar = model.getRovarById(selectedStr);
-        } else if (selectedStr.startsWith("GombaTest")) {
-            selectedGombaTest = model.getGombaTestById(selectedStr);
-        }
-         */
-
-        // új MainPanel létrehozása Timerrel
         MainPanel panel = new MainPanel(this, timer);
-        view.setGamePanel(panel); // késleltetve adjuk hozzá
+        view.setGamePanel(panel);
 
-        // InfoPanel gombfigyelők
         panel.getInfoPanel().clearListener = e -> onClearSelection();
         panel.getInfoPanel().exitListener = e -> switchToMenuPanel();
 
-        // Billentyű figyelés
         panel.getGamePanel().addKeyListener(keyListener);
         panel.getGamePanel().setFocusable(true);
 
         view.switchToGame();
+
+        // Első felugró üzenet
+        JOptionPane.showMessageDialog(null,
+                "Minden játékos végezze el a kezdőlépéseit:\n" +
+                        "Gombászok helyezzenek el 1-1 gombát\n" +
+                        "Rovarászok helyezzenek el 1-1 rovart",
+                "Kezdőlépések",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        // Játékosok listájának lekérdezése a modeltől
+        List<Player> players = model.getPlayers(); // pl. G1, G2, R1, R2
+
+        // Az óra még nem indul el
+        kezdoLepesekLepesenkent(panel, players, 0);
     }
+
+    private void kezdoLepesekLepesenkent(MainPanel panel, List<Player> players, int index) {
+        if (index >= players.size()) {
+            // Végére értünk a kezdőlépéseknek → vége dialog és indul az óra
+            JOptionPane.showMessageDialog(null,
+                    "Kezdőlépések elvégezve!",
+                    "Indul a játék",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            onStart();
+            return;
+        }
+
+        Player currentPlayer = players.get(index);
+        JOptionPane.showMessageDialog(null,
+                currentPlayer.getName() + " végezze el a kezdőlépését!",
+                "Kezdőlépés",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        performFirstStep(currentPlayer);
+
+        // Gomb megjelenítése az InfoPanelen
+        JButton doneButton = new JButton("Kezdőlépés kész (" + currentPlayer.getName() + ")");
+        onClearSelection();
+        panel.getInfoPanel().add(doneButton);
+        panel.getInfoPanel().revalidate();
+        panel.getInfoPanel().repaint();
+
+
+        doneButton.addActionListener(e -> {
+            panel.getInfoPanel().remove(doneButton);
+            panel.getInfoPanel().revalidate();
+            panel.getInfoPanel().repaint();
+
+            kezdoLepesekLepesenkent(panel, players, index + 1);
+        });
+    }
+
+
+
 
     public void switchToMenuPanel() {
         onClearSelection();
@@ -211,6 +259,35 @@ public class Controller {
         });
 
         timer.start();
+    }
+
+    public void performFirstStep(Player currentPlayer) {
+        Timer waitTimer = new Timer(100, null); // 100ms-onként ellenőrzés, mert nem lehet while al várni a user inputját
+
+        waitTimer.addActionListener(e -> {
+            if (selectedTekton != null) {
+                ((Timer) e.getSource()).stop(); // leállítjuk a timer-t
+
+                Tekton target = model.getTektonById(selectedTekton.getId());
+
+                if (currentPlayer instanceof Rovarasz) {
+                    Rovar r = model.firstRovar((Rovarasz) currentPlayer, target);
+                    view.getGamePanel().getGamePanel().addRovarView(selectedTekton,  r.getId());
+
+                } else if (currentPlayer instanceof Gombasz) {
+                    Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
+                    try {
+                        view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, "/resources/gombatest.png", g.getId());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+                updateView();  //frissítjük a nézetet is
+            }
+        });
+
+        waitTimer.start();
     }
 
     private void showGameOverDialog() {

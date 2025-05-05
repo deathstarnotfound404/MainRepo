@@ -4,9 +4,9 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class VagastGatloView extends SporaHatasView {
-    public VagastGatloView() {
-        loadImage("/resources/vagast_gatlo_rovar.png");
+public class BaseSporaView extends SporaHatasView {
+    public BaseSporaView() {
+        loadImage("/resources/rovar.png");
     }
 
     @Override

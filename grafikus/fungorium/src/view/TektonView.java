@@ -31,5 +31,9 @@ public abstract class TektonView extends JButton {
         super.paintComponent(g);
         if (image != null) g.drawImage(image, 0, 0, this);
     }
+
+    public Vec2 getPosition() {
+        return coord;
+    }
 }
 

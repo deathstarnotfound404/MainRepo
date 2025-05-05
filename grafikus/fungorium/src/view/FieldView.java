@@ -3,9 +3,12 @@ import controller.Controller;
 import model.Field;
 import model.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,5 +79,19 @@ public class FieldView extends JPanel {
         for (Line line : gombaFonaViewList) line.draw((Graphics2D) g);
         for (RovarView r : rovarViewList) r.updateView(g);
         for (GombaTestView gt : gombaTestViewList) gt.updateView(g);
+    }
+
+    public void addGombaTestView(TektonView tektonView, String imagePath, int gombaTestId) throws IOException {
+        //"/resources/gomba_test.png"
+        BufferedImage image = ImageIO.read(getClass().getResource(imagePath));
+        GombaTestView gtv = new GombaTestView(tektonView, image, gombaTestId);
+        gombaTestViewList.add(gtv);
+        repaint(); // újrarajzolás
+    }
+
+    public void addRovarView(TektonView tektonView, int rovarId) {
+        RovarView rv = new RovarView(tektonView, rovarId);
+        rovarViewList.add(rv);
+        repaint(); // újrarajzolás a panelen
     }
 }
