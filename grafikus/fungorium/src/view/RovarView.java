@@ -4,13 +4,16 @@ import model.Rovar;
 import java.awt.*;
 
 public class RovarView {
-    int id;
+    private Rovar r;
+    private int id;
     private Vec2 pos;
     private SporaHatasView hatas;
 
-    public RovarView(TektonView pos, int id) {
-        hatas = new BaseSporaView();
-        this.id = id;
+    public RovarView(TektonView pos, Rovar r, Direction dir) {
+        hatas = new BaseSporaView(dir);
+
+        this.r = r;
+        this.id = r.getId();
 
         int centerX = pos.getPosition().getX() + pos.getWidth() / 2;
         int centerY = pos.getPosition().getY() + pos.getHeight() / 2;

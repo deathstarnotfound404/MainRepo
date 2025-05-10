@@ -1,13 +1,15 @@
 package view;
 
+import model.Tekton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 public class FonalGatloView extends TektonView {
-    public FonalGatloView(int id, int x, int y, ActionListener listener) {
-        super(id, x, y, listener);
+    public FonalGatloView(Tekton t, int x, int y, ActionListener listener) {
+        super(t, x, y, listener);
         loadTexture();
     }
 

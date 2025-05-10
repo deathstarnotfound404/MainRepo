@@ -1,16 +1,29 @@
 package view;
+import model.GombaTest;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class GombaTestView {
-    int id;
+    private GombaTest gombaTest;
+    private int id;
     private BufferedImage image;
     private Vec2 pos;
 
-    public GombaTestView(TektonView tPos, BufferedImage img, int id) {
-        this.id = id;
+    public GombaTestView(TektonView tPos, GombaTest test, Color c) throws IOException {
+        this.gombaTest = test;
+        this.id = gombaTest.getId();
         this.pos = tPos.getPosition();
-        this.image = img;
+
+
+        //Gen img
+        if(c == Color.CYAN) {
+            image = ImageIO.read(getClass().getResource("/cyan_gt.png"));
+        } else {
+            image = ImageIO.read(getClass().getResource("/pink_gt.png"));
+        }
     }
 
     public void updateView(Graphics g) {

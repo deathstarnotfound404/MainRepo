@@ -383,6 +383,10 @@ public class Field {
         return rovar;
     }
 
+    public int getPlayerCount() {
+        return playerLista.size();
+    }
+
     public Gomba firstGomba(Gombasz currentPlayer, Tekton target) {
         if(target.isGtGatlo()) {
             return null;
@@ -391,5 +395,61 @@ public class Field {
         currentPlayer.addGomba(gomba);
         System.out.println("Gomba létrehozva a(z) " + target.getId() + ". Tektorra.");
         return gomba;
+    }
+
+    public Player getFirstGombasz() {
+        for (Player player : playerLista.keySet()) {
+            if(playerLista.get(player).equals("G")) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Player getSecondGombasz() {
+        if(playerLista.keySet().size() > 2) {
+            boolean first = false;
+            for (Player player : playerLista.keySet()) {
+                if(playerLista.get(player).equals("G")) {
+                    if(!first) {
+                        first = true;
+                    } else {
+                        return player;
+                    }
+                }
+            }
+        } else {
+            return null;
+        }
+
+        return null;
+    }
+
+    public Player getFirstRovarasz() {
+        for (Player player : playerLista.keySet()) {
+            if(playerLista.get(player).equals("R")) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Player getSecondRovarasz() {
+        if(playerLista.keySet().size() > 2) {
+            boolean first = false;
+            for (Player player : playerLista.keySet()) {
+                if(playerLista.get(player).equals("R")) {
+                    if(!first) {
+                        first = true;
+                    } else {
+                        return player;
+                    }
+                }
+            }
+        } else {
+            return null;
+        }
+
+        return null;
     }
 }

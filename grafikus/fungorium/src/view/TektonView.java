@@ -1,17 +1,21 @@
 package view;
 
+import model.Tekton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public abstract class TektonView extends JButton {
     protected int id;
+    private Tekton tekton;
     protected ActionListener tektonSelectionAL;
     protected Vec2 coord;
     protected Image image;
 
-    protected TektonView(int id,  int x, int y, ActionListener listener) {
-        this.id = id;
+    protected TektonView(Tekton t, int x, int y, ActionListener listener) {
+        this.tekton = t;
+        this.id = tekton.getId();
         coord = new Vec2(x, y);
         setBounds(x, y, 40, 40);
         this.tektonSelectionAL = listener;
@@ -34,6 +38,10 @@ public abstract class TektonView extends JButton {
 
     public Vec2 getPosition() {
         return coord;
+    }
+
+    public Tekton getTekton() {
+        return tekton;
     }
 }
 
