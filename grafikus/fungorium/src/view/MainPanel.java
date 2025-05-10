@@ -1,6 +1,9 @@
 package view;
+import model.Field;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class MainPanel extends JPanel {
     private FieldView gamePanel;
@@ -28,8 +31,8 @@ public class MainPanel extends JPanel {
         return infoPanel;
     }
 
-    public void updateView() {
-        gamePanel.updateView();
+    public void updateView(Field model) throws IOException {
+        gamePanel.updateView(model);
         infoPanel.updateView();
     }
 }

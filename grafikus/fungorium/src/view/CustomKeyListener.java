@@ -1,6 +1,7 @@
 package view;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 public class CustomKeyListener implements KeyListener {
     private Controller controller;
@@ -25,7 +26,20 @@ public class CustomKeyListener implements KeyListener {
                     controller.keyPressedError("Előbb válassz ki egy Gombatestet");
                 }
             }
-            case 'f' -> controller.updateModelGrowFonal();
+            case 'f' -> {
+                System.out.println("Pressed Key: F");
+                if(controller.isSelectedGombatest()) {
+                    if(controller.updateModelGrowFonal()) {
+                        try {
+                            controller.updateView(controller.getModel());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                } else {
+                    controller.keyPressedError("Hint: Clear + 1.Tekton kattintás + 1. Tektonon GombaTest választás + 2.Tekton kattintás");
+                }
+            }
             case 't' -> controller.updateModelGrowGombaTest();
             case 's' -> controller.updateModelSpreadSpora();
             case 'h' -> {
@@ -34,7 +48,7 @@ public class CustomKeyListener implements KeyListener {
             }
             default -> System.out.println("Ismeretlen parancs: " + e.getKeyChar());
         }
-        controller.updateView(); // minden módosítás után frissítés
+        controller.onClearSelection();
     }
 
     @Override

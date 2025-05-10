@@ -3,10 +3,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Objects;
 
 public class InfoPanel extends JPanel {
     private Timer timer;
-    private JComboBox<String> optionsOnTekton;
+    private JComboBox<Object> optionsOnTekton;
     private JLabel pontszamok;
     private JButton exitButton, clearButton;
     private List<String> options;
@@ -53,7 +54,7 @@ public class InfoPanel extends JPanel {
         return timer;
     }
 
-    public JComboBox<String> getElemek() {
+    public JComboBox<Object> getElemek() {
         return optionsOnTekton;
     }
 
@@ -64,9 +65,18 @@ public class InfoPanel extends JPanel {
     public void updateView() {
     }
 
+    /*
     public void setOptionsList(List<String> opts) {
         optionsOnTekton.removeAllItems();
         for (String opt : opts) {
+            optionsOnTekton.addItem(opt);
+        }
+    }
+     */
+
+    public void setOptionsList(List<Object> opts) {
+        optionsOnTekton.removeAllItems();
+        for (Object opt : opts) {
             optionsOnTekton.addItem(opt);
         }
     }

@@ -357,4 +357,9 @@ public class Rovar implements IDestroyable {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Rovar #" + this.id;
+    }
 }

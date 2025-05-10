@@ -26,6 +26,11 @@ public class GombaFonalView extends Line {
     @Override
     public void updateView() {}
 
+    @Override
+    public int getId() {
+        return gf.getID();
+    }
+
     public GombaFonal getGf() {
         return gf;
     }

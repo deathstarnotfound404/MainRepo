@@ -316,23 +316,6 @@ public class Field {
         }
     }
 
-    //Todo
-    public Iterable<? extends Rovar> getRovarokOnTekton(Tekton clicked) {
-        if(clicked.getRovar()==null) {
-            return null;
-        }
-        return Collections.singleton(clicked.getRovar());
-    }
-
-    //TODO
-    public Iterable<? extends GombaTest> getGombaTestekOnTekton(Tekton clicked) {
-        if (clicked.getGomba() == null) {
-            return null;
-        }
-
-        return Collections.singleton(clicked.getGomba().getGombatest());
-    }
-
     public Rovar getRovarById(int id) {
         for (Player player : playerLista.keySet()) {
             if(Objects.equals(playerLista.get(player), "R")) {
@@ -367,6 +350,10 @@ public class Field {
 
     public List<Player> getPlayers() {
         return new ArrayList<>(playerLista.keySet());
+    }
+
+    public List<Tekton> getTektons() {
+        return tektonLista;
     }
 
     public Rovar firstRovar(Rovarasz currentPlayer, Tekton target) {
@@ -447,5 +434,13 @@ public class Field {
         }
 
         return null;
+    }
+
+    public void sporaTermeles() {
+        for (Player player : playerLista.keySet()) {
+            if (player instanceof Gombasz g) {
+                g.sporaTermelesAll();
+            }
+        }
     }
 }

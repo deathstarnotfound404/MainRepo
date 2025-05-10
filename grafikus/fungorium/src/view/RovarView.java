@@ -52,4 +52,13 @@ public class RovarView {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return this.r.toString();
+    }
+
+    public Rovar getRovar() {
+        return this.r;
+    }
 }

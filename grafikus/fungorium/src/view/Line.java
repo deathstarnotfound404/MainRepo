@@ -15,4 +15,5 @@ public abstract class Line {
 
     public abstract void draw(Graphics2D g);
     public abstract void updateView();
+    public abstract int getId();
 }

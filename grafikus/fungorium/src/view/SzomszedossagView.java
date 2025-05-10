@@ -22,5 +22,10 @@ public class SzomszedossagView extends Line {
     //TODO
     @Override
     public void updateView() {}
+
+    @Override
+    public int getId() {
+        return -1;
+    }
 }
 

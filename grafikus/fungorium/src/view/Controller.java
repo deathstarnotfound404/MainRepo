@@ -1,26 +1,28 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.*;
+import java.util.Timer;
 
 import model.*;
 
 public class Controller {
     private static Field model;
     private GameFrame view;
-    public static Timer timer;
+    public static javax.swing.Timer timer;
     private int gameTime;
     private int remainingSeconds;
     private long startTime;
+    private java.util.Timer sporaTimer;
 
 
     private CustomKeyListener keyListener;
 
     private TektonView selectedTekton;
     private TektonView selectedSecondTekton;
+    private TektonView selectedThirdTekton;
     private RovarView selectedRovar;
     private GombaTestView selectedGombaTest;
 
@@ -86,6 +88,19 @@ public class Controller {
 
         // Az óra még nem indul el
         kezdoLepesekLepesenkent(panel, players, 0);
+
+        // 20 másodpercenként spóra termelés meghívása minden Gombászra
+        sporaTimer = new Timer();
+        sporaTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                synchronized (model) {
+                    model.sporaTermeles();
+                }
+            }
+        }, 5000, 5000); // 20 (20000)másodpercenként
+
+        onClearSelection();
     }
 
     private void kezdoLepesekLepesenkent(MainPanel panel, List<Player> players, int index) {
@@ -137,10 +152,11 @@ public class Controller {
     public void onClearSelection() {
         selectedTekton = null;
         selectedSecondTekton = null;
+        selectedThirdTekton = null;
         selectedRovar = null;
         selectedGombaTest = null;
 
-        JComboBox<String> box = view.getGamePanel().getInfoPanel().getElemek();
+        JComboBox<Object> box = view.getGamePanel().getInfoPanel().getElemek();
         box.removeAllItems();
     }
 
@@ -154,44 +170,51 @@ public class Controller {
             selectedTekton = clicked;
         } else if (selectedSecondTekton == null) {
             selectedSecondTekton = clicked;
+        } else if (selectedThirdTekton == null) {
+            selectedThirdTekton = clicked;
+            view.getGamePanel().getGamePanel().requestFocusInWindow();
+
         } else {
             onClearSelection();
-            selectedTekton = clicked;
         }
 
         // ComboBox frissítés:
-        List<String> options = new ArrayList<>();
+        List<Object> options = new ArrayList<>();
 
-        if(model.getRovarokOnTekton(model.getTektonById(selectedTekton.getId())) != null) {
-            for (Rovar r : model.getRovarokOnTekton(model.getTektonById(selectedTekton.getId()))) {
-                if(r != null) {
-                    options.add("Rovar #" + r.getId());
+        if(selectedTekton != null) {
+            if(selectedTekton.getTekton().getRovar() != null) {
+                Rovar r = selectedTekton.getTekton().getRovar();
+                for(RovarView rv : view.getGamePanel().getGamePanel().getRovarViews()) {
+                    if(rv.getRovar().getId() == r.getId()) {
+                        options.add(rv);
+                    }
                 }
             }
-        }
 
-        if (model.getGombaTestekOnTekton(model.getTektonById(clicked.getId())) != null) {
-            for (GombaTest gt : model.getGombaTestekOnTekton(model.getTektonById(clicked.getId()))) {
-                if(gt != null) {
-                    options.add("GombaTest #" + gt.getId());
+            if (clicked.getTekton().getGomba() != null) {
+                GombaTest gt = clicked.getTekton().getGomba().getGombatest();
+                for(GombaTestView gtv : view.getGamePanel().getGamePanel().getGombaTestViews()) {
+                    if(gtv.getGombaTest().getId() == gt.getId()) {
+                        options.add(gtv);
+                    }
                 }
             }
+
+            //TODO a kombobox tobbi eleme
+
+            InfoPanel infoPanel = view.getGamePanel().getInfoPanel();
+            infoPanel.setOptionsList(options);
+
+            // ComboBox listener figyelés:
+            infoPanel.getElemek().addActionListener(e -> {
+                onComboBoxSelection();
+                view.getGamePanel().getGamePanel().requestFocusInWindow();
+            });
         }
-
-        //TODO a kombobox tobbi eleme
-
-        InfoPanel infoPanel = view.getGamePanel().getInfoPanel();
-        infoPanel.setOptionsList(options);
-
-        // ComboBox listener figyelés:
-        infoPanel.getElemek().addActionListener(e -> {
-            onComboBoxSelection();
-            view.getGamePanel().getGamePanel().requestFocusInWindow();
-        });
     }
 
     public void onComboBoxSelection() {
-        JComboBox<String> box = view.getGamePanel().getInfoPanel().getElemek();
+        JComboBox<Object> box = view.getGamePanel().getInfoPanel().getElemek();
         Object selected = box.getSelectedItem();
 
         if (selected == null) {
@@ -208,8 +231,9 @@ public class Controller {
         }
     }
 
-    public void updateView() {
-        view.getGamePanel().updateView();
+    public void updateView(Field model) throws IOException {
+        view.getGamePanel().updateView(model);
+        view.repaint();
     }
 
     // Modellműveletek
@@ -227,10 +251,10 @@ public class Controller {
     }
 
     public boolean updateModelGrowFonal() {
-        Tekton _selectedTekton = model.getTektonById(selectedTekton.getId());
-        Tekton _selectedSecondTekton = model.getTektonById(selectedSecondTekton.getId());
-        GombaTest _gombaTest = model.getGombaTestById(selectedGombaTest.getId());
-        return model.growFonal(_selectedTekton, _selectedSecondTekton, _gombaTest.getAlapGomba());
+        Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
+        Tekton _selectedThirdTekton = selectedThirdTekton.getTekton();
+        GombaTest _gombaTest = selectedGombaTest.getGombaTest();
+        return model.growFonal(_selectedSecondTekton, _selectedThirdTekton, _gombaTest.getAlapGomba());
     }
 
     public boolean updateModelGrowGombaTest() {
@@ -253,7 +277,7 @@ public class Controller {
     }
 
     public boolean updateModelBuyFonal() {
-        Gomba _selectedGomba = model.getGombaTestById(selectedGombaTest.getId()).getAlapGomba();
+        Gomba _selectedGomba = selectedGombaTest.getGombaTest().getAlapGomba();
         return model.buyFonal(_selectedGomba);
     }
 
@@ -261,7 +285,7 @@ public class Controller {
         this.remainingSeconds = duration;
         this.startTime = System.currentTimeMillis();
 
-        timer = new Timer(delay, e -> {
+        timer = new javax.swing.Timer(delay, e -> {
             remainingSeconds--;
             updateTimer();
 
@@ -275,7 +299,7 @@ public class Controller {
     }
 
     public void performFirstStep(Player currentPlayer) {
-        Timer waitTimer = new Timer(100, null); // 100ms-onként ellenőrzés
+        javax.swing.Timer waitTimer = new javax.swing.Timer(100, null); // 100ms-onként ellenőrzés
         waitTimer.addActionListener(e -> {
             if (selectedTekton != null) {
                 Tekton target = model.getTektonById(selectedTekton.getId());
@@ -284,8 +308,12 @@ public class Controller {
                     Rovar r = model.firstRovar((Rovarasz) currentPlayer, target);
                     if (r != null) {
                         view.getGamePanel().getGamePanel().addRovarView(selectedTekton, r);
-                        ((Timer) e.getSource()).stop(); // sikeres -> kilépés
-                        updateView();
+                        ((javax.swing.Timer) e.getSource()).stop(); // sikeres -> kilépés
+                        try {
+                            updateView(model);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "Ide nem helyezhető rovar!",
@@ -297,13 +325,18 @@ public class Controller {
                 } else if (currentPlayer instanceof Gombasz) {
                     Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
                     if (g != null) {
+                        //try {
+                            //view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, g.getGombatest());
+                        //} catch (IOException ex) {
+                        //    throw new RuntimeException(ex);
+                        //}
                         try {
-                            view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, g.getGombatest());
+                            updateView(model);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        ((Timer) e.getSource()).stop(); // sikeres -> kilépés
-                        updateView();
+
+                        ((javax.swing.Timer) e.getSource()).stop(); // sikeres -> kilépés
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "Ide nem helyezhető gombatest!",
@@ -350,7 +383,7 @@ public class Controller {
         return model;
     }
 
-    public Timer getTimer() {
+    public javax.swing.Timer getTimer() {
         return timer;
     }
 

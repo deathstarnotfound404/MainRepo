@@ -1,11 +1,9 @@
 package view;
 import model.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,11 +57,15 @@ public class FieldView extends JPanel {
             controller.onTektonSelection(tv);
         };
 
+        genTektonViews(controller.getModel());
+    }
+
+    private void genTektonViews(Field model) {
         int x_i = 30;
         int row = 0;
         int y_i = 30;
 
-        for (Tekton t : controller.getModel().getTektonList()) {
+        for (Tekton t : model.getTektons()) {
             if(t.isDefendFonalak()) {
                 tektonViewList.add(new FonalDefenderTektonView(t, x_i, y_i, tektonClickListener));
             } else if(t.isGtGatlo()) {
@@ -89,7 +91,7 @@ public class FieldView extends JPanel {
             this.add(tv);
         }
 
-        //Alap szomszedosságok beálltása
+        //Szomszedosságok beálltása
         for(TektonView tv : tektonViewList) {
             for(TektonView tv2 : tektonViewList) {
                 if(tv.getId() == tv2.getId()) {
@@ -104,10 +106,67 @@ public class FieldView extends JPanel {
         }
     }
 
-    public void updateView() {
+    public void updateView(Field model) throws IOException {
         //TODO Update a listákat
+        tektonViewList.clear();
+        szomszedsagViewList.clear();
+        gombaFonaViewList.clear();
+        rovarViewList.clear();
+        gombaTestViewList.clear();
 
-        repaint();
+        //Tektonok + Szomszédságok
+        genTektonViews(model);
+        for(Tekton t : model.getTektons()) {
+
+            //GombaTestek
+            if(t.getGomba() != null) {
+                for(TektonView tv : tektonViewList) {
+                    if(tv.getTekton().getId() == t.getId()) {
+                        gombaTestViewList.add(new GombaTestView(tv, t.getGomba().getGombatest(), colors.get(t.getGomba().getGombasz())));
+                        //addGombaTestView(t, t.getGomba().getGombatest())
+                    }
+                }
+            }
+
+            //Rovarok
+            if(t.getRovar() != null) {
+                for(TektonView tv : tektonViewList) {
+                    if(tv.getTekton().getId() == t.getRovar().getHelyzet().getId()) {
+                        rovarViewList.add(new RovarView(tv, t.getRovar(), dir.get(t.getRovar().getRovarasz())));
+                    }
+                }
+            }
+
+            //GombaFonalak
+            List<GombaFonal> gfList = t.getKapcsolodoFonalak();
+            for(GombaFonal gf : gfList) {
+                boolean marBenne = false;
+                for(Line gfv : gombaFonaViewList) {
+                    if(gfv.getId() != -1 && gfv.getId() == gf.getID()) {
+                        marBenne = true;
+                    }
+                }
+                if(!marBenne) {
+                    int startId = gf.getStartTekton().getId();
+                    int endId = gf.getCelTekton().getId();
+                    TektonView start = null;
+                    TektonView end = null;
+                    for (TektonView tv : tektonViewList) {
+                        if(tv.getTekton().getId() == startId) {
+                            start = tv;
+                        } else if(tv.getTekton().getId() == endId) {
+                            end = tv;
+                        }
+                    }
+                    if(start != null && end != null) {
+                        gombaFonaViewList.add(new GombaFonalView(start, end, gf, colors.get(gf.getAlapGomba().getGombasz())));
+                    }
+                }
+            }
+
+        }
+
+        //repaint();
     }
 
     public List<TektonView> getTektonViews() {
@@ -117,6 +176,7 @@ public class FieldView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        for(TektonView tv : tektonViewList) tv.updateView();
         for (Line line : szomszedsagViewList) line.draw((Graphics2D) g);
         for (Line line : gombaFonaViewList) line.draw((Graphics2D) g);
         for (RovarView r : rovarViewList) r.updateView(g);
@@ -147,5 +207,13 @@ public class FieldView extends JPanel {
         GombaFonalView gfv = new GombaFonalView(t1, t2, gf, col);
         gombaFonaViewList.add(gfv);
         repaint();
+    }
+
+    public List<RovarView> getRovarViews() {
+        return this.rovarViewList;
+    }
+
+    public List<GombaTestView> getGombaTestViews() {
+        return this.gombaTestViewList;
     }
 }

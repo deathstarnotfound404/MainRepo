@@ -1,5 +1,6 @@
 package view;
 import model.GombaTest;
+import model.Tekton;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -37,5 +38,9 @@ public class GombaTestView {
 
     public int getId() {
         return id;
+    }
+
+    public GombaTest getGombaTest() {
+        return this.gombaTest;
     }
 }
