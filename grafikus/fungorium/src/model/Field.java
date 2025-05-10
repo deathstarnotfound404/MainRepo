@@ -52,10 +52,6 @@ public class Field {
         tektonLista.add(t);
     }
 
-    public int getPlayerNumber() {
-        return playerLista.size();
-    }
-
     /**
      * Evaluates the game state and determines the winners.
      * The first element in the returned list is the winning Rovarasz (Entomologist),

@@ -560,6 +560,14 @@ public class Tekton implements IDestroyable {
         t2.addSzomszedosTekton(t1);
     }
 
+    public boolean isSzomszedok(Tekton t) {
+        if(szomszedosTektonok.contains(t)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Sets the visitor count for this Tekton.
      *

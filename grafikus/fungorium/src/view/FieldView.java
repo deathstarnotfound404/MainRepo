@@ -78,7 +78,7 @@ public class FieldView extends JPanel {
 
             x_i = x_i+100;
             row = row + 1;
-            if(row == 3) {
+            if(row == 4) {
                 x_i = 30;
                 row = 0;
                 y_i = y_i+100;
@@ -87,6 +87,20 @@ public class FieldView extends JPanel {
 
         for (TektonView tv : tektonViewList) {
             this.add(tv);
+        }
+
+        //Alap szomszedosságok beálltása
+        for(TektonView tv : tektonViewList) {
+            for(TektonView tv2 : tektonViewList) {
+                if(tv.getId() == tv2.getId()) {
+                    break;
+                } else {
+                    if (tv.getTekton().isSzomszedok(tv2.getTekton())) {
+                        SzomszedossagView szv = new SzomszedossagView(tv, tv2);
+                        szomszedsagViewList.add(szv);
+                    }
+                }
+            }
         }
     }
 
