@@ -60,3 +60,14 @@ java -cp bin proto.Main
 ```
 
 ---
+
+### Grafikus
+
+```Windows cmd```
+```shell
+cd /d "C:\User\cloud\Downloads\MainRepo-grafikus\grafikus\fungorium"
+javac -d out src\model\*.java
+javac -cp out -d out src\view\*.java
+xcopy /E /I /Y resources out\
+java -cp out src\Main.java
+```
