@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.*;
 
@@ -33,6 +34,18 @@ public class Controller {
         // Menü gombok figyelése
         view.getMenuPanel().startAL = e -> switchToGamePanel();
         view.getMenuPanel().exitAL = e -> System.exit(0);
+    }
+
+    public boolean isSelectedGombatest() {
+        return selectedGombaTest != null;
+    }
+
+    public void keyPressedError(String error) {
+        JOptionPane.showMessageDialog(null,
+                error,
+                "Billentyű parancs",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     public void onStart() {
@@ -171,7 +184,10 @@ public class Controller {
         infoPanel.setOptionsList(options);
 
         // ComboBox listener figyelés:
-        infoPanel.getElemek().addActionListener(e -> onComboBoxSelection());
+        infoPanel.getElemek().addActionListener(e -> {
+            onComboBoxSelection();
+            view.getGamePanel().getGamePanel().requestFocusInWindow();
+        });
     }
 
     public void onComboBoxSelection() {
@@ -182,15 +198,13 @@ public class Controller {
             return;
         }
 
-        // Eredmény visszaállítása alaphelyzetbe
-        selectedRovar = null;
-        selectedGombaTest = null;
-
         // Egyezés alapján a modellből visszakeressük
         if(selected instanceof RovarView) {
             selectedRovar = (RovarView) selected;
         } else if (selected instanceof GombaTestView) {
             selectedGombaTest = (GombaTestView) selected;
+        } else if (selected instanceof TektonView) {
+            selectedSecondTekton = (TektonView) selected;
         }
     }
 
@@ -284,7 +298,7 @@ public class Controller {
                     Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
                     if (g != null) {
                         try {
-                            view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, "/gombatest.png", g.getGombatest());
+                            view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, g.getGombatest());
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }

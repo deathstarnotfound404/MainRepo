@@ -105,6 +105,8 @@ public class FieldView extends JPanel {
     }
 
     public void updateView() {
+        //TODO Update a listákat
+
         repaint();
     }
 
@@ -121,13 +123,12 @@ public class FieldView extends JPanel {
         for (GombaTestView gt : gombaTestViewList) gt.updateView(g);
     }
 
-    public void addGombaTestView(TektonView tektonView, String imagePath, GombaTest gombaTest) throws IOException {
-        //"/resources/gomba_test.png"
-        //BufferedImage image = ImageIO.read(getClass().getResource(imagePath));
+    public void addGombaTestView(TektonView tektonView, GombaTest gombaTest) throws IOException {
         Gombasz gsz = gombaTest.getAlapGomba().getGombasz();
         Color col = colors.get(gsz);
         GombaTestView gtv = new GombaTestView(tektonView, gombaTest, col);
         gombaTestViewList.add(gtv);
+        //TODO ezekt ki kell szedni, és updateView frissítse végig
         repaint(); // újrarajzolás
     }
 
@@ -138,5 +139,13 @@ public class FieldView extends JPanel {
         RovarView rv = new RovarView(tektonView, rovar, direction);
         rovarViewList.add(rv);
         repaint(); // újrarajzolás a panelen
+    }
+
+    public void addGombaFonalView(TektonView t1, TektonView t2, GombaFonal gf) {
+        Gombasz gsz = gf.getAlapGomba().getGombasz();
+        Color col = colors.get(gsz);
+        GombaFonalView gfv = new GombaFonalView(t1, t2, gf, col);
+        gombaFonaViewList.add(gfv);
+        repaint();
     }
 }
