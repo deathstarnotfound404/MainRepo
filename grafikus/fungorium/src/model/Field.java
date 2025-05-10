@@ -384,6 +384,9 @@ public class Field {
     }
 
     public Gomba firstGomba(Gombasz currentPlayer, Tekton target) {
+        if(target.isGtGatlo()) {
+            return null;
+        }
         Gomba gomba = new Gomba(target, currentPlayer, 0);
         currentPlayer.addGomba(gomba);
         System.out.println("Gomba létrehozva a(z) " + target.getId() + ". Tektorra.");

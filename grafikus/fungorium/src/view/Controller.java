@@ -260,6 +260,7 @@ public class Controller {
         timer.start();
     }
 
+    /*
     public void performFirstStep(Player currentPlayer) {
         Timer waitTimer = new Timer(100, null); // 100ms-onként ellenőrzés, mert nem lehet while al várni a user inputját
 
@@ -275,17 +276,70 @@ public class Controller {
 
                 } else if (currentPlayer instanceof Gombasz) {
                     Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
-                    try {
-                        view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, "/resources/gombatest.png", g.getId());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                    if (g != null) {
+                        try {
+                            view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, "/gombatest.png", g.getId());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        ((Timer) e.getSource()).stop(); // sikeres -> kilépés
+                        updateView();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Ide nem helyezhető gombatest!",
+                                "Érvénytelen kezdőlépés",
+                                JOptionPane.WARNING_MESSAGE);
+                        selectedTekton = null; // új próbálkozásra várunk
                     }
                 }
-
-                updateView();  //frissítjük a nézetet is
             }
         });
 
+        waitTimer.start();
+    }
+
+     */
+
+    public void performFirstStep(Player currentPlayer) {
+        Timer waitTimer = new Timer(100, null); // 100ms-onként ellenőrzés
+        waitTimer.addActionListener(e -> {
+            if (selectedTekton != null) {
+                Tekton target = model.getTektonById(selectedTekton.getId());
+
+                if (currentPlayer instanceof Rovarasz) {
+                    Rovar r = model.firstRovar((Rovarasz) currentPlayer, target);
+                    if (r != null) {
+                        view.getGamePanel().getGamePanel().addRovarView(selectedTekton, r.getId());
+                        ((Timer) e.getSource()).stop(); // sikeres -> kilépés
+                        updateView();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Ide nem helyezhető rovar!",
+                                "Érvénytelen kezdőlépés",
+                                JOptionPane.WARNING_MESSAGE);
+                        selectedTekton = null; // új próbálkozásra várunk
+                    }
+
+                } else if (currentPlayer instanceof Gombasz) {
+                    Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
+                    if (g != null) {
+                        try {
+                            view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, "/gombatest.png", g.getId());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        ((Timer) e.getSource()).stop(); // sikeres -> kilépés
+                        updateView();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Ide nem helyezhető gombatest!",
+                                "Érvénytelen kezdőlépés",
+                                JOptionPane.WARNING_MESSAGE);
+                        selectedTekton = null; // új próbálkozásra várunk
+                    }
+                }
+            }
+        });
         waitTimer.start();
     }
 
