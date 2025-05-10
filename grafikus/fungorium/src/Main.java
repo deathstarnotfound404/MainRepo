@@ -1,4 +1,4 @@
-import controller.Controller;
+import view.Controller;
 import model.Field;
 import view.GameFrame;
 

@@ -1,7 +1,6 @@
 package view;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import controller.Controller;
 
 public class CustomKeyListener implements KeyListener {
     private Controller controller;

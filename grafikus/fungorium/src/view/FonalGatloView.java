@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class FonalGatloView extends TektonView {
     public FonalGatloView(int id, int x, int y, ActionListener listener) {
@@ -14,7 +15,7 @@ public class FonalGatloView extends TektonView {
     public void loadTexture() {
         //image = Toolkit.getDefaultToolkit().getImage("resources/fonal_gatlo.png");
 
-        image = new ImageIcon(getClass().getResource("/resources/fonal_gatlo.png")).getImage();
+        image = new ImageIcon(getClass().getResource("/fonal_gatlo.png")).getImage();
         Image scaled = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         this.setIcon(new ImageIcon(scaled));
         this.setContentAreaFilled(false);

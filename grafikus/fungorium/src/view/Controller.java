@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.*;
 
 import model.*;
-import view.*;
 
 public class Controller {
     private static Field model;

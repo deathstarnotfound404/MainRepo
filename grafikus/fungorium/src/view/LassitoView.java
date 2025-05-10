@@ -1,12 +1,13 @@
 package view;
 
 import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class LassitoView extends SporaHatasView {
     public LassitoView() {
-        loadImage("/resources/lassito_rovar.png");
+        loadImage("/lassito_rovar.png");
     }
 
     @Override

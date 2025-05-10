@@ -1,6 +1,4 @@
 package view;
-import controller.Controller;
-import model.Field;
 import model.*;
 
 import javax.imageio.ImageIO;
