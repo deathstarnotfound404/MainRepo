@@ -43,4 +43,9 @@ public class GombaTestView {
     public GombaTest getGombaTest() {
         return this.gombaTest;
     }
+
+    @Override
+    public String toString() {
+        return this.gombaTest.toString();
+    }
 }

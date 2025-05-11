@@ -210,4 +210,9 @@ public class GombaTest implements IDestroyable {
      */
     @Override
     public void elpusztul() { }
+
+    @Override
+    public String toString() {
+        return "GombaTest #" + this.id;
+    }
 }

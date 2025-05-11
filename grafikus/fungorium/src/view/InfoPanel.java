@@ -65,15 +65,6 @@ public class InfoPanel extends JPanel {
     public void updateView() {
     }
 
-    /*
-    public void setOptionsList(List<String> opts) {
-        optionsOnTekton.removeAllItems();
-        for (String opt : opts) {
-            optionsOnTekton.addItem(opt);
-        }
-    }
-     */
-
     public void setOptionsList(List<Object> opts) {
         optionsOnTekton.removeAllItems();
         for (Object opt : opts) {
