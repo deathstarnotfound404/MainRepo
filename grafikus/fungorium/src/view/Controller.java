@@ -16,6 +16,7 @@ public class Controller {
     private int remainingSeconds;
     private long startTime;
     private java.util.Timer sporaTimer;
+    private TimeHandler timeHandler;
 
 
     private CustomKeyListener keyListener;
@@ -28,6 +29,7 @@ public class Controller {
 
     public Controller(Field model) {
         Controller.model = model;
+        timeHandler = new TimeHandler();
         this.view = new GameFrame(); // csak menü jön létre benne
 
         // KeyListener előkészítés
@@ -40,6 +42,10 @@ public class Controller {
 
     public boolean isSelectedGombatest() {
         return selectedGombaTest != null;
+    }
+
+    public boolean isSelctedRovar() {
+        return selectedRovar != null;
     }
 
     public void keyPressedError(String error) {
@@ -99,6 +105,19 @@ public class Controller {
                 }
             }
         }, 5000, 5000); // 20 (20000)másodpercenként
+
+
+/*
+        timeHandler.scheduleAtFixedRate(() -> {
+            try {
+                updateView(model);
+                System.out.println("updateView");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }, 5000, 5000, this); // 10 sec delay + 10 sec period
+
+ */
 
         onClearSelection();
     }
@@ -237,17 +256,52 @@ public class Controller {
     }
 
     // Modellműveletek
-    public boolean updateModelCutFonal() {
-        Tekton _selectedTekton = model.getTektonById(selectedTekton.getId());
-        Tekton _selectedSecondTekton = model.getTektonById(selectedSecondTekton.getId());
-        Rovar _selectedRovar = model.getRovarById(selectedRovar.getId());
-        return model.cutFonal(_selectedTekton, _selectedSecondTekton, _selectedRovar);
+    public void updateModelCutFonal() {
+        Tekton _selectedTekton = selectedTekton.getTekton();
+        Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
+        Rovar _selectedRovar = selectedRovar.getRovar();
+
+        timeHandler.schedule(() -> {
+            model.cutFonal(_selectedTekton, _selectedSecondTekton, _selectedRovar);
+
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    updateView(model);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }, 10000, this); // ez a this → lockObject, pl. model is lehetne
+
+
+        //return model.cutFonal(_selectedTekton, _selectedSecondTekton, _selectedRovar);
     }
 
     public boolean updateModelMoveRovar() {
-        Rovar _selectedRovar = model.getRovarById(selectedRovar.getId());
-        Tekton _selectedSecondTekton = model.getTektonById(selectedSecondTekton.getId());
-        return model.moveRovar(_selectedRovar, _selectedSecondTekton);
+        Rovar _selectedRovar = selectedRovar.getRovar();
+        Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
+        boolean moved = model.moveRovar(_selectedRovar, _selectedSecondTekton);
+        if(model.eatSpora(_selectedRovar)) {
+            //Időzítés - reset rovar
+            /*
+            timeHandler.schedule(() -> {
+                _selectedRovar.kepessegekAlaphelyzetbe();
+            }, 30000, this);
+
+             */
+            timeHandler.schedule(() -> {
+                _selectedRovar.kepessegekAlaphelyzetbe();
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        updateView(model);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }, 30000, this); // ez a this → lockObject, pl. model is lehetne
+
+        }
+        return moved;
     }
 
     public boolean updateModelGrowFonal() {
@@ -258,15 +312,16 @@ public class Controller {
     }
 
     public boolean updateModelGrowGombaTest() {
-        Gombasz _selecetdGomba = model.getGombaTestById(selectedGombaTest.getId()).getAlapGomba().getGombasz();
-        Tekton _selectedTekton = model.getTektonById(selectedTekton.getId());
-        return model.growGombaTest(_selecetdGomba, _selectedTekton);
+        Gombasz _selecetdGomba = selectedGombaTest.getGombaTest().getAlapGomba().getGombasz();
+        Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
+        return model.growGombaTest(_selecetdGomba, _selectedSecondTekton);
     }
 
     public boolean updateModelSpreadSpora() {
-        Tekton _selectedTekton = model.getTektonById(selectedTekton.getId());
-        Gomba _selectedAlapG = model.getGombaTestById(selectedGombaTest.getId()).getAlapGomba();
-        return model.spreadSpora(_selectedTekton, _selectedAlapG);
+        Tekton _selectedTekton = selectedTekton.getTekton();
+        Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
+        Gomba _selectedAlapG = selectedGombaTest.getGombaTest().getAlapGomba();
+        return model.spreadSpora(_selectedSecondTekton, _selectedAlapG);
     }
 
     public boolean updateModelEatRovar() {

@@ -1,4 +1,5 @@
-package model;
+package view;
+import javax.swing.*;
 import java.util.concurrent.*;
 
 public class TimeHandler {
@@ -27,6 +28,19 @@ public class TimeHandler {
                 action.run();
             }
         }, delayMillis, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Ismétlődő időzített művelet, biztonságos Swing-gel:
+     * - mindig az EDT-n történik a GUI frissítés (`invokeLater`)
+     * - a modellre szinkronizál
+     */
+    public void scheduleAtFixedRate(Runnable action, long initialDelayMillis, long periodMillis, Object lockObject) {
+        scheduler.scheduleAtFixedRate(() -> {
+            synchronized (lockObject) {
+                SwingUtilities.invokeLater(action);
+            }
+        }, initialDelayMillis, periodMillis, TimeUnit.MILLISECONDS);
     }
 
     /**

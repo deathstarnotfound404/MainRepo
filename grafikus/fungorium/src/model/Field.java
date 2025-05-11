@@ -10,8 +10,6 @@ public class Field {
     /** Counter to generate unique IDs */
     private static int idCounter = 0;
 
-    TimeHandler timeHandler;
-
     /** List of all Tekton cells in the field */
     private static List<Tekton> tektonLista = new ArrayList<>();
 
@@ -21,9 +19,7 @@ public class Field {
     /**
      * Constructs a new empty Field.
      */
-    public Field() {
-        timeHandler = new TimeHandler();
-    }
+    public Field() {}
 
     /**
      * Adds a Gombasz (Mycologist) player to the game.
@@ -218,7 +214,7 @@ public class Field {
         Tekton.connectSzomszedok(tektonLista.get(7), tektonLista.get(11));
     }
 
-    public boolean cutFonal(Tekton selectedTekton, Tekton selectedSecondTekton, Rovar r) {
+    public boolean cutFonal(Tekton selectedTekton, Tekton selectedSecondTekton, Tekton rovarHehzet){//Rovar r) {
         //Gombafonal kivétele a modellből
         GombaFonal kivalaztottFonal = null;
         for(GombaFonal gf : r.getHelyzet().getKapcsolodoFonalak()) {
@@ -239,22 +235,20 @@ public class Field {
             return false;
         }
 
-        final Rovar rovar = r;
-        final GombaFonal gf = kivalaztottFonal;
+        return r.getRovarasz().fonalVagas(r, kivalaztottFonal);
+    }
 
-        timeHandler.schedule(() -> r.getRovarasz().fonalVagas(r, gf), 10000, this);
-        return true;
+    public boolean eatSpora(Rovar r) {
+        return r.sporaEves();
     }
 
     public boolean moveRovar(Rovar selectedRovar, Tekton selectedSecondTekton) {
         final Rovar rovar = selectedRovar;
 
         if (rovar.getRovarasz().rovarIranyitas(rovar, selectedSecondTekton)) {
-            rovar.sporaEves();
-            selectedSecondTekton.hatasKifejtes();
 
-            //Időzítés - reset rovar
-            timeHandler.schedule(() -> rovar.kepessegekAlaphelyzetbe(), 30000, this);
+
+            selectedSecondTekton.hatasKifejtes();
 
             List<Tekton> modositando = new ArrayList<>(Field.getTektonList());
             for (Tekton t : modositando) {
