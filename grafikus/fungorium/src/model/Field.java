@@ -214,7 +214,7 @@ public class Field {
         Tekton.connectSzomszedok(tektonLista.get(7), tektonLista.get(11));
     }
 
-    public boolean cutFonal(Tekton selectedTekton, Tekton selectedSecondTekton, Tekton rovarHehzet){//Rovar r) {
+    public boolean cutFonal(Tekton selectedTekton, Tekton selectedSecondTekton, Rovar r) {
         //Gombafonal kivétele a modellből
         GombaFonal kivalaztottFonal = null;
         for(GombaFonal gf : r.getHelyzet().getKapcsolodoFonalak()) {

@@ -38,6 +38,17 @@ public class Rovar implements IDestroyable {
         id = Field.genID();
     }
 
+    public Rovar deepCopy(){
+        Rovar rovar = new Rovar();
+        rovar.id = this.id;
+        rovar.setHelyzet(helyzet);
+        rovar.setTapanyag(tapanyag);
+        rovar.evesHatekonysag = evesHatekonysag;
+        rovar.tudVagni = tudVagni;
+        rovar.rovarasz = rovarasz;
+        return rovar;
+    }
+
     /**
      * Adds nutrients to the insect's collection.
      *

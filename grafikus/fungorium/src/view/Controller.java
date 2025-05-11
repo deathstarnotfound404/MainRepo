@@ -259,7 +259,7 @@ public class Controller {
     public void updateModelCutFonal() {
         Tekton _selectedTekton = selectedTekton.getTekton();
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
-        Rovar _selectedRovar = selectedRovar.getRovar();
+        Rovar _selectedRovar = selectedRovar.getRovar().deepCopy();
 
         timeHandler.schedule(() -> {
             model.cutFonal(_selectedTekton, _selectedSecondTekton, _selectedRovar);
