@@ -108,6 +108,9 @@ public class Gomba implements IDestroyable {
         // Add all threads after a discontinuity to the list
         for (List<GombaFonal> l : fonalLista) {
             for (int i = 0; i < l.size(); i++) {
+                if(l.get(0).getStartTekton().getId() != this.tekton.getId()) {
+                    nemfolytonosList.addAll(l);
+                }
                 if(i < l.size() - 2) {
                     if(l.get(i).getCelTekton().getId() != l.get(i+1).getStartTekton().getId()) {
                         nemfolytonosList.addAll(l.subList(i + 1, l.size()));
@@ -379,8 +382,10 @@ public class Gomba implements IDestroyable {
 
             for(Tekton tekton : lista) {
                 if(ujGF.getCelTekton().getId() == tekton.getId()) {
-                    System.out.println("Egymás utáni fonalak nem alkothatnak kört!");
-                    return false;
+                    if(ujGF.getStartTekton().getId() != this.tekton.getId() || ujGF.getCelTekton().getId() != this.tekton.getId()) {
+                        System.out.println("Egymás utáni fonalak nem alkothatnak kört!");
+                        return false;
+                    }
                 }
             }
         }
@@ -493,9 +498,15 @@ public class Gomba implements IDestroyable {
      */
     public void nemFolytonosFonalTorles() {
         List<GombaFonal> nemFolytonos = fonalFolytonossagVizsgalat();
+        System.out.println("Nem folytonosak: " + nemFolytonos.size());
         for (GombaFonal gf : nemFolytonos) {
             for (List<GombaFonal> l : fonalLista) {
                 if(l.contains(gf)) {
+                    if(gf.getStartTekton().isDefendFonalak() || gf.getCelTekton().isDefendFonalak()) {
+                        break;
+                    }
+                    gf.getStartTekton().getKapcsolodoFonalak().remove(gf);
+                    gf.getCelTekton().getKapcsolodoFonalak().remove(gf);
                     l.remove(gf);
                 }
             }

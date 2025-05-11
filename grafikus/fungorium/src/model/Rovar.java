@@ -109,7 +109,7 @@ public class Rovar implements IDestroyable {
      * and disables maximum consumption.
      */
     public void kepessegekAlaphelyzetbe() {
-        evesHatekonysag = 1;
+        evesHatekonysag = 0.5;
         tudVagni = true;
         maxFogyasztas = false;
 

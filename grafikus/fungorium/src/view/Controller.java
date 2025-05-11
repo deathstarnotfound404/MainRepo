@@ -16,6 +16,7 @@ public class Controller {
     private int remainingSeconds;
     private long startTime;
     private java.util.Timer sporaTimer;
+    private java.util.Timer fonalTorloTimer;
     private TimeHandler timeHandler;
 
 
@@ -118,6 +119,22 @@ public class Controller {
         }, 5000, 5000, this); // 10 sec delay + 10 sec period
 
  */
+
+        timeHandler.scheduleAtFixedRate(() -> {
+            SwingUtilities.invokeLater(() -> {
+                System.out.println(">");
+                for(Player player : players) {
+                    if(player instanceof Gombasz gsz) {
+                        gsz.removeUnconnectedFonalak();
+                    }
+                }
+                try {
+                    updateView(model);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }, 10000, 10000,  this); // ez a this → lockObject, pl. model is lehetne
 
         onClearSelection();
     }

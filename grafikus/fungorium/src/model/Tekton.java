@@ -76,6 +76,7 @@ public class Tekton implements IDestroyable {
      * @return a description of the applied effect
      */
     public String hatasKifejtes() {
+        System.out.println("[Tekton" + id + ": TektonHatas kifejtes]");
         return tektonHatas.hatas();
     }
 
@@ -178,6 +179,11 @@ public class Tekton implements IDestroyable {
     public void fonalakFelszivasa(){
         if(!defendFonalak) {
             for(GombaFonal gf : kapcsolodoFonalak) {
+                if(gf.getStartTekton().getId() == this.id) {
+                    gf.getCelTekton().getKapcsolodoFonalak().remove(gf);
+                } else {
+                    gf.getStartTekton().getKapcsolodoFonalak().add(gf);;
+                }
                 gf.getAlapGomba().deleteFonal(gf);
             }
             clearKapcsolodoFonalak();

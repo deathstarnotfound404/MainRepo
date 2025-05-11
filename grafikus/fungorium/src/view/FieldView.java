@@ -70,7 +70,7 @@ public class FieldView extends JPanel {
                 tektonViewList.add(new FonalDefenderTektonView(t, x_i, y_i, tektonClickListener));
             } else if(t.isGtGatlo()) {
                 tektonViewList.add(new GombaTestGatloView(t, x_i, y_i, tektonClickListener));
-            } else if (t.isMaxEgyFonal()) {
+            } else if (t.getTektonHatas() instanceof FonalGatloHatas) {
                 tektonViewList.add(new FonalGatloView(t, x_i, y_i, tektonClickListener));
             } else if (t.getTektonHatas() instanceof FonalFelszivodoHatas) {
                 tektonViewList.add(new FonalFelszivodoTektonView(t, x_i, y_i, tektonClickListener));
@@ -132,7 +132,19 @@ public class FieldView extends JPanel {
             if(t.getRovar() != null) {
                 for(TektonView tv : tektonViewList) {
                     if(tv.getTekton().getId() == t.getRovar().getHelyzet().getId()) {
-                        rovarViewList.add(new RovarView(tv, t.getRovar(), dir.get(t.getRovar().getRovarasz())));
+                        Rovar r = t.getRovar();
+                        Direction direction = dir.get(r.getRovarasz());
+                        if (!r.getTudVagni()) { //vágásgátló
+                            rovarViewList.add(new RovarView(tv, r, new VagastGatloView(direction)));
+                        } else if (r.getEvesHatekonysag() == 0.25) {    //Lassító
+                            rovarViewList.add(new RovarView(tv, r, new LassitoView(direction)));
+                        } else if (r.getEvesHatekonysag() == 0.0) {  //Benito
+                            rovarViewList.add(new RovarView(tv, r, new BenitoView(direction)));
+                        } else if (r.getEvesHatekonysag() == 1.0) {  //Gyorsító
+                            rovarViewList.add(new RovarView(tv, r, new GyorsitoView(direction)));
+                        } else {  //Sima / Klonozot
+                            rovarViewList.add(new RovarView(tv, r, new BaseSporaView(direction)));
+                        }
                     }
                 }
             }
@@ -196,7 +208,7 @@ public class FieldView extends JPanel {
         Rovarasz rsz = rovar.getRovarasz();
         Direction direction = dir.get(rsz);
 
-        RovarView rv = new RovarView(tektonView, rovar, direction);
+        RovarView rv = new RovarView(tektonView, rovar, new BaseSporaView(direction));
         rovarViewList.add(rv);
         repaint(); // újrarajzolás a panelen
     }

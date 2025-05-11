@@ -31,6 +31,7 @@ public class FonalFelszivodoHatas extends TektonHatas {
         //Fonalak felszívása az adott tektonról
         if(super.tekton.getLatogatottsag()%5 == 0 && super.tekton.getLatogatottsag() != 0) {
             super.tekton.fonalakFelszivasa();
+            System.out.println("Fonalfelszívás megtörtént");
             return "Felszivas";
         } else {
             return "NincsFonalFelszivas";

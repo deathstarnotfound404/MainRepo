@@ -35,6 +35,7 @@ public class TimeHandler {
      * - mindig az EDT-n történik a GUI frissítés (`invokeLater`)
      * - a modellre szinkronizál
      */
+    /*
     public void scheduleAtFixedRate(Runnable action, long initialDelayMillis, long periodMillis, Object lockObject) {
         scheduler.scheduleAtFixedRate(() -> {
             synchronized (lockObject) {
@@ -42,6 +43,23 @@ public class TimeHandler {
             }
         }, initialDelayMillis, periodMillis, TimeUnit.MILLISECONDS);
     }
+
+     */
+
+    public void scheduleAtFixedRate(Runnable action, long initialDelayMillis, long periodMillis, Object lockObject) {
+        scheduler.scheduleAtFixedRate(() -> {
+            synchronized (lockObject) {
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        action.run();
+                    } catch (Exception ex) {
+                        ex.printStackTrace(); // ← VAGY logold GUI-n
+                    }
+                });
+            }
+        }, initialDelayMillis, periodMillis, TimeUnit.MILLISECONDS);
+    }
+
 
     /**
      * A játék végén a scheduler leállítása.

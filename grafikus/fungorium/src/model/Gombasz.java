@@ -124,11 +124,25 @@ public class Gombasz extends Player {
                     }
                 }
 
-                //Create and add the new thread
+                //Create and add the new fonal
                 GombaFonal ujFonal = new GombaFonal(g, stratTekton, celTekton);
-                if(!g.addFonal(ujFonal) || !celTekton.addKapcsolodoFonalak(ujFonal) || !stratTekton.addKapcsolodoFonalak(ujFonal)) {
-                    System.out.println("Hiba: A fonal nem adható a Gombához vagy a Tektonokhoz!");
+
+                if(!celTekton.addKapcsolodoFonalak(ujFonal)) {
+                    System.out.println("Hiba: Celtektonon max 1 fonal lehet!");
                     return false;
+                } else {
+                    if(!stratTekton.addKapcsolodoFonalak(ujFonal)) {
+                        celTekton.getKapcsolodoFonalak().remove(ujFonal);
+                        System.out.println("Hiba: Celtektonon max 1 fonal lehet!");
+                        return false;
+                    } else {
+                        if(!g.addFonal(ujFonal)) {
+                            celTekton.getKapcsolodoFonalak().remove(ujFonal);
+                            stratTekton.getKapcsolodoFonalak().remove(ujFonal);
+                            System.out.println("Hiba: A fonal nem adható a Gombához vagy a Tektonokhoz!");
+                            return false;
+                        }
+                    }
                 }
 
                 //Check for bonus thread placement
@@ -334,5 +348,13 @@ public class Gombasz extends Player {
 
         System.out.println("Hiba: A kijelölt ovar nem érhető el fonallal!");
         return false;
+    }
+
+    //Kitöröl minden nem folytonosan kötött fonalat
+    public void removeUnconnectedFonalak() {
+        System.out.println("[removeUnconnectedFonalak]");
+        for(Gomba g : gombaLista) {
+            g.nemFolytonosFonalTorles();
+        }
     }
 }

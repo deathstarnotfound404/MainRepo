@@ -244,11 +244,13 @@ public class Field {
 
     public boolean moveRovar(Rovar selectedRovar, Tekton selectedSecondTekton) {
         final Rovar rovar = selectedRovar;
+        Tekton start = rovar.getHelyzet();
 
         if (rovar.getRovarasz().rovarIranyitas(rovar, selectedSecondTekton)) {
 
 
-            selectedSecondTekton.hatasKifejtes();
+            //selectedSecondTekton.hatasKifejtes();
+            start.hatasKifejtes();
 
             List<Tekton> modositando = new ArrayList<>(Field.getTektonList());
             for (Tekton t : modositando) {

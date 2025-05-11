@@ -64,8 +64,9 @@ public class TektonHatas {
      * @return a randomly selected TektonHatas subclass instance
      */
     public static TektonHatas generateRandomTektonHatas(){
-        int valasztas = rnd.nextInt(5);     //5 féle hatas létezik
-
+        //int valasztas = rnd.nextInt(5);     //5 féle hatas létezik
+        int valasztas = Math.abs(rnd.nextInt()) % 5;
+        
         switch (valasztas){
             case 0:
                 return new TektonHatas();

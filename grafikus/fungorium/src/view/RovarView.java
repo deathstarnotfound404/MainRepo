@@ -9,8 +9,8 @@ public class RovarView {
     private Vec2 pos;
     private SporaHatasView hatas;
 
-    public RovarView(TektonView pos, Rovar r, Direction dir) {
-        hatas = new BaseSporaView(dir);
+    public RovarView(TektonView pos, Rovar r, SporaHatasView hatas) {
+        this.hatas = hatas;
 
         this.r = r;
         this.id = r.getId();
