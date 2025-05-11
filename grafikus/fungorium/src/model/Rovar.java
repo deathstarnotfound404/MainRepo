@@ -25,6 +25,8 @@ public class Rovar implements IDestroyable {
     /** Flag indicating if the insect can consume all available spores */
     private boolean maxFogyasztas = false;
 
+    private boolean aktivHatas = false;
+
     /** The player that controls this insect */
     private Rovarasz rovarasz;
 
@@ -112,7 +114,7 @@ public class Rovar implements IDestroyable {
         evesHatekonysag = 0.5;
         tudVagni = true;
         maxFogyasztas = false;
-
+        aktivHatas = false;
         System.out.println("\nRovar: r" + id + " -> Kepessegek Alaphelyzetbe állítása");
     }
 
@@ -313,8 +315,10 @@ public class Rovar implements IDestroyable {
         if(sporaLista != null && sporaLista.size() > 0 && elfogyaszthatoVal > 0) {
             this.addTapanyag(elfogyaszthatoVal);    // Add nutrients
             BaseSpora last = sporaLista.get(elfogyaszthatoVal-1);   // The last eaten spore's effect applies
-            last.hatas(this);   // Apply spore effect to this insect
-
+            if(!aktivHatas) {
+                aktivHatas = true;
+                last.hatas(this);   // Apply spore effect to this insect
+            }
             this.helyzet.getSporaLista().subList(0, elfogyaszthatoVal).clear(); // Remove consumed spores
 
             return true;
