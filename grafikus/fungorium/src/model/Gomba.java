@@ -177,8 +177,11 @@ public class Gomba implements IDestroyable {
      * @return true if the cell is continuously connected, false otherwise
      */
     public boolean fonalFolytonossagVizsgalat(Tekton t){
-        // If the Tekton is where the fungus body is located, it's continuous
         if(t.getId() == this.tekton.getId()){
+            return true;
+        }
+
+        if(fonalLista.size() == 0){
             return true;
         }
 
@@ -302,7 +305,7 @@ public class Gomba implements IDestroyable {
             if(this.gombaTest.getSzint() == 3){ // Level 3 bodies can spread to neighbors' neighbors
                 // Check if target is a neighbor's neighbor
                 if(!szomszedSzomszedjaEllenorzes(celTekton)){
-                    System.out.println("\tHiba: 3. SZintű GombaTest maximum csak a szomszéd szomszédjaira szórhat!");
+                    System.out.println("\tHiba: 3. Szintű GombaTest maximum csak a szomszéd szomszédjaira szórhat!");
                     return false;
                 }
             } else {
@@ -361,8 +364,8 @@ public class Gomba implements IDestroyable {
      */
     public boolean addFonal(GombaFonal ujGF) {
         // Check if Tektons are neighbors
-        if(!ujGF.getCelTekton().getSzomszedok().contains(ujGF.getStartTekton()) ||
-                !ujGF.getStartTekton().getSzomszedok().contains(ujGF.getCelTekton())) {
+        if(!ujGF.getCelTekton().getSzomszedosTektonok().contains(ujGF.getStartTekton()) ||
+                !ujGF.getStartTekton().getSzomszedosTektonok().contains(ujGF.getCelTekton())) {
             System.out.println("Nem szomszédos Tektonok nem összeköthetőek!");
             return false;
         }

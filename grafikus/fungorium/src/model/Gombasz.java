@@ -148,7 +148,7 @@ public class Gombasz extends Player {
                 //Check for bonus thread placement
                 if(celTekton.getSporaLista().size() > 0 && !ingyen) {
                     System.out.println("\t[Növesztés gyorsítása] Még egy fonal ingyen lerakható ha van szabad Tekton");
-                    List<Tekton> celSzomszedok = new ArrayList<>(celTekton.getSzomszedok());
+                    List<Tekton> celSzomszedok = new ArrayList<>(celTekton.getSzomszedosTektonok());
                     celSzomszedok.remove(stratTekton);
 
                     boolean valasztott = false;
@@ -352,7 +352,6 @@ public class Gombasz extends Player {
 
     //Kitöröl minden nem folytonosan kötött fonalat
     public void removeUnconnectedFonalak() {
-        System.out.println("[removeUnconnectedFonalak]");
         for(Gomba g : gombaLista) {
             g.nemFolytonosFonalTorles();
         }

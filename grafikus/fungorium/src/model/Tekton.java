@@ -62,15 +62,6 @@ public class Tekton implements IDestroyable {
     }
 
     /**
-     * Returns the list of neighboring Tektons.
-     *
-     * @return list of adjacent Tektons
-     */
-    public List<Tekton> getSzomszedok() {
-        return this.szomszedosTektonok;
-    }
-
-    /**
      * Triggers the effect associated with this Tekton.
      *
      * @return a description of the applied effect
@@ -121,8 +112,8 @@ public class Tekton implements IDestroyable {
 
             ujTekton1.addSzomszedosTekton(ujTekton1);
             ujTekton2.addSzomszedosTekton(ujTekton2);
-            ujTekton1.getSzomszedok().addAll(this.szomszedosTektonok);
-            ujTekton2.getSzomszedok().addAll(this.szomszedosTektonok);
+            ujTekton1.getSzomszedosTektonok().addAll(this.szomszedosTektonok);
+            ujTekton2.getSzomszedosTektonok().addAll(this.szomszedosTektonok);
 
             for (Tekton t : meglevoSzomszedok) {
                 t.addSzomszedosTekton(ujTekton1);
@@ -382,20 +373,6 @@ public class Tekton implements IDestroyable {
     }
 
     /**
-     * Removes a neighboring Tekton connection.
-     * Also removes the reciprocal connection.
-     *
-     * @param t the Tekton to remove from neighbors
-     * @return true if the neighbor was successfully removed, false otherwise
-     */
-    public boolean removeSzomszedosTekton(Tekton t){
-        if(t.getSzomszedosTektonok().contains(this)){
-            t.getSzomszedosTektonok().remove(this);
-        }
-        return szomszedosTektonok.remove(t);
-    }
-
-    /**
      * Sets the protection status for fungal threads on this Tekton.
      *
      * @param val true to protect threads, false to allow them to be removed
@@ -562,9 +539,10 @@ public class Tekton implements IDestroyable {
         sb.append("  - rovar látogatottság: ").append(this.rovarLatogatottsag).append("\n");
         sb.append("  - kapcsolódó fonalak: ").append(this.fonalFokszam).append("\n");
         sb.append("  - spórák a tektonon: ").append(this.sporaLista.size()).append("\n");
+        sb.append("  - szomszedok szama: ").append(this.szomszedosTektonok.size()).append("\n");
 
         if (tektononLevoGomba != null) {
-            sb.append("  - Tektonon Gomba: [GombaTest #").append(tektononLevoGomba.getId()).append("]\n")
+            sb.append("  - Tektonon Gomba: [GombaTest #").append(tektononLevoGomba.getGombatest().getId()).append("]\n")
                     .append("   - sporaszám: ").append(tektononLevoGomba.getGombatest().getSporakeszlet()).append("\n")
                     .append("   - fonalszám: ").append(tektononLevoGomba.getFonalKeszlet()).append("\n")
                     .append("   - szint: ").append(tektononLevoGomba.getGombatest().getSzint()).append("\n")

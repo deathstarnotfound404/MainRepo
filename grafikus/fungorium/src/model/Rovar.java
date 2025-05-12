@@ -170,7 +170,7 @@ public class Rovar implements IDestroyable {
         }
 
         // If the two Tektons are not neighbors
-        if(!szomszedLista.contains(celTekton) && !celTekton.getSzomszedok().contains(this.helyzet)) {
+        if(!szomszedLista.contains(celTekton) && !celTekton.getSzomszedosTektonok().contains(this.helyzet)) {
             System.out.println("Hiba: A kiválasztott két tekton nem szomszédos!");
             return false;
         }

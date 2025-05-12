@@ -11,15 +11,18 @@ public class Field {
     private static int idCounter = 0;
 
     /** List of all Tekton cells in the field */
-    private static List<Tekton> tektonLista = new ArrayList<>();
+    private static List<Tekton> tektonLista;
 
     /** Map of players and their types (G for Gombasz/Mycologist, R for Rovarasz/Entomologist) */
-    private Map<Player, String> playerLista = new HashMap<>();
+    private Map<Player, String> playerLista;
 
     /**
      * Constructs a new empty Field.
      */
-    public Field() {}
+    public Field() {
+        tektonLista = new ArrayList<>();
+        playerLista = new HashMap<>();
+    }
 
     /**
      * Adds a Gombasz (Mycologist) player to the game.
@@ -471,5 +474,12 @@ public class Field {
         }
 
         return sb.toString();
+    }
+
+    public void delete() {
+        idCounter = 0;
+
+        tektonLista.clear();
+        playerLista.clear();
     }
 }

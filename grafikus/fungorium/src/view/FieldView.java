@@ -94,7 +94,7 @@ public class FieldView extends JPanel {
                 // Próbáljuk a törölt szomszédok közelébe tenni
                 Vec2 base = null;
                 for (Tekton deleted : deletedPositions.keySet()) {
-                    if (t.getSzomszedok().contains(deleted)) {
+                    if (t.getSzomszedosTektonok().contains(deleted)) {
                         base = deletedPositions.get(deleted);
                         break;
                     }
@@ -130,7 +130,7 @@ public class FieldView extends JPanel {
         for (Tekton t : tektons) {
             if (!layoutCache.containsKey(t)) {
                 movable.add(t);
-                movable.addAll(t.getSzomszedok());
+                movable.addAll(t.getSzomszedosTektonok());
             }
         }
 
@@ -161,7 +161,7 @@ public class FieldView extends JPanel {
 
             // Vonzás szomszédok között
             for (Tekton v : movable) {
-                for (Tekton u : v.getSzomszedok()) {
+                for (Tekton u : v.getSzomszedosTektonok()) {
                     if (!positions.containsKey(u)) continue;
                     Vec2 posV = positions.get(v);
                     Vec2 posU = positions.get(u);
@@ -277,10 +277,7 @@ public class FieldView extends JPanel {
     }
 
     public void updateView(Field model) throws IOException {
-        //TODO Update a listákat
         this.removeAll();
-        //tektonViewList.clear();
-        System.out.println(tektonViewList.size());
         szomszedsagViewList.clear();
         gombaFonaViewList.clear();
         rovarViewList.clear();

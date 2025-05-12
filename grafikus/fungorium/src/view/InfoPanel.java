@@ -10,7 +10,6 @@ public class InfoPanel extends JPanel {
     private JComboBox<Object> optionsOnTekton;
     private JTextArea pontszamok;
     private JButton exitButton, clearButton;
-    private List<String> options;
     private JLabel timerLabel;
     private JLabel timeValue;
     private JTextArea tektonInfo;
@@ -39,6 +38,7 @@ public class InfoPanel extends JPanel {
 
         optionsOnTekton = new JComboBox<>();
         optionsOnTekton.setMaximumSize(new Dimension(200, 25));
+        optionsOnTekton.setSelectedIndex(-1);
 
         pontszamlabel = new JLabel("Pontszámok");
         pontszamlabel.setAlignmentX(Component.LEFT_ALIGNMENT);

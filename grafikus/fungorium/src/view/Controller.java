@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -89,7 +89,11 @@ public class Controller {
                 throw new RuntimeException(ex);
             }
         };
-        panel.getInfoPanel().exitListener = e -> switchToMenuPanel();
+
+        panel.getInfoPanel().exitListener = e -> {
+            model.delete();
+            switchToMenuPanel();
+        };
 
         panel.getGamePanel().addKeyListener(keyListener);
         panel.getGamePanel().setFocusable(true);
@@ -126,7 +130,6 @@ public class Controller {
 
         timeHandler.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
-                System.out.println(">");
                 for(Player player : players) {
                     if(player instanceof Gombasz gsz) {
                         gsz.removeUnconnectedFonalak();
@@ -256,16 +259,20 @@ public class Controller {
                 }
             }
 
-            //TODO a kombobox tobbi eleme
-
             InfoPanel infoPanel = view.getGamePanel().getInfoPanel();
-            infoPanel.setOptionsList(options);
+            JComboBox<Object> comboBox = infoPanel.getElemek();
 
-            // ComboBox listener figyelés:
-            infoPanel.getElemek().addActionListener(e -> {
+            for (ActionListener al : comboBox.getActionListeners()) {
+                comboBox.removeActionListener(al);
+            }
+
+            infoPanel.setOptionsList(options); // ez ne váltson ki eseményt
+
+            comboBox.addActionListener(e -> {
                 onComboBoxSelection();
                 view.getGamePanel().getGamePanel().requestFocusInWindow();
             });
+
 
             updateView(model);
         }
@@ -360,6 +367,7 @@ public class Controller {
         Tekton _selectedTekton = selectedTekton.getTekton();
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
         Gomba _selectedAlapG = selectedGombaTest.getGombaTest().getAlapGomba();
+        System.out.println(_selectedAlapG.getGombatest().getId());
         return model.spreadSpora(_selectedSecondTekton, _selectedAlapG);
     }
 
