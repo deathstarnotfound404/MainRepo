@@ -48,6 +48,19 @@ public class Field {
         tektonLista.add(t);
     }
 
+    public static boolean removeTekton(Tekton t) {
+        if(t==null){
+            return false;
+        }
+
+        for (Tekton t_i : Field.getTektonList()){
+            t_i.getSzomszedosTektonok().remove(t);
+        }
+
+        boolean ret = tektonLista.remove(t);
+        return ret;
+    }
+
     /**
      * Evaluates the game state and determines the winners.
      * The first element in the returned list is the winning Rovarasz (Entomologist),

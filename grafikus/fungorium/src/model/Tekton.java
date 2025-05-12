@@ -460,10 +460,7 @@ public class Tekton implements IDestroyable {
         }
         this.sporaLista.clear();
         this.kapcsolodoFonalak.clear();
-        Field.getTektonList().remove(this);
-        for (Tekton t : Field.getTektonList()){
-            t.getSzomszedosTektonok().remove(this);
-        }
+        Field.removeTekton(this);
     }
 
     /**

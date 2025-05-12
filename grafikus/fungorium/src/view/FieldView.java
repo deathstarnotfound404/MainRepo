@@ -5,10 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class FieldView extends JPanel {
     private List<TektonView> tektonViewList;
@@ -16,12 +14,15 @@ public class FieldView extends JPanel {
     private List<Line> gombaFonaViewList;
     private List<RovarView> rovarViewList;
     private List<GombaTestView> gombaTestViewList;
-    ActionListener tektonClickListener;
+    private Map<Tekton, Vec2> layoutCache = new HashMap<>();
+    private ActionListener tektonClickListener;
 
     protected Map<Player, Color> colors;
     protected Map<Player, Direction> dir;
 
     FieldView(Controller controller) {
+        this.setPreferredSize(new Dimension(600, 600));
+
         tektonViewList = new ArrayList<>();
         szomszedsagViewList = new ArrayList<>();
         gombaFonaViewList = new ArrayList<>();
@@ -60,47 +61,212 @@ public class FieldView extends JPanel {
         genTektonViews(controller.getModel());
     }
 
-    private void genTektonViews(Field model) {
-        int x_i = 30;
-        int row = 0;
-        int y_i = 30;
+    private Map<Tekton, Vec2> calculateLayout(List<Tekton> tektons, int panelWidth, int panelHeight) {
+        Map<Tekton, Vec2> positions = new HashMap<>();
+        Random rand = new Random();
 
-        for (Tekton t : model.getTektons()) {
-            if(t.isDefendFonalak()) {
-                tektonViewList.add(new FonalDefenderTektonView(t, x_i, y_i, tektonClickListener));
-            } else if(t.isGtGatlo()) {
-                tektonViewList.add(new GombaTestGatloView(t, x_i, y_i, tektonClickListener));
-            } else if (t.getTektonHatas() instanceof FonalGatloHatas) {
-                tektonViewList.add(new FonalGatloView(t, x_i, y_i, tektonClickListener));
-            } else if (t.getTektonHatas() instanceof FonalFelszivodoHatas) {
-                tektonViewList.add(new FonalFelszivodoTektonView(t, x_i, y_i, tektonClickListener));
-            } else {
-                tektonViewList.add(new BaseTektonView(t, x_i, y_i, tektonClickListener));
-            }
+        int margin = 50;
+        int usableWidth = panelWidth - 2 * margin;
+        int usableHeight = panelHeight - 2 * margin;
 
-            x_i = x_i+100;
-            row = row + 1;
-            if(row == 4) {
-                x_i = 30;
-                row = 0;
-                y_i = y_i+100;
+        int area = usableWidth * usableHeight;
+        int n = tektons.size();
+        double k = Math.sqrt((double) area / n); // ideális élhossz
+        double temperature = panelWidth / 10.0;
+
+        // 0. Megkeressük a törölt elemeket
+        Map<Tekton, Vec2> deletedPositions = new HashMap<>();
+        for (Tekton old : layoutCache.keySet()) {
+            if (!tektons.contains(old)) {
+                deletedPositions.put(old, layoutCache.get(old));
             }
         }
 
+        // 1. Meglévő pozíciók megtartása vagy új generálása
+        for (Tekton t : tektons) {
+            if (layoutCache.containsKey(t)) {
+                positions.put(t, layoutCache.get(t));
+            } else {
+                // Próbáljuk a törölt szomszédok közelébe tenni
+                Vec2 base = null;
+                for (Tekton deleted : deletedPositions.keySet()) {
+                    if (t.getSzomszedok().contains(deleted)) {
+                        base = deletedPositions.get(deleted);
+                        break;
+                    }
+                }
+
+                Vec2 newPos;
+                boolean tooClose;
+                do {
+                    tooClose = false;
+                    if (base != null) {
+                        int dx = rand.nextInt(41) - 20;
+                        int dy = rand.nextInt(41) - 20;
+                        newPos = new Vec2(base.getX() + dx, base.getY() + dy);
+                    } else {
+                        newPos = new Vec2(margin + rand.nextInt(usableWidth), margin + rand.nextInt(usableHeight));
+                    }
+
+                    for (Vec2 pos : positions.values()) {
+                        int dx = pos.getX() - newPos.getX();
+                        int dy = pos.getY() - newPos.getY();
+                        if (Math.sqrt(dx * dx + dy * dy) < 50) {
+                            tooClose = true;
+                            break;
+                        }
+                    }
+                } while (tooClose);
+                positions.put(t, newPos);
+            }
+        }
+
+        // 2. Mozgathatók: újak és azok szomszédai
+        Set<Tekton> movable = new HashSet<>();
+        for (Tekton t : tektons) {
+            if (!layoutCache.containsKey(t)) {
+                movable.add(t);
+                movable.addAll(t.getSzomszedok());
+            }
+        }
+
+        // 3. Iteráció – vonzás, taszítás, gravity
+        for (int iter = 0; iter < 200; iter++) {
+            Map<Tekton, Vec2> displacements = new HashMap<>();
+            for (Tekton t : movable) {
+                displacements.put(t, new Vec2(0, 0));
+            }
+
+            // Taszítás minden elem között
+            for (Tekton v : movable) {
+                for (Tekton u : tektons) {
+                    if (v == u) continue;
+                    Vec2 posV = positions.get(v);
+                    Vec2 posU = positions.get(u);
+                    int dx = posV.getX() - posU.getX();
+                    int dy = posV.getY() - posU.getY();
+                    double dist = Math.sqrt(dx * dx + dy * dy) + 0.01;
+                    double force = k * k / dist;
+
+                    displacements.put(v, displacements.get(v).add(new Vec2(
+                            (int) (dx / dist * force),
+                            (int) (dy / dist * force)
+                    )));
+                }
+            }
+
+            // Vonzás szomszédok között
+            for (Tekton v : movable) {
+                for (Tekton u : v.getSzomszedok()) {
+                    if (!positions.containsKey(u)) continue;
+                    Vec2 posV = positions.get(v);
+                    Vec2 posU = positions.get(u);
+                    int dx = posV.getX() - posU.getX();
+                    int dy = posV.getY() - posU.getY();
+                    double dist = Math.sqrt(dx * dx + dy * dy) + 0.01;
+                    double force = dist * dist / k;
+
+                    displacements.put(v, displacements.get(v).add(new Vec2(
+                            (int) (-dx / dist * force),
+                            (int) (-dy / dist * force)
+                    )));
+                }
+            }
+
+            // Gravity középre
+            int centerX = panelWidth / 2;
+            int centerY = panelHeight / 2;
+            for (Tekton t : movable) {
+                Vec2 pos = positions.get(t);
+                int dx = centerX - pos.getX();
+                int dy = centerY - pos.getY();
+                double gravity = 0.1;
+                displacements.put(t, displacements.get(t).add(new Vec2(
+                        (int) (dx * gravity),
+                        (int) (dy * gravity)
+                )));
+            }
+
+            // 4. Elmozdítás + margin korrekció
+            for (Tekton t : movable) {
+                Vec2 pos = positions.get(t);
+                Vec2 disp = displacements.get(t);
+                double len = Math.sqrt(disp.getX() * disp.getX() + disp.getY() * disp.getY()) + 0.01;
+                int dx = (int) (disp.getX() / len * Math.min(len, temperature));
+                int dy = (int) (disp.getY() / len * Math.min(len, temperature));
+                int newX = Math.max(margin, Math.min(panelWidth - margin, pos.getX() + dx));
+                int newY = Math.max(margin, Math.min(panelHeight - margin, pos.getY() + dy));
+                positions.put(t, new Vec2(newX, newY));
+            }
+
+            temperature *= 0.95;
+        }
+
+        // 5. Frissítjük a cache-t
+        layoutCache.clear();
+        layoutCache.putAll(positions);
+        return positions;
+    }
+
+    private void genTektonViews(Field model) {
+        if (layoutCache.isEmpty()) {
+            layoutCache = calculateLayout(model.getTektons(), 500, 500);
+        }
+
+        List<Tekton> currentModelTektons = model.getTektons();
+        List<TektonView> updatedTektonViews = new ArrayList<>();
+
+        // Megtartjuk azokat, amik még léteznek
+        for (TektonView tv : tektonViewList) {
+            if (currentModelTektons.contains(tv.getTekton())) {
+                updatedTektonViews.add(tv);
+            }
+        }
+
+        // A meglévők listáját frissítjük
+        tektonViewList = updatedTektonViews;
+
+        // Megkeressük az új Tektonokat
+        for (Tekton t : currentModelTektons) {
+            boolean alreadyExists = false;
+            for (TektonView tv : tektonViewList) {
+                if (tv.getTekton().equals(t)) {
+                    alreadyExists = true;
+                    break;
+                }
+            }
+
+            if (!alreadyExists) {
+                Vec2 pos = layoutCache.get(t);
+                TektonView newView;
+                if (t.isDefendFonalak()) {
+                    newView = new FonalDefenderTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+                } else if (t.isGtGatlo()) {
+                    newView = new GombaTestGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
+                } else if (t.getTektonHatas() instanceof FonalGatloHatas) {
+                    newView = new FonalGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
+                } else if (t.getTektonHatas() instanceof FonalFelszivodoHatas) {
+                    newView = new FonalFelszivodoTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+                } else {
+                    newView = new BaseTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+                }
+                tektonViewList.add(newView);
+            }
+        }
+
+        // Előző View-k törlése, új hozzáadása
+        this.removeAll();
         for (TektonView tv : tektonViewList) {
             this.add(tv);
         }
 
-        //Szomszedosságok beálltása
-        for(TektonView tv : tektonViewList) {
-            for(TektonView tv2 : tektonViewList) {
-                if(tv.getId() == tv2.getId()) {
-                    break;
-                } else {
-                    if (tv.getTekton().isSzomszedok(tv2.getTekton())) {
-                        SzomszedossagView szv = new SzomszedossagView(tv, tv2);
-                        szomszedsagViewList.add(szv);
-                    }
+        // Szomszédosság újragenerálása
+        szomszedsagViewList.clear();
+        for (TektonView tv : tektonViewList) {
+            for (TektonView tv2 : tektonViewList) {
+                if (tv.getId() == tv2.getId()) continue;
+                if (tv.getTekton().isSzomszedok(tv2.getTekton())) {
+                    szomszedsagViewList.add(new SzomszedossagView(tv, tv2));
                 }
             }
         }
@@ -108,11 +274,17 @@ public class FieldView extends JPanel {
 
     public void updateView(Field model) throws IOException {
         //TODO Update a listákat
-        tektonViewList.clear();
+        this.removeAll();
+        //tektonViewList.clear();
+        System.out.println(tektonViewList.size());
         szomszedsagViewList.clear();
         gombaFonaViewList.clear();
         rovarViewList.clear();
         gombaTestViewList.clear();
+
+        if(model.getTektons().size() != layoutCache.size()) {
+            layoutCache.clear();
+        }
 
         //Tektonok + Szomszédságok
         genTektonViews(model);
