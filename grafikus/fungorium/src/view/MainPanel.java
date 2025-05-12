@@ -12,7 +12,6 @@ public class MainPanel extends JPanel {
 
     public MainPanel(Controller controller, Timer timer) {
         this.controller = controller;
-
         setLayout(new BorderLayout());
 
         gamePanel = new FieldView(controller);

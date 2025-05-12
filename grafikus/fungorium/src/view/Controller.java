@@ -122,6 +122,8 @@ public class Controller {
             }
         }, 5000, 5000); // 20 (20000)másodpercenként
 
+
+
         timeHandler.scheduleAtFixedRate(() -> {
             SwingUtilities.invokeLater(() -> {
                 System.out.println(">");

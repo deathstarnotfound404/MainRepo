@@ -145,7 +145,6 @@ public class InfoPanel extends JPanel {
         rovarInfo.setText(rovarText);
     }
 
-
     public void setOptionsList(List<Object> opts) {
         optionsOnTekton.removeAllItems();
         for (Object opt : opts) {
