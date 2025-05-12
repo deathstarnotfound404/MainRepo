@@ -369,13 +369,17 @@ public class Field {
     }
 
     public Rovar firstRovar(Rovarasz currentPlayer, Tekton target) {
-        Rovar rovar = new Rovar();
-        rovar.setRovarasz(currentPlayer);
-        currentPlayer.addRovar(rovar, target);
-        rovar.setHelyzet(target);
-        target.setRovar(rovar);
-        System.out.println("Rovar létrehozva a(z) " + target.getId() + ". Tektorra.");
-        return rovar;
+        if(target.getRovar() == null) {
+            Rovar rovar = new Rovar();
+            rovar.setRovarasz(currentPlayer);
+            currentPlayer.addRovar(rovar, target);
+            rovar.setHelyzet(target);
+            target.setRovar(rovar);
+            System.out.println("Rovar létrehozva a(z) " + target.getId() + ". Tektorra.");
+            return rovar;
+        }else {
+            return null;
+        }
     }
 
     public int getPlayerCount() {
@@ -386,10 +390,14 @@ public class Field {
         if(target.isGtGatlo()) {
             return null;
         }
-        Gomba gomba = new Gomba(target, currentPlayer, 0);
-        currentPlayer.addGomba(gomba);
-        System.out.println("Gomba létrehozva a(z) " + target.getId() + ". Tektorra.");
-        return gomba;
+        if(target.getGomba() == null) {
+            Gomba gomba = new Gomba(target, currentPlayer, 0);
+            currentPlayer.addGomba(gomba);
+            System.out.println("Gomba létrehozva a(z) " + target.getId() + ". Tektorra.");
+            return gomba;
+        } else {
+            return null;
+        }
     }
 
     public Player getFirstGombasz() {

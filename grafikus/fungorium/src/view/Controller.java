@@ -428,11 +428,6 @@ public class Controller {
                 } else if (currentPlayer instanceof Gombasz) {
                     Gomba g = model.firstGomba((Gombasz) currentPlayer, target);
                     if (g != null) {
-                        //try {
-                            //view.getGamePanel().getGamePanel().addGombaTestView(selectedTekton, g.getGombatest());
-                        //} catch (IOException ex) {
-                        //    throw new RuntimeException(ex);
-                        //}
                         try {
                             updateView(model);
                         } catch (IOException ex) {
