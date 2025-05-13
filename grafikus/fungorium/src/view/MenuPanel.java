@@ -44,10 +44,16 @@ public class MenuPanel extends JPanel {
         gbc.gridy = 0;
         gbc.gridwidth = 2;
 
-        JLabel titleLabel = new JLabel("Last of Us", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("The Last of Us", SwingConstants.CENTER);
         add(titleLabel, gbc);
-        Font titleFont = new Font("Times New Roman", Font.BOLD, 144);
+        Font titleFont = new Font("Times New Roman", Font.BOLD, 80);
         titleLabel.setFont(titleFont);
+
+        gbc.gridy++;
+        JLabel titleLabel2 = new JLabel("Fungorium", SwingConstants.CENTER);
+        add(titleLabel2, gbc);
+        Font titleFont2 = new Font("Times New Roman", Font.BOLD, 20);
+        titleLabel2.setFont(titleFont2);
 
         gbc.gridy++;
         JLabel instructionLabel = new JLabel("Add meg a játék adatait", SwingConstants.CENTER);
