@@ -111,7 +111,7 @@ public class Gomba implements IDestroyable {
                 if(l.get(0).getStartTekton().getId() != this.tekton.getId()) {
                     nemfolytonosList.addAll(l);
                 }
-                if(i < l.size() - 2) {
+                if(i < l.size() - 1) {
                     if(l.get(i).getCelTekton().getId() != l.get(i+1).getStartTekton().getId()) {
                         nemfolytonosList.addAll(l.subList(i + 1, l.size()));
                         break;
