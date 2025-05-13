@@ -38,7 +38,7 @@ public class InfoPanel extends JPanel {
 
         optionsOnTekton = new JComboBox<>();
         optionsOnTekton.setMaximumSize(new Dimension(200, 25));
-        optionsOnTekton.setSelectedIndex(-1);
+        optionsOnTekton.addItem("-- Válassz --");
 
         pontszamlabel = new JLabel("Pontszámok");
         pontszamlabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -147,6 +147,7 @@ public class InfoPanel extends JPanel {
 
     public void setOptionsList(List<Object> opts) {
         optionsOnTekton.removeAllItems();
+        optionsOnTekton.addItem("-- Válassz --");
         for (Object opt : opts) {
             optionsOnTekton.addItem(opt);
         }

@@ -1,4 +1,5 @@
 package view;
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class CustomKeyListener implements KeyListener {
             case 'c' -> {
                 System.out.println("Pressed Key: C");
 
-                if(controller.isSelctedRovar()) {
+                if(controller.isSelectedRovar() && controller.isSelectedTekton() && controller.isSelectedSecondTekton()) {
                     controller.updateModelCutFonal();
                 } else {
                     controller.keyPressedError("Előbb válassz ki egy Rovart, majd utána egy cél Tektont ami között történik a vágás!");
@@ -24,7 +25,7 @@ public class CustomKeyListener implements KeyListener {
             }
             case 'm' -> {
                 System.out.println("Pressed Key:M");
-                if(controller.isSelctedRovar()) {
+                if(controller.isSelectedRovar() && controller.isSelectedSecondTekton()) {
                     if(controller.updateModelMoveRovar()) {
                         try {
                             controller.updateView(controller.getModel());
@@ -46,7 +47,7 @@ public class CustomKeyListener implements KeyListener {
             }
             case 'f' -> {
                 System.out.println("Pressed Key: F");
-                if(controller.isSelectedGombatest()) {
+                if(controller.isSelectedGombatest() && controller.isSelectedSecondTekton() && controller.isSelectedThirdTekton()) {
                     if(controller.updateModelGrowFonal()) {
                         try {
                             controller.updateView(controller.getModel());
@@ -60,7 +61,7 @@ public class CustomKeyListener implements KeyListener {
             }
             case 't' -> {
                 System.out.println("Pressed Key:T");
-                if(controller.isSelectedGombatest()) {
+                if(controller.isSelectedGombatest() && controller.isSelectedSecondTekton()) {
                     if(controller.updateModelGrowGombaTest()) {
                         try {
                             controller.updateView(controller.getModel());
@@ -74,7 +75,7 @@ public class CustomKeyListener implements KeyListener {
             }
             case 's' -> {
                 System.out.println("Pressed Key:S");
-                if(controller.isSelectedGombatest()) {
+                if(controller.isSelectedGombatest() && controller.isSelectedSecondTekton()) {
                     if(controller.updateModelSpreadSpora()) {
                         try {
                             controller.updateView(controller.getModel());
@@ -83,12 +84,36 @@ public class CustomKeyListener implements KeyListener {
                         }
                     }
                 } else {
-                    controller.keyPressedError("Előbb válassz ki egy Gombatestet, majd utána egy cél Tektont");
+                    controller.keyPressedError("Előbb válassz ki egy GombaTestet, majd egy céltektont!");
+                }
+            }
+            case 'k' -> {
+                System.out.println("Pressed Key:K");
+                if(controller.isSelectedRovar() && controller.isSelectedGombatest()) {
+                    if(controller.updateModelEatRovar()) {
+                        try {
+                            controller.updateView(controller.getModel());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                } else {
+                    controller.keyPressedError("Előbb válassz ki egy Gombatestet, majd egy bénult Rovart!");
                 }
             }
             case 'h' -> {
-                // segítség parancs – opcionálisan implementálható
                 System.out.println("Segítség parancs aktiválva.");
+                String helpMessage = """
+        c - fonal elvágása
+        m - rovar mozgatása
+        f - fonal növesztése
+        t - GombaTest növesztése
+        s - Spóra szórása
+        k - rovar evés
+
+        h - segítség kérése
+        """;
+                JOptionPane.showMessageDialog(null, helpMessage, "Segítség – Billentyűparancsok", JOptionPane.INFORMATION_MESSAGE);
             }
             default -> System.out.println("Ismeretlen parancs: " + e.getKeyChar());
         }

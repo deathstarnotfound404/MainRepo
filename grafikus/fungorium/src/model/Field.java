@@ -304,7 +304,7 @@ public class Field {
         return gomba.getGombasz().szoras(gomba, celTekton);
     }
 
-    public boolean eatRovar(Gombasz gsz, Tekton selectedTekton, Rovar selectedRovar) {
+    public boolean eatRovar(Gombasz gsz, Rovar selectedRovar) {
         // Rovar eltávolítása
         if (gsz.rovarEves(selectedRovar)) {
             System.out.println(gsz.getName() + ": Sikeresen elfogyasztotta a " + selectedRovar.getId() + ". azonosítójú rovart.");
