@@ -452,8 +452,8 @@ public class Controller {
      * @return igaz, ha az elfogyasztás sikeres volt
      */
     public boolean updateModelEatRovar() {
-        Gombasz _selectedGombasz = model.getGombaTestById(selectedGombaTest.getId()).getAlapGomba().getGombasz();
-        Rovar _selectedRovar = model.getRovarById(selectedRovar.getId());
+        Gombasz _selectedGombasz = selectedGombaTest.getGombaTest().getAlapGomba().getGombasz();
+        Rovar _selectedRovar = selectedRovar.getRovar();
         return model.eatRovar(_selectedGombasz, _selectedRovar);
     }
 
