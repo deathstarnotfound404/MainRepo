@@ -173,7 +173,7 @@ public class Tekton implements IDestroyable {
                 if(gf.getStartTekton().getId() == this.id) {
                     gf.getCelTekton().getKapcsolodoFonalak().remove(gf);
                 } else {
-                    gf.getStartTekton().getKapcsolodoFonalak().add(gf);;
+                    gf.getStartTekton().getKapcsolodoFonalak().remove(gf);;
                 }
                 gf.getAlapGomba().deleteFonal(gf);
             }
