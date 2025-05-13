@@ -1,24 +1,17 @@
 package view;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
+/**
+ * Nézet osztály, amely a spóra alaptípusának (BaseSpora) grafikus megjelenítéséért felelős.
+ * Kezeli a spóra képének betöltését és forgatását az irány függvényében.
+ * Kiterjeszti a {@link SporaHatasView} osztályt.
+ */
 public class BaseSporaView extends SporaHatasView {
+    /**
+     * Létrehoz egy BaseSporaView objektumot és betölti az alapértelmezett spóra képet.
+     *
+     * @param dir az irány, amelybe a spóra néz
+     */
     public BaseSporaView(Direction dir) {
         loadImage("/rovar.png", dir);
-    }
-
-    @Override
-    public void loadImage(String path, Direction dir) {
-        try (InputStream is = getClass().getResourceAsStream(path)) {
-            img = ImageIO.read(is);
-            if(dir == Direction.DOWN) {
-                super.imageForgatas();
-            }
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 }

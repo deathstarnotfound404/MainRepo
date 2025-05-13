@@ -8,18 +8,29 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * A játéktér grafikus megjelenítéséért felelős osztály.
+ * Megjeleníti a tektonokat, szomszédságokat, gombafonalakat, rovarokat és gombatesteket.
+ * Kezeli a játékelemek elrendezését és interakcióit a képernyőn.
+ */
 public class FieldView extends JPanel {
     private List<TektonView> tektonViewList;
-    private List<Line> szomszedsagViewList;
-    private List<Line> gombaFonaViewList;
-    private List<RovarView> rovarViewList;
-    private List<GombaTestView> gombaTestViewList;
+    private final List<Line> szomszedsagViewList;
+    private final List<Line> gombaFonaViewList;
+    private final List<RovarView> rovarViewList;
+    private final List<GombaTestView> gombaTestViewList;
     private Map<Tekton, Vec2> layoutCache = new HashMap<>();
-    private ActionListener tektonClickListener;
+    private final ActionListener tektonClickListener;
 
     protected Map<Player, Color> colors;
     protected Map<Player, Direction> dir;
 
+    /**
+     * Létrehoz egy új játéktér nézetet a megadott vezérlővel.
+     * Inicializálja a játékelemek listáit és beállítja a játékosok színeit és irányait.
+     *
+     * @param controller a játékvezérlő, amely összeköti a modellt és a nézetet
+     */
     FieldView(Controller controller) {
         this.setPreferredSize(new Dimension(600, 600));
 
@@ -65,18 +76,25 @@ public class FieldView extends JPanel {
         genTektonViews(controller.getModel());
     }
 
-    private Map<Tekton, Vec2> calculateLayout(List<Tekton> tektons, int panelWidth, int panelHeight) {
+    /**
+     * Kiszámítja a tektonlemezek optimális elrendezését a játéktéren.
+     * Force-directed graph elrendezési algoritmust használ a tektonok pozicionálására.
+     *
+     * @param tektons a tektonlemezek listája
+     * @return a tektonokhoz rendelt pozíciók térképe
+     */
+    private Map<Tekton, Vec2> calculateLayout(List<Tekton> tektons) {
         Map<Tekton, Vec2> positions = new HashMap<>();
         Random rand = new Random();
 
         int margin = 50;
-        int usableWidth = panelWidth - 2 * margin;
-        int usableHeight = panelHeight - 2 * margin;
+        int usableWidth = 500 - 2 * margin;
+        int usableHeight = 500 - 2 * margin;
 
         int area = usableWidth * usableHeight;
         int n = tektons.size();
         double k = Math.sqrt((double) area / n); // ideális élhossz
-        double temperature = panelWidth / 10.0;
+        double temperature = 500 / 10.0;
 
         // 0. Megkeressük a törölt elemeket
         Map<Tekton, Vec2> deletedPositions = new HashMap<>();
@@ -178,8 +196,8 @@ public class FieldView extends JPanel {
             }
 
             // Gravity középre
-            int centerX = panelWidth / 2;
-            int centerY = panelHeight / 2;
+            int centerX = 500 / 2;
+            int centerY = 500 / 2;
             for (Tekton t : movable) {
                 Vec2 pos = positions.get(t);
                 int dx = centerX - pos.getX();
@@ -198,8 +216,8 @@ public class FieldView extends JPanel {
                 double len = Math.sqrt(disp.getX() * disp.getX() + disp.getY() * disp.getY()) + 0.01;
                 int dx = (int) (disp.getX() / len * Math.min(len, temperature));
                 int dy = (int) (disp.getY() / len * Math.min(len, temperature));
-                int newX = Math.max(margin, Math.min(panelWidth - margin, pos.getX() + dx));
-                int newY = Math.max(margin, Math.min(panelHeight - margin, pos.getY() + dy));
+                int newX = Math.max(margin, Math.min(500 - margin, pos.getX() + dx));
+                int newY = Math.max(margin, Math.min(500 - margin, pos.getY() + dy));
                 positions.put(t, new Vec2(newX, newY));
             }
 
@@ -212,9 +230,15 @@ public class FieldView extends JPanel {
         return positions;
     }
 
+    /**
+     * Létrehozza és inicializálja a tektonlemez nézeteket az aktuális játéktér modell alapján.
+     * Különböző típusú tekton nézeteket hoz létre a tektonok tulajdonságai alapján.
+     *
+     * @param model a játéktér modell objektum
+     */
     private void genTektonViews(Field model) {
         if (layoutCache.isEmpty()) {
-            layoutCache = calculateLayout(model.getTektons(), 500, 500);
+            layoutCache = calculateLayout(model.getTektons());
         }
 
         List<Tekton> currentModelTektons = model.getTektons();
@@ -242,18 +266,7 @@ public class FieldView extends JPanel {
 
             if (!alreadyExists) {
                 Vec2 pos = layoutCache.get(t);
-                TektonView newView;
-                if (t.isDefendFonalak()) {
-                    newView = new FonalDefenderTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
-                } else if (t.isGtGatlo()) {
-                    newView = new GombaTestGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
-                } else if (t.getTektonHatas() instanceof FonalGatloHatas) {
-                    newView = new FonalGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
-                } else if (t.getTektonHatas() instanceof FonalFelszivodoHatas) {
-                    newView = new FonalFelszivodoTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
-                } else {
-                    newView = new BaseTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
-                }
+                TektonView newView = getTektonView(t, pos);
                 tektonViewList.add(newView);
             }
         }
@@ -276,6 +289,29 @@ public class FieldView extends JPanel {
         }
     }
 
+    private TektonView getTektonView(Tekton t, Vec2 pos) {
+        TektonView newView;
+        if (t.isDefendFonalak()) {
+            newView = new FonalDefenderTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+        } else if (t.isGtGatlo()) {
+            newView = new GombaTestGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
+        } else if (t.getTektonHatas() instanceof FonalGatloHatas) {
+            newView = new FonalGatloView(t, pos.getX(), pos.getY(), tektonClickListener);
+        } else if (t.getTektonHatas() instanceof FonalFelszivodoHatas) {
+            newView = new FonalFelszivodoTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+        } else {
+            newView = new BaseTektonView(t, pos.getX(), pos.getY(), tektonClickListener);
+        }
+        return newView;
+    }
+
+    /**
+     * Frissíti a játéktér grafikus megjelenítését az aktuális modell állapot alapján.
+     * Újragenerálja a tektonokat, szomszédságokat, gombafonalakat, rovarokat és gombatesteket.
+     *
+     * @param model a játéktér modell objektum
+     * @throws IOException ha a képek betöltése sikertelen
+     */
     public void updateView(Field model) throws IOException {
         this.removeAll();
         szomszedsagViewList.clear();
@@ -348,16 +384,15 @@ public class FieldView extends JPanel {
                     }
                 }
             }
-
         }
-
-        //repaint();
     }
 
-    public List<TektonView> getTektonViews() {
-        return tektonViewList;
-    }
-
+    /**
+     * Kirajzolja a játéktér összes elemét a grafikus kontextusra.
+     * Sorrendben: tektonok, szomszédságok, gombafonalak, rovarok, gombatestek.
+     *
+     * @param g a grafikus kontextus
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -368,15 +403,12 @@ public class FieldView extends JPanel {
         for (GombaTestView gt : gombaTestViewList) gt.updateView(g);
     }
 
-    public void addGombaTestView(TektonView tektonView, GombaTest gombaTest) throws IOException {
-        Gombasz gsz = gombaTest.getAlapGomba().getGombasz();
-        Color col = colors.get(gsz);
-        GombaTestView gtv = new GombaTestView(tektonView, gombaTest, col);
-        gombaTestViewList.add(gtv);
-        //TODO ezekt ki kell szedni, és updateView frissítse végig
-        repaint(); // újrarajzolás
-    }
-
+    /**
+     * Hozzáad egy új rovar nézetet a játéktérhez.
+     *
+     * @param tektonView a tekton nézet, amelyhez a rovar tartozik
+     * @param rovar a rovar objektum
+     */
     public void addRovarView(TektonView tektonView, Rovar rovar) {
         Rovarasz rsz = rovar.getRovarasz();
         Direction direction = dir.get(rsz);
@@ -386,18 +418,20 @@ public class FieldView extends JPanel {
         repaint(); // újrarajzolás a panelen
     }
 
-    public void addGombaFonalView(TektonView t1, TektonView t2, GombaFonal gf) {
-        Gombasz gsz = gf.getAlapGomba().getGombasz();
-        Color col = colors.get(gsz);
-        GombaFonalView gfv = new GombaFonalView(t1, t2, gf, col);
-        gombaFonaViewList.add(gfv);
-        repaint();
-    }
-
+    /**
+     * Visszaadja a rovar nézetek listáját.
+     *
+     * @return rovar nézetek listája
+     */
     public List<RovarView> getRovarViews() {
         return this.rovarViewList;
     }
 
+    /**
+     * Visszaadja a gombatest nézetek listáját.
+     *
+     * @return gombatest nézetek listája
+     */
     public List<GombaTestView> getGombaTestViews() {
         return this.gombaTestViewList;
     }

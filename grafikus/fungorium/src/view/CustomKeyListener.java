@@ -4,13 +4,37 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+/**
+ * Billentyűzet eseményeket kezelő osztály, amely a játékhoz szükséges
+ * billentyűparancsokat dolgozza fel.
+ * Megvalósítja a {@link KeyListener} interfészt.
+ */
 public class CustomKeyListener implements KeyListener {
-    private Controller controller;
+    private final Controller controller;
 
+    /**
+     * Létrehoz egy új billentyűzetfigyelő objektumot a megadott vezérlővel.
+     *
+     * @param c a játékvezérlő, amely feldolgozza a parancsokat
+     */
     public CustomKeyListener(Controller c) {
         this.controller = c;
     }
 
+    /**
+     * Billentyű lenyomásakor hívódik meg, feldolgozza a játékban használt billentyűparancsokat.
+     * Az alábbi parancsokat kezeli:
+     * - c: fonal elvágása
+     * - m: rovar mozgatása
+     * - b: fonal vásárlása
+     * - f: fonal növesztése
+     * - t: gombatest növesztése
+     * - s: spóra szórása
+     * - k: rovar elfogyasztása
+     * - h: súgó megjelenítése
+     *
+     * @param e a billentyűesemény objektum
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyChar()) {
@@ -120,13 +144,21 @@ public class CustomKeyListener implements KeyListener {
         controller.onClearSelection();
     }
 
+    /**
+     * Billentyű felengedésekor hívódik meg.
+     * Jelenleg nem használt.
+     *
+     * @param e a billentyűesemény objektum
+     */
     @Override
-    public void keyReleased(KeyEvent e) {
-        // jelenleg nem használt
-    }
+    public void keyReleased(KeyEvent e) { }
 
+    /**
+     * Billentyű lenyomásakor hívódik meg (karaktert eredményező billentyűknél).
+     * Jelenleg nem használt.
+     *
+     * @param e a billentyűesemény objektum
+     */
     @Override
-    public void keyTyped(KeyEvent e) {
-        // jelenleg nem használt
-    }
+    public void keyTyped(KeyEvent e) { }
 }

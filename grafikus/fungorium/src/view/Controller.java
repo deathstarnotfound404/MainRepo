@@ -10,19 +10,17 @@ import java.util.Timer;
 
 import model.*;
 
+/**
+ * A játékmechanikát vezérlő osztály, amely összeköti a modellt és a nézetet.
+ * Kezeli a felhasználói interakciókat, időzítőket és játéklogikát.
+ */
 public class Controller {
     private Field model;
     private GameFrame view;
     public static javax.swing.Timer timer;
-    private int gameTime;
     private int remainingSeconds;
-    private long startTime;
-    private java.util.Timer sporaTimer;
-    private java.util.Timer fonalTorloTimer;
     private TimeHandler timeHandler;
-
-
-    private CustomKeyListener keyListener;
+    private final CustomKeyListener keyListener;
 
     private TektonView selectedTekton;
     private TektonView selectedSecondTekton;
@@ -30,6 +28,11 @@ public class Controller {
     private RovarView selectedRovar;
     private GombaTestView selectedGombaTest;
 
+    /**
+     * Létrehoz egy új Controller példányt a megadott játéktér modellel.
+     *
+     * @param model a játéktér modellje
+     */
     public Controller(Field model) {
         this.model = model;
         timeHandler = new TimeHandler();
@@ -52,6 +55,11 @@ public class Controller {
             System.exit(0);};
     }
 
+    /**
+     * Hibaüzenetet jelenít meg billentyűparancsokkal kapcsolatos hibák esetén.
+     *
+     * @param error a megjelenítendő hibaüzenet
+     */
     public void keyPressedError(String error) {
         JOptionPane.showMessageDialog(null,
                 error,
@@ -60,18 +68,26 @@ public class Controller {
         );
     }
 
+    /**
+     * A játék indításakor hívódik meg, inicializálja az időzítőt.
+     */
     public void onStart() {
-        gameTime = view.getMenuPanel().getGameDuration();
+        int gameTime = view.getMenuPanel().getGameDuration();
         initTimer(1000, gameTime);
     }
 
+    /**
+     * Átvált a játékpanelre a menüből, inicializálja a játékot és a kezdőlépéseket.
+     *
+     * @throws IOException ha a nézet frissítése során hiba történik
+     */
     public void switchToGamePanel() throws IOException {
         model.initGame(view.getMenuPanel().getGombasz1Name(),
                 view.getMenuPanel().getGombasz2Name(),
                 view.getMenuPanel().getRovarasz1Name(),
                 view.getMenuPanel().getRovarasz2Name());
 
-        MainPanel panel = new MainPanel(this, timer);
+        MainPanel panel = new MainPanel(this);
         view.setGamePanel(panel);
 
         panel.getInfoPanel().clearListener = e -> {
@@ -95,9 +111,10 @@ public class Controller {
 
         // Első felugró üzenet
         JOptionPane.showMessageDialog(null,
-                "Minden játékos végezze el a kezdőlépéseit:\n" +
-                        "Gombászok helyezzenek el 1-1 gombát\n" +
-                        "Rovarászok helyezzenek el 1-1 rovart",
+                """
+                        Minden játékos végezze el a kezdőlépéseit:
+                        Gombászok helyezzenek el 1-1 gombát
+                        Rovarászok helyezzenek el 1-1 rovart""",
                 "Kezdőlépések",
                 JOptionPane.INFORMATION_MESSAGE
         );
@@ -109,7 +126,7 @@ public class Controller {
         kezdoLepesekLepesenkent(panel, players, 0);
 
         // 20 másodpercenként spóra termelés meghívása minden Gombászra
-        sporaTimer = new Timer();
+        Timer sporaTimer = new Timer();
         sporaTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -121,24 +138,30 @@ public class Controller {
 
 
 
-        timeHandler.scheduleAtFixedRate(() -> {
-            SwingUtilities.invokeLater(() -> {
-                for(Player player : players) {
-                    if(player instanceof Gombasz gsz) {
-                        gsz.removeUnconnectedFonalak();
-                    }
+        timeHandler.scheduleAtFixedRate(() -> SwingUtilities.invokeLater(() -> {
+            for(Player player : players) {
+                if(player instanceof Gombasz gsz) {
+                    gsz.removeUnconnectedFonalak();
                 }
-                try {
-                    updateView(model);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }, 10000, 10000,  this); // ez a this → lockObject, pl. model is lehetne
+            }
+            try {
+                updateView(model);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }), 10000, 10000,  this); // ez a this → lockObject, pl. model is lehetne
 
         onClearSelection();
     }
 
+    /**
+     * A játékosok kezdőlépéseit bonyolítja le lépésről lépésre.
+     *
+     * @param panel a játék főpanelje
+     * @param players a játékosok listája
+     * @param index az aktuális játékos indexe
+     * @throws IOException ha a nézet frissítése során hiba történik
+     */
     private void kezdoLepesekLepesenkent(MainPanel panel, List<Player> players, int index) throws IOException {
         if (index >= players.size()) {
             // Végére értünk a kezdőlépéseknek → vége dialog és indul az óra
@@ -193,14 +216,17 @@ public class Controller {
         updateView(model);
     }
 
-
-
-
+    /**
+     * Visszavált a menüpanelre a játékból.
+     */
     public void switchToMenuPanel() {
         onClearSelection();
         view.switchToMenu();
     }
 
+    /**
+     * Törli az aktuális kijelöléseket.
+     */
     public void onClearSelection() {
         selectedTekton = null;
         selectedSecondTekton = null;
@@ -212,6 +238,12 @@ public class Controller {
         box.removeAllItems();
     }
 
+    /**
+     * Kezeli egy tektonlemez kijelölését.
+     *
+     * @param clicked a kiválasztott tektonlemez nézet
+     * @throws IOException ha a nézet frissítése során hiba történik
+     */
     public void onTektonSelection(TektonView clicked) throws IOException {
         if (selectedTekton == null) {
             selectedTekton = clicked;
@@ -270,6 +302,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Kezeli a ComboBox-ban történő kiválasztást.
+     *
+     * @throws IOException ha a nézet frissítése során hiba történik
+     */
     public void onComboBoxSelection() throws IOException {
         JComboBox<Object> box = view.getGamePanel().getInfoPanel().getElemek();
         Object selected = box.getSelectedItem();
@@ -290,12 +327,20 @@ public class Controller {
         updateView(model);
     }
 
+    /**
+     * Frissíti a játék nézetét a modell aktuális állapota alapján.
+     *
+     * @param model a játéktér modellje
+     * @throws IOException ha a nézet frissítése során hiba történik
+     */
     public void updateView(Field model) throws IOException {
         view.getGamePanel().updateView(model);
         view.repaint();
     }
 
-    // Modellműveletek
+    /**
+     * Fonal elvágását végzi el a modellben.
+     */
     public void updateModelCutFonal() {
         Tekton _selectedTekton = selectedTekton.getTekton();
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
@@ -312,11 +357,13 @@ public class Controller {
                 }
             });
         }, 10000, this); // ez a this → lockObject, pl. model is lehetne
-
-
-        //return model.cutFonal(_selectedTekton, _selectedSecondTekton, _selectedRovar);
     }
 
+    /**
+     * Rovar mozgatását végzi el a modellben.
+     *
+     * @return igaz, ha a mozgatás sikeres volt
+     */
     public boolean updateModelMoveRovar() {
         Rovar _selectedRovar = selectedRovar.getRovar();
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
@@ -337,6 +384,11 @@ public class Controller {
         return moved;
     }
 
+    /**
+     * Fonal növesztését végzi el a modellben.
+     *
+     * @return igaz, ha a növesztés sikeres volt
+     */
     public boolean updateModelGrowFonal() {
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
         Tekton _selectedThirdTekton = selectedThirdTekton.getTekton();
@@ -344,32 +396,55 @@ public class Controller {
         return model.growFonal(_selectedSecondTekton, _selectedThirdTekton, _gombaTest.getAlapGomba());
     }
 
+    /**
+     * Gombatest növesztését végzi el a modellben.
+     *
+     * @return igaz, ha a növesztés sikeres volt
+     */
     public boolean updateModelGrowGombaTest() {
         Gombasz _selecetdGomba = selectedGombaTest.getGombaTest().getAlapGomba().getGombasz();
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
         return model.growGombaTest(_selecetdGomba, _selectedSecondTekton);
     }
 
+    /**
+     * Spóra terjesztését végzi el a modellben.
+     *
+     * @return igaz, ha a terjesztés sikeres volt
+     */
     public boolean updateModelSpreadSpora() {
         Tekton _selectedSecondTekton = selectedSecondTekton.getTekton();
         Gomba _selectedAlapG = selectedGombaTest.getGombaTest().getAlapGomba();
         return model.spreadSpora(_selectedSecondTekton, _selectedAlapG);
     }
 
+    /**
+     * Rovar elfogyasztását végzi el a modellben.
+     *
+     * @return igaz, ha az elfogyasztás sikeres volt
+     */
     public boolean updateModelEatRovar() {
         Gombasz _selectedGombasz = model.getGombaTestById(selectedGombaTest.getId()).getAlapGomba().getGombasz();
         Rovar _selectedRovar = model.getRovarById(selectedRovar.getId());
         return model.eatRovar(_selectedGombasz, _selectedRovar);
     }
 
-    public boolean updateModelBuyFonal() {
+    /**
+     * Fonal vásárlását végzi el a modellben.
+     */
+    public void updateModelBuyFonal() {
         Gomba _selectedGomba = selectedGombaTest.getGombaTest().getAlapGomba();
-        return model.buyFonal(_selectedGomba);
+        model.buyFonal(_selectedGomba);
     }
 
+    /**
+     * Inicializálja a játék időzítőjét.
+     *
+     * @param delay az időzítő frissítési gyakorisága milliszekundumban
+     * @param duration a játék időtartama másodpercben
+     */
     public void initTimer(int delay, int duration) {
         this.remainingSeconds = duration;
-        this.startTime = System.currentTimeMillis();
 
         timer = new javax.swing.Timer(delay, e -> {
             remainingSeconds--;
@@ -385,6 +460,11 @@ public class Controller {
         timer.start();
     }
 
+    /**
+     * Végrehajtja a játékos kezdőlépését.
+     *
+     * @param currentPlayer az aktuális játékos
+     */
     public void performFirstStep(Player currentPlayer) {
         javax.swing.Timer waitTimer = new javax.swing.Timer(100, null); // 100ms-onként ellenőrzés
         waitTimer.addActionListener(e -> {
@@ -432,6 +512,9 @@ public class Controller {
         waitTimer.start();
     }
 
+    /**
+     * Megjeleníti a játék vége dialógust az eredményekkel.
+     */
     private void showGameOverDialog() {
         String eredmeny = "VÉGE!\n" + model.getAllas();
         model.delete();
@@ -451,52 +534,82 @@ public class Controller {
         }
     }
 
+    /**
+     * Frissíti az időzítő kijelzőjét a felületen.
+     */
     public void updateTimer() {
         JLabel timeLabel = view.getGamePanel().getInfoPanel().getTimeLabel();
         timeLabel.setText("Hátra: " + remainingSeconds + " mp");
     }
 
-    // Getters
+    /**
+     * @return a játék nézete
+     */
     public GameFrame getView() {
         return view;
     }
 
+    /**
+     * @return a játéktér modellje
+     */
     public Field getModel() {
         return model;
     }
 
-    public javax.swing.Timer getTimer() {
-        return timer;
-    }
-
+    /**
+     * Beállítja a játék nézetét.
+     *
+     * @param view az új játék nézet
+     */
     public void setView(GameFrame view) {
         this.view = view;
     }
 
+    /**
+     * @return a kijelölt tektonlemez, vagy null ha nincs kijelölve
+     */
     public Tekton getSelectedTekton() {
         return selectedTekton != null ? selectedTekton.getTekton() : null;
     }
 
+    /**
+     * @return a kijelölt rovar, vagy null ha nincs kijelölve
+     */
     public Rovar getSelectedRovar() {
         return selectedRovar != null ? selectedRovar.getRovar() : null;
     }
 
+    /**
+     * @return igaz, ha van kijelölt tektonlemez
+     */
     public boolean isSelectedTekton() {
         return selectedTekton != null;
     }
 
+    /**
+     * @return igaz, ha van kijelölt második tektonlemez
+     */
     public boolean isSelectedSecondTekton() {
         return selectedSecondTekton != null;
     }
 
+    /**
+     * @return igaz, ha van kijelölt harmadik tektonlemez
+     */
     public boolean isSelectedThirdTekton() {
         return selectedThirdTekton != null;
     }
 
+    /**
+     * @return igaz, ha van kijelölt rovar
+     */
     public boolean isSelectedRovar() {
         return selectedRovar != null;
     }
 
+    /**
+     * @return igaz, ha van kijelölt gombatest
+     */
     public boolean isSelectedGombatest() {
         return selectedGombaTest != null;
     }

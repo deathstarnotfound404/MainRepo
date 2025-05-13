@@ -3,34 +3,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * A játék információs paneljét megvalósító osztály.
+ * Ez az osztály felelős az összes játék közben megjelenő információ és kezelőfelület
+ * megjelenítéséért, többek között megjeleníti a visszaszámlálót, pontszámokat,
+ * a kiválasztott Tektonról és rovarról szóló információkat, valamint a kezelőgombokat.
+ */
 public class InfoPanel extends JPanel {
-    private Timer timer;
-    private JComboBox<Object> optionsOnTekton;
-    private JTextArea pontszamok;
-    private JButton exitButton, clearButton;
-    private JLabel timerLabel;
-    private JLabel timeValue;
-    private JTextArea tektonInfo;
-    private JTextArea rovarInfo;
+    /** A Tektonon végrehajtható műveletek legördülő listája */
+    private final JComboBox<Object> optionsOnTekton;
+    /** A pontszámok megjelenítésére szolgáló szövegmező */
+    private final JTextArea pontszamok;
+    /** Az idő értékét megjelenítő címke */
+    private final JLabel timeValue;
+    /** A kiválasztott Tektonról információt megjelenítő szövegmező */
+    private final JTextArea tektonInfo;
+    /** A kiválasztott rovarról információt megjelenítő szövegmező */
+    private final JTextArea rovarInfo;
 
-    private JLabel pontszamlabel;
-    private JLabel tektonInfoLabel;
-    private JLabel rovarInfoLabel;
-
+    /** A kilépés gomb eseménykezelője */
     public ActionListener exitListener;
+    /** A kijelölés törlése gomb eseménykezelője */
     public ActionListener clearListener;
 
-    public InfoPanel(Timer t) {
-        this.timer = t;
+    /**
+     * Létrehoz egy új információs panelt a megadott időzítővel.
+     * Inicializálja a panel komponenseit és elrendezését.
+     */
+    public InfoPanel() {
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         int panelWidth = this.getPreferredSize().width;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        timerLabel = new JLabel("Visszaszámláló:");
+        JLabel timerLabel = new JLabel("Visszaszámláló:");
         timerLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         timeValue = new JLabel(); // Külső vezérlés frissíti majd
@@ -40,7 +48,7 @@ public class InfoPanel extends JPanel {
         optionsOnTekton.setMaximumSize(new Dimension(200, 25));
         optionsOnTekton.addItem("-- Válassz --");
 
-        pontszamlabel = new JLabel("Pontszámok");
+        JLabel pontszamlabel = new JLabel("Pontszámok");
         pontszamlabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         pontszamlabel.setPreferredSize(new Dimension(200, 20));
 
@@ -53,7 +61,7 @@ public class InfoPanel extends JPanel {
         pontszamok.setBackground(this.getBackground());
         pontszamok.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        tektonInfoLabel = new JLabel("Tekton infó");
+        JLabel tektonInfoLabel = new JLabel("Tekton infó");
         tektonInfoLabel.setHorizontalAlignment(SwingConstants.LEFT);
         tektonInfoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         tektonInfoLabel.setPreferredSize(new Dimension(panelWidth, tektonInfoLabel.getPreferredSize().height));
@@ -67,7 +75,7 @@ public class InfoPanel extends JPanel {
         tektonInfo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //tektonInfo.setMaximumSize(new Dimension(180, 60));
 
-        rovarInfoLabel = new JLabel("Rovar infó");
+        JLabel rovarInfoLabel = new JLabel("Rovar infó");
         rovarInfoLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rovarInfoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         rovarInfoLabel.setPreferredSize(new Dimension(panelWidth, rovarInfoLabel.getPreferredSize().height));
@@ -81,9 +89,9 @@ public class InfoPanel extends JPanel {
         rovarInfo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //rovarInfo.setMaximumSize(new Dimension(180, 60));
 
-        exitButton = new JButton("Exit");
+        JButton exitButton = new JButton("Exit");
         exitButton.setBackground(new Color(230, 230, 230));
-        clearButton = new JButton("Clear Selection");
+        JButton clearButton = new JButton("Clear Selection");
         clearButton.setBackground(new Color(230, 230, 230));
         Dimension buttonSize = new Dimension(160, 30);
         exitButton.setMaximumSize(buttonSize);
@@ -119,18 +127,21 @@ public class InfoPanel extends JPanel {
         });
     }
 
-    public Timer getTimer() {
-        return timer;
-    }
-
+    /**
+     * Visszaadja a Tektonon végrehajtható műveletek legördülő listáját.
+     *
+     * @return A legördülő lista objektum
+     */
     public JComboBox<Object> getElemek() {
         return optionsOnTekton;
     }
 
-    public JTextArea getPontszamok() {
-        return pontszamok;
-    }
-
+    /**
+     * Frissíti az információs panel megjelenítését a vezérlő aktuális állapota alapján.
+     * Frissíti a pontszámokat, valamint a kiválasztott Tekton és rovar információit.
+     *
+     * @param controller A játékvezérlő objektum
+     */
     public void updateView(Controller controller) {
         pontszamok.setText(controller.getModel().getAllas());
 
@@ -145,6 +156,11 @@ public class InfoPanel extends JPanel {
         rovarInfo.setText(rovarText);
     }
 
+    /**
+     * Beállítja a Tektonon végrehajtható műveletek listáját.
+     *
+     * @param opts A megjelenítendő műveletek listája
+     */
     public void setOptionsList(List<Object> opts) {
         optionsOnTekton.removeAllItems();
         optionsOnTekton.addItem("-- Válassz --");
@@ -153,6 +169,11 @@ public class InfoPanel extends JPanel {
         }
     }
 
+    /**
+     * Visszaadja az idő értékét megjelenítő címkét.
+     *
+     * @return Az idő címke
+     */
     public JLabel getTimeLabel() {
         return timeValue;
     }
