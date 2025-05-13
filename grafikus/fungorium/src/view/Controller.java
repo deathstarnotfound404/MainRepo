@@ -20,6 +20,7 @@ public class Controller {
     public static javax.swing.Timer timer;
     private int remainingSeconds;
     private TimeHandler timeHandler;
+    private Timer sporaTimer;
     private final CustomKeyListener keyListener;
 
     private TektonView selectedTekton;
@@ -51,6 +52,8 @@ public class Controller {
         };
         view.getMenuPanel().exitAL = e -> {
             model.delete();
+            timer.stop();
+            sporaTimer.cancel();
             timeHandler.shutdown();
             System.exit(0);};
     }
@@ -88,6 +91,8 @@ public class Controller {
                 view.getMenuPanel().getRovarasz2Name());
 
         MainPanel panel = new MainPanel(this);
+        timeHandler.shutdown();
+        timeHandler = new TimeHandler();
         view.setGamePanel(panel);
 
         panel.getInfoPanel().clearListener = e -> {
@@ -101,6 +106,9 @@ public class Controller {
 
         panel.getInfoPanel().exitListener = e -> {
             model.delete();
+            timer.stop();
+            sporaTimer.cancel();
+            timeHandler.shutdown();
             switchToMenuPanel();
         };
 
@@ -126,7 +134,7 @@ public class Controller {
         kezdoLepesekLepesenkent(panel, players, 0);
 
         // 20 másodpercenként spóra termelés meghívása minden Gombászra
-        Timer sporaTimer = new Timer();
+        sporaTimer = new Timer();
         sporaTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -452,8 +460,9 @@ public class Controller {
 
             if (remainingSeconds <= 0) {
                 timer.stop();
+                sporaTimer.cancel();
+                timeHandler.shutdown();
                 showGameOverDialog();
-                //timeHandler.shutdown();
             }
         });
 
