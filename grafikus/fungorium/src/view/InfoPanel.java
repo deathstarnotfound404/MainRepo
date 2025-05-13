@@ -21,6 +21,8 @@ public class InfoPanel extends JPanel {
     private final JTextArea tektonInfo;
     /** A kiválasztott rovarról információt megjelenítő szövegmező */
     private final JTextArea rovarInfo;
+    /**Akítv kiválasztások jelölése*/
+    private final JTextArea selectedElemek;
 
     /** A kilépés gomb eseménykezelője */
     public ActionListener exitListener;
@@ -54,12 +56,29 @@ public class InfoPanel extends JPanel {
 
         pontszamok = new JTextArea();
         pontszamok.setForeground(Color.GRAY);
-
         pontszamok.setEditable(false);
         pontszamok.setLineWrap(true);
         pontszamok.setWrapStyleWord(true);
         pontszamok.setBackground(this.getBackground());
         pontszamok.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        JLabel selectedeklabel = new JLabel("Selected");
+        pontszamlabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        pontszamlabel.setPreferredSize(new Dimension(200, 20));
+
+        selectedElemek = new JTextArea(
+                "Selected Tekton : - \n" +
+                "Selected 2. Tekton : - \n" +
+                "Selected 3. Tekton : - \n" +
+                "Selected Rovar : - \n" +
+                "Selected GombaTest : - \n"
+        );
+        selectedElemek.setForeground(Color.GRAY);
+        selectedElemek.setEditable(false);
+        selectedElemek.setLineWrap(true);
+        selectedElemek.setWrapStyleWord(true);
+        selectedElemek.setBackground(this.getBackground());
+        selectedElemek.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         JLabel tektonInfoLabel = new JLabel("Tekton infó");
         tektonInfoLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -107,6 +126,9 @@ public class InfoPanel extends JPanel {
         add(pontszamlabel);
         add(pontszamok);
         add(Box.createRigidArea(new Dimension(0, 10)));
+        add(selectedeklabel);
+        add(selectedElemek);
+        add(Box.createRigidArea(new Dimension(0, 10)));
         add(tektonInfoLabel);
         add(tektonInfo);
         add(Box.createRigidArea(new Dimension(0, 10)));
@@ -144,6 +166,8 @@ public class InfoPanel extends JPanel {
      */
     public void updateView(Controller controller) {
         pontszamok.setText(controller.getModel().getAllas());
+
+        selectedElemek.setText(controller.activeSelections());
 
         String tektonText = (controller.getSelectedTekton() != null)
                 ? controller.getSelectedTekton().toStringUI()

@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
         Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
         setIconImage(icon);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(800, 800);
         setLocationRelativeTo(null);
 
         cardLayout = new CardLayout();

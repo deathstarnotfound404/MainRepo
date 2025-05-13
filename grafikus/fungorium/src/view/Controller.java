@@ -582,10 +582,52 @@ public class Controller {
     }
 
     /**
+     * @return a kijelölt 2. tektonlemez, vagy null ha nincs kijelölve
+     */
+    public Tekton getSelectedSecondTekton() {
+        return selectedSecondTekton != null ? selectedSecondTekton.getTekton() : null;
+    }
+
+    /**
+     * @return a kijelölt 3. tektonlemez, vagy null ha nincs kijelölve
+     */
+    public Tekton getSelectedThirdTekton() {
+        return selectedThirdTekton != null ? selectedThirdTekton.getTekton() : null;
+    }
+
+    /**
      * @return a kijelölt rovar, vagy null ha nincs kijelölve
      */
     public Rovar getSelectedRovar() {
         return selectedRovar != null ? selectedRovar.getRovar() : null;
+    }
+
+    /**
+     * @return a kijelölt gomba test, vagy null ha nincs kijelölve
+     */
+    public GombaTest getSelectedGombaTest() {
+        return selectedGombaTest != null ? selectedGombaTest.getGombaTest() : null;
+    }
+
+    /**
+     * @return A kijelölt elemek kiírása stringbe a Controllerből
+     */
+    public String activeSelections() {
+        StringBuilder sb = new StringBuilder();
+
+        Tekton sel1 = getSelectedTekton();
+        Tekton sel2 = getSelectedSecondTekton();
+        Tekton sel3 = getSelectedThirdTekton();
+        Rovar rovar = getSelectedRovar();
+        GombaTest gomba = getSelectedGombaTest();
+
+        sb.append("Selected Tekton : ").append(sel1 != null ? ("#" + sel1.getId()) : "-").append(" \n");
+        sb.append("Selected 2. Tekton : ").append(sel2 != null ? ("#" + sel2.getId()) : "-").append(" \n");
+        sb.append("Selected 3. Tekton : ").append(sel3 != null ? ("#" + sel3.getId()) : "-").append(" \n");
+        sb.append("Selected Rovar : ").append(rovar != null ? ("#" + rovar.getId()) : "-").append(" \n");
+        sb.append("Selected GombaTest : ").append(gomba != null ? ("#" + gomba.getId()) : "-").append(" \n");
+
+        return sb.toString();
     }
 
     /**
