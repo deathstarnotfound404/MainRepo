@@ -56,7 +56,7 @@ public class CustomKeyListener implements KeyListener {
                         }
                     }
                 } else {
-                    controller.keyPressedError("Hint: Clear + 1.Tekton kattintás + 1. Tektonon GombaTest választás + 2.Tekton kattintás");
+                    controller.keyPressedError("Hint: Clear + 1.Tekton kattintás + 1. Tektonon GombaTest választás + 1.Start Tekton kattintás + 2. Cél Tekton kattintás");
                 }
             }
             case 't' -> {
