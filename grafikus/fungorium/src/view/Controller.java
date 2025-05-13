@@ -287,6 +287,26 @@ public class Controller {
                 }
             }
 
+            if(selectedSecondTekton != null) {
+                if(selectedSecondTekton.getTekton().getRovar() != null) {
+                    Rovar r = selectedSecondTekton.getTekton().getRovar();
+                    for(RovarView rv : view.getGamePanel().getGamePanel().getRovarViews()) {
+                        if(rv.getRovar().getId() == r.getId()) {
+                            options.add(rv);
+                        }
+                    }
+                }
+
+                if (clicked.getTekton().getGomba() != null) {
+                    GombaTest gt = clicked.getTekton().getGomba().getGombatest();
+                    for(GombaTestView gtv : view.getGamePanel().getGamePanel().getGombaTestViews()) {
+                        if(gtv.getGombaTest().getId() == gt.getId()) {
+                            options.add(gtv);
+                        }
+                    }
+                }
+            }
+
             InfoPanel infoPanel = view.getGamePanel().getInfoPanel();
             JComboBox<Object> comboBox = infoPanel.getElemek();
 
